@@ -1,0 +1,39 @@
+(game "Simplified_uno"
+    (players 2)
+    (equipment {
+        (Deck
+            {
+            (SpecialCard red 4 {1..4})   // (<CardType> <Color> <the Number of this card in the deck> <the value>)
+            (SpecialCard red 4 {1..4})   // on peut aussi imaginer (Card Hearts 3 {V,Q,K})
+            (SpecialCard blue 4 {1..4})  // on peut imaginer plus de detail ? (SpecialCard special:(Power:6 Defense:3) 6)
+            (SpecialCard blue 4 {1..4})
+            (SpecialCard green 4 {1..4})
+            (SpecialCard green 4 {1..4})
+            (SpecialCard yellow 4 {1..4})
+            (SpecialCard yellow 4 {1..4})
+           }
+           Shuffle
+        )
+
+    })
+    (rules
+        (start {
+            (Deal 2 Each)
+            (Deal 1 Discard)
+        })
+        (play
+            (or
+               {
+                (PutCard if:(= color color:(Discard))) //ou if:(= color color:(at stack/deck/discard))
+                (PutCard if:(= value value:(Discard)))
+                (DrawCard deck) //deck ou PlayerDeck ...
+                }
+            )
+        )
+        (end
+            (if
+                ("HandEmpty") (result Mover Win)
+            )
+        )
+    )
+)
