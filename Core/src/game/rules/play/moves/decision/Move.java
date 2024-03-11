@@ -13,23 +13,7 @@ import game.functions.ints.IntFunction;
 import game.functions.range.RangeFunction;
 import game.functions.region.RegionFunction;
 import game.rules.play.moves.Moves;
-import game.rules.play.moves.nonDecision.effect.Add;
-import game.rules.play.moves.nonDecision.effect.Bet;
-import game.rules.play.moves.nonDecision.effect.Claim;
-import game.rules.play.moves.nonDecision.effect.FromTo;
-import game.rules.play.moves.nonDecision.effect.Hop;
-import game.rules.play.moves.nonDecision.effect.Leap;
-import game.rules.play.moves.nonDecision.effect.Pass;
-import game.rules.play.moves.nonDecision.effect.PlayCard;
-import game.rules.play.moves.nonDecision.effect.Promote;
-import game.rules.play.moves.nonDecision.effect.Propose;
-import game.rules.play.moves.nonDecision.effect.Remove;
-import game.rules.play.moves.nonDecision.effect.Select;
-import game.rules.play.moves.nonDecision.effect.Shoot;
-import game.rules.play.moves.nonDecision.effect.Slide;
-import game.rules.play.moves.nonDecision.effect.Step;
-import game.rules.play.moves.nonDecision.effect.Then;
-import game.rules.play.moves.nonDecision.effect.Vote;
+import game.rules.play.moves.nonDecision.effect.*;
 import game.rules.play.moves.nonDecision.effect.set.SetNextPlayerType;
 import game.rules.play.moves.nonDecision.effect.set.SetRotationType;
 import game.rules.play.moves.nonDecision.effect.set.direction.SetRotation;
@@ -47,7 +31,10 @@ import game.util.moves.From;
 import game.util.moves.Piece;
 import game.util.moves.Player;
 import game.util.moves.To;
+import other.action.ActionType;
 import other.context.Context;
+
+import static other.action.ActionType.DrawCard;
 
 /**
  * Defines a decision move.
@@ -644,7 +631,37 @@ public final class Move extends Decision
 		moves.setDecision();
 		return moves;
 	}
-	
+	public static Moves construct
+			(
+					final ActionType moveType,
+					@Opt final Then           then
+			)
+	{
+		Moves moves = null;
+
+		switch (moveType)
+		{
+			case Pass:
+				moves = new Pass(then);
+				break;
+			case PutCard:
+				moves = new PutCard(then);
+				break;
+			case DrawCard:
+				moves = new DrawCard(then);
+				break;
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		if (moves == null)
+			throw new IllegalArgumentException("Move(): A MoveSimpleType is not implemented.");
+
+		moves.setDecision();
+		return moves;
+	}
+
 	//-------------------------------------------------------------------------
 
 	/**

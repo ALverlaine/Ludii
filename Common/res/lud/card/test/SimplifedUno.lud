@@ -1,32 +1,40 @@
+
 (game "Simplified_uno"
     (players 2)
     (equipment {
-        (Deck
-            {
-            (SpecialCard red 4 {1..4})   // (<CardType> <Color> <the Number of this card in the deck> <the value>)
-            (SpecialCard red 4 {1..4})   // on peut aussi imaginer (Card Hearts 3 {V,Q,K})
-            (SpecialCard blue 4 {1..4})  // on peut imaginer plus de detail ? (SpecialCard special:(Power:6 Defense:3) 6)
-            (SpecialCard blue 4 {1..4})
-            (SpecialCard green 4 {1..4})
-            (SpecialCard green 4 {1..4})
-            (SpecialCard yellow 4 {1..4})
-            (SpecialCard yellow 4 {1..4})
-           }
-           Shuffle
+            (create deck
+                iloc  //invisible location
+                (deck
+                    (RANK (ONE, TWO, THREE, FOUR))
+                    (COLOR
+                        (RED, BLUE, GREEN, YELLOW)  // can be (color (red (suits (diamonds, hearts))) (black (suits (clubs, spades))))
+                    )
+                )
+                STOCK //name of the deck
+            )
         )
 
     })
     (rules
+        (set
+            (game points VALUE)
+                       (
+                        ((NUMBER (ONE)) 1)
+                        ((NUMBER (TWO)) 2)
+                        ((NUMBER (THREE)) 3)
+                        ((NUMBER (FOUR)) 4)
+                        )
+            )
         (start {
-            (Deal 2 Each)
-            (Deal 1 Discard)
+            (deal 2 Each)
+            (deal 1 Discard)
         })
         (play
             (or
                {
-                (PutCard if:(= color color:(Discard))) //ou if:(= color color:(at stack/deck/discard))
-                (PutCard if:(= value value:(Discard)))
-                (DrawCard deck) //deck ou PlayerDeck ...
+                (move PlayCard (if:(= COLOR color:(TOP (DISCARD)))) //ou if:(= color color:(at stack/deck/discard))
+                (move PlayCard (if:(= VALUE value:(TOP (DISCARD))))
+                (move DrawCard STOCK) //deck ou PlayerDeck ...
                 }
             )
         )

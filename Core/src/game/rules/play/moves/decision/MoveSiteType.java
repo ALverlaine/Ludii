@@ -10,4 +10,6 @@ public enum MoveSiteType
 
 	/** Makes a claim move. */
 	Claim,
+	PutCard,
+	DrawCard,
 }

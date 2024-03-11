@@ -46,6 +46,8 @@ import other.action.move.ActionMoveN;
 import other.action.move.ActionPromote;
 import other.action.move.ActionSelect;
 import other.action.move.ActionSubStackMove;
+import other.action.move.cardMove.DrawCard;
+import other.action.move.cardMove.PutCard;
 import other.action.move.move.ActionMove;
 import other.action.move.remove.ActionRemove;
 import other.action.others.ActionForfeit;
@@ -417,6 +419,10 @@ public class Move extends BaseAction
 				actions.add(new ActionSetHiddenCount(actionStr));
 			else if (actionStr.startsWith("[SetHidden"))
 				actions.add(new ActionSetHidden(actionStr));
+			else if (actionStr.startsWith("[PutCard:"))
+				actions.add(new PutCard(actionStr));
+			else if (actionStr.startsWith("[DrawCard:"))
+				actions.add(new DrawCard(actionStr));
 			else
 				System.err.println("Move constructor does not recognise action: " + str);
 
