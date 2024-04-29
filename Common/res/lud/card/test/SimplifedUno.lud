@@ -1,40 +1,33 @@
+(define "HandEmpty"
+(all Sites (sites Hand #1) if:(= 0 (count Cell at:(site))))
+)
 
 (game "Simplified_uno"
     (players 2)
     (equipment {
-            (create deck
-                iloc  //invisible location
-                (deck
-                    (RANK (ONE, TWO, THREE, FOUR))
-                    (COLOR
-                        (RED, BLUE, GREEN, YELLOW)  // can be (color (red (suits (diamonds, hearts))) (black (suits (clubs, spades))))
-                    )
-                )
-                STOCK //name of the deck
-            )
-        )
+            (hand Each)
+            (card "ONE" value:1 ) //we can add more parameters to the card, like color, or special abilities
+            (card "TWO" value:1)
+            (card "THREE" value:1)
+            (card "FOUR" value:1)
 
+            (deck "PLAY")
+            (deck "STOCK" cardset:"UNO_SET")
+        )
     })
     (rules
-        (set
-            (game points VALUE)
-                       (
-                        ((NUMBER (ONE)) 1)
-                        ((NUMBER (TWO)) 2)
-                        ((NUMBER (THREE)) 3)
-                        ((NUMBER (FOUR)) 4)
-                        )
-            )
         (start {
-            (deal 2 Each)
-            (deal 1 Discard)
+	
+            (shuffle "STOCK") //shuffle the deck, a deck can be constituted of multiple sets of cards
+            (deal 2 Each from:"STOCK") //deal 2 cards to each player
+            (deal 1 PLAY from:"STOCK") //deal 1 card to the discard pile
         })
         (play
             (or
-               {
-                (move PlayCard (if:(= COLOR color:(TOP (DISCARD)))) //ou if:(= color color:(at stack/deck/discard))
-                (move PlayCard (if:(= VALUE value:(TOP (DISCARD))))
-                (move DrawCard STOCK) //deck ou PlayerDeck ...
+                {
+                (move PlayCard (if:(=  ( "suit" (topLevel at:"PLAY"))))
+                (move PlayCard (if:(=  (Param "card" (topLevel at:"PLAY"))))
+                (move DrawCard at:"STOCK")
                 }
             )
         )
