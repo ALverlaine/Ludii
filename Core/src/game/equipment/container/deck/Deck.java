@@ -1,6 +1,6 @@
 package game.equipment.container.deck;
 
-import game.equipment.component.CardType;
+import game.equipment.component.Card;
 import game.equipment.container.Container;
 import game.types.play.RoleType;
 import main.Constants;
@@ -29,15 +29,7 @@ public class Deck extends Container {
         super("Deck", Constants.UNDEFINED, RoleType.Neutral);
     }
 
-    public static Boolean construct(final CardType isType) {
-        switch (isType)
-
-        {
-            case SpecialCard:
-                return false;
-            default:
-                break;
-        }
+    public static Boolean construct(final Card isType) throws IllegalArgumentException {
         throw new IllegalArgumentException("Deck(): A CardType is not implemented.");
     }
 

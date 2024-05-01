@@ -8,12 +8,12 @@ import game.util.directions.DirectionFacing;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class SpecialCard extends Component implements Serializable {
+public class Card extends Component implements Serializable {
 
 
     @Serial
     private static final long serialVersionUID = 1L;
-    public SpecialCard(String label, RoleType role, StepType[][] walk, DirectionFacing dirn, Moves generator, Integer maxState, Integer maxCount, Integer maxValue) {
+    public Card(String label, RoleType role, StepType[][] walk, DirectionFacing dirn, Moves generator, Integer maxState, Integer maxCount, Integer maxValue) {
         super(label, role, null, dirn, generator, maxState, maxCount, maxValue);
     }
 }
