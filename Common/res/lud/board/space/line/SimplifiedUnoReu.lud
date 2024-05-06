@@ -1,0 +1,74 @@
+(define "HandEmpty"
+    (all Sites (sites Hand #1) if:(= 0 (count Cell at:(site))))
+)
+
+(game "Simplified_uno"
+    (players 2)
+    (equipment {
+            (hand Each)
+            (card "ONE_RED" {"value" "suits"})
+            (card "TWO_RED" {"value" "suits"})
+            (card "THREE_RED" {"value" "suits"})
+            (card "FOUR_RED" {"value" "suits"})
+            (card "ONE_BLUE" {"value" "suits"})
+            (card "TWO_BLUE" {"value" "suits"})
+            (card "THREE_BLUE" {"value" "suits"})
+            (card "FOUR_BLUE" {"value" "suits"})
+            (card "ONE_GREEN" {"value" "suits"})
+            (card "TWO_GREEN" {"value" "suits"})
+            (card "THREE_GREEN" {"value" "suits"})
+            (card "FOUR_GREEN" {"value" "suits"})
+            (card "ONE_YELLOW" {"value" "suits"})
+            (card "TWO_YELLOW" {"value" "suits"})
+            (card "THREE_YELLOW" {"value" "suits"})
+            (card "FOUR_YELLOW" {"value" "suits"})
+            (deck "PLAY" 32) //name of the deck and number of cards max he can have
+            (deck "STOCK" 32)
+    })
+    (rules
+        (start {
+            (setCardType "ONE_RED" {1 "RED"})
+            (setCardType "TWO_RED" {2 "RED"})
+            (setCardType "THREE_RED" {3 "RED"})
+            (setCardType "FOUR_RED" {4 "RED"})
+            (setCardType "ONE_BLUE" {1 "BLUE"})
+            (setCardType "TWO_BLUE" {2 "BLUE"})
+            (setCardType "THREE_BLUE" {3 "BLUE"})
+            (setCardType "FOUR_BLUE" {4 "BLUE"})
+            (setCardType "ONE_GREEN" {1 "GREEN"})
+            (setCardType "TWO_GREEN" {2 "GREEN"})
+            (setCardType "THREE_GREEN" {3 "GREEN"})
+            (setCardType "FOUR_GREEN" {4 "GREEN"})
+            (setCardType "ONE_YELLOW" {1 "YELLOW"})
+            (setCardType "TWO_YELLOW" {2 "YELLOW"})
+            (setCardType "THREE_YELLOW" {3 "YELLOW"})
+            (setCardType "FOUR_YELLOW" {4 "YELLOW"})
+            (setDeck "STOCK" {"ONE_RED" "TWO_RED" "THREE_RED" "FOUR_RED" "ONE_BLUE" "TWO_BLUE" "THREE_BLUE" "FOUR_BLUE" "ONE_GREEN" "TWO_GREEN" "THREE_GREEN" "FOUR_GREEN" "ONE_YELLOW" "TWO_YELLOW" "THREE_YELLOW" "FOUR_YELLOW"}) //add all the cards to the deck
+            (shuffle "STOCK") //shuffle the deck, a deck can be constituted of multiple sets of cards
+            (deal 2 Each from:"STOCK") //deal 2 cards to each player
+            (deal 1 PLAY from:"STOCK") //deal 1 card to the discard pile
+         })
+        (play
+            (or
+                {
+                (move PlayCard
+                    (to
+                        (topLevel at:"PLAY")
+                        (if:(= (cardSite "suits" from:hand) (cardSite "suits" from:(topLevel at:"PLAY")))))
+                )
+                (move PlayCard
+                    (to
+                        (topLevel at:"PLAY")
+                        if:(= (cardSite "value" from:hand) (cardSite "value" from:(topLevel at:"PLAY"))))
+                )
+                (move DrawCard at:"STOCK")
+                }
+            )
+        )
+        (end
+            (if
+                ("HandEmpty") (result Mover Win)
+            )
+        )
+    )
+)

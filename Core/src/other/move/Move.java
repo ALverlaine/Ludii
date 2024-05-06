@@ -27,7 +27,6 @@ import other.UndoData;
 import other.action.Action;
 import other.action.ActionType;
 import other.action.BaseAction;
-import other.action.cards.ActionSetTrumpSuit;
 import other.action.die.ActionSetDiceAllEqual;
 import other.action.die.ActionUpdateDice;
 import other.action.die.ActionUseDie;
@@ -47,6 +46,8 @@ import other.action.move.ActionMoveN;
 import other.action.move.ActionPromote;
 import other.action.move.ActionSelect;
 import other.action.move.ActionSubStackMove;
+import other.action.move.cardMove.DrawCard;
+import other.action.move.cardMove.PutCard;
 import other.action.move.move.ActionMove;
 import other.action.move.remove.ActionRemove;
 import other.action.others.ActionForfeit;
@@ -342,8 +343,6 @@ public class Move extends BaseAction
 				actions.add(new ActionBet(actionStr));
 			else if (actionStr.startsWith("[Pass:"))
 				actions.add(new ActionPass(actionStr));
-			else if (actionStr.startsWith("[SetTrumpSuit:"))
-				actions.add(new ActionSetTrumpSuit(actionStr));
 			else if (actionStr.startsWith("[SetPending:"))
 				actions.add(new ActionSetPending(actionStr));
 			else if (actionStr.startsWith("[Promote:"))
@@ -420,6 +419,10 @@ public class Move extends BaseAction
 				actions.add(new ActionSetHiddenCount(actionStr));
 			else if (actionStr.startsWith("[SetHidden"))
 				actions.add(new ActionSetHidden(actionStr));
+			else if (actionStr.startsWith("[PutCard:"))
+				actions.add(new PutCard(actionStr));
+			else if (actionStr.startsWith("[DrawCard:"))
+				actions.add(new DrawCard(actionStr));
 			else
 				System.err.println("Move constructor does not recognise action: " + str);
 

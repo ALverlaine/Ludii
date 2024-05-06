@@ -2624,6 +2624,7 @@ public enum Concept
 		false,
 		Concept.SingleSiteMoves
 	),
+
 	
 	/** Frequency of RemoveDecision. */
 	RemoveDecisionFrequency

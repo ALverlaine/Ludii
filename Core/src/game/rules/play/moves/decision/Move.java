@@ -13,29 +13,11 @@ import game.functions.ints.IntFunction;
 import game.functions.range.RangeFunction;
 import game.functions.region.RegionFunction;
 import game.rules.play.moves.Moves;
-import game.rules.play.moves.nonDecision.effect.Add;
-import game.rules.play.moves.nonDecision.effect.Bet;
-import game.rules.play.moves.nonDecision.effect.Claim;
-import game.rules.play.moves.nonDecision.effect.FromTo;
-import game.rules.play.moves.nonDecision.effect.Hop;
-import game.rules.play.moves.nonDecision.effect.Leap;
-import game.rules.play.moves.nonDecision.effect.Pass;
-import game.rules.play.moves.nonDecision.effect.PlayCard;
-import game.rules.play.moves.nonDecision.effect.Promote;
-import game.rules.play.moves.nonDecision.effect.Propose;
-import game.rules.play.moves.nonDecision.effect.Remove;
-import game.rules.play.moves.nonDecision.effect.Select;
-import game.rules.play.moves.nonDecision.effect.Shoot;
-import game.rules.play.moves.nonDecision.effect.Slide;
-import game.rules.play.moves.nonDecision.effect.Step;
-import game.rules.play.moves.nonDecision.effect.Then;
-import game.rules.play.moves.nonDecision.effect.Vote;
+import game.rules.play.moves.nonDecision.effect.*;
 import game.rules.play.moves.nonDecision.effect.set.SetNextPlayerType;
 import game.rules.play.moves.nonDecision.effect.set.SetRotationType;
-import game.rules.play.moves.nonDecision.effect.set.SetTrumpType;
 import game.rules.play.moves.nonDecision.effect.set.direction.SetRotation;
 import game.rules.play.moves.nonDecision.effect.set.nextPlayer.SetNextPlayer;
-import game.rules.play.moves.nonDecision.effect.set.suit.SetTrumpSuit;
 import game.rules.play.moves.nonDecision.effect.state.swap.SwapPlayersType;
 import game.rules.play.moves.nonDecision.effect.state.swap.SwapSitesType;
 import game.rules.play.moves.nonDecision.effect.state.swap.players.SwapPlayers;
@@ -49,7 +31,10 @@ import game.util.moves.From;
 import game.util.moves.Piece;
 import game.util.moves.Player;
 import game.util.moves.To;
+import other.action.ActionType;
 import other.context.Context;
+
+import static other.action.ActionType.DrawCard;
 
 /**
  * Defines a decision move.
@@ -208,58 +193,6 @@ public final class Move extends Decision
 		// We should never reach that except if we forget some codes.
 		if (moves == null)
 			throw new IllegalArgumentException("Move(): A MoveRemoveType is not implemented.");
-
-		moves.setDecision();
-		return moves;
-	}
-	
-	//-------------------------------------------------------------------------
-
-	/**
-	 * For deciding the trump suit of a card game.
-	 * 
-	 * @param moveType The type of move.
-	 * @param setType  The type of property to set.
-	 * @param suit     The suit to choose.
-	 * @param suits    The possible suits to choose.
-	 * @param then     The moves applied after that move is applied.
-	 * 
-	 * @example (move Set TrumpSuit (card Suit at:(handSite Shared)))
-	 * 
-	 */
-	public static Moves construct
-	(
-			     final MoveSetType  moveType,
-			     final SetTrumpType setType,
-	   	     @Or final IntFunction  suit,
-		     @Or final Difference   suits,
-		@Opt     final Then         then
-	)
-	{
-		int numNonNull = 0;
-		if (suit != null)
-			numNonNull++;
-		if (suits != null)
-			numNonNull++;
-
-		if (numNonNull != 1)
-			throw new IllegalArgumentException(
-					"Move(): With SetSuitType only one suit or suits parameter must be non-null.");
-
-		Moves moves = null;
-
-		switch (setType)
-		{
-		case TrumpSuit:
-			moves = new SetTrumpSuit(suit, suits, then);
-			break;
-		default:
-			break;
-		}
-
-		// We should never reach that except if we forget some codes.
-		if (moves == null)
-			throw new IllegalArgumentException("Move(): A SetSuitType is not implemented.");
 
 		moves.setDecision();
 		return moves;
@@ -684,9 +617,6 @@ public final class Move extends Decision
 		case Pass:
 			moves = new Pass(then);
 			break;
-		case PlayCard:
-			moves = new PlayCard(then);
-			break;
 		default:
 			break;
 		}
@@ -698,7 +628,37 @@ public final class Move extends Decision
 		moves.setDecision();
 		return moves;
 	}
-	
+	public static Moves construct
+			(
+					final ActionType moveType,
+					@Opt final Then           then
+			)
+	{
+		Moves moves = null;
+
+		switch (moveType)
+		{
+			case Pass:
+				moves = new Pass(then);
+				break;
+			case PutCard:
+				moves = new PutCard(then);
+				break;
+			case DrawCard:
+				moves = new DrawCard(then);
+				break;
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		if (moves == null)
+			throw new IllegalArgumentException("Move(): A MoveSimpleType is not implemented.");
+
+		moves.setDecision();
+		return moves;
+	}
+
 	//-------------------------------------------------------------------------
 
 	/**
@@ -916,6 +876,42 @@ public final class Move extends Decision
 			break;
 		default:
 			break;
+		}
+		// We should never reach that except if we forget some codes.
+		if (moves == null)
+			throw new IllegalArgumentException("Move(): A MoveAddType is not implemented.");
+
+		moves.setDecision();
+		return moves;
+	}
+	/**
+	 * For deciding to add a piece or claim a site.
+	 *
+	 * @param moveType The type of move.
+	 * @param to       The data on the location to add.
+	 * @param from     The data on the location to add.
+	 * @param then     The moves applied after that move is applied.
+	 *
+	 * @example (move PlayCard (to (topLevel at : " PLAY ") (if:(= (cardSite "suits" from:hand) (cardSite "suits" from:(topLevel at:"PLAY"))))))
+	 */
+
+	public static Moves construct
+			(
+					final MoveSiteType moveType,
+					final To           to,
+					final From 	       from,
+			@Opt    final Then         then
+			)
+	{
+		Moves moves = null;
+
+		switch (moveType)
+		{
+			case PlayCard:
+				moves = new PlayCard(to, from, then);
+				break;
+			default:
+				break;
 		}
 		// We should never reach that except if we forget some codes.
 		if (moves == null)

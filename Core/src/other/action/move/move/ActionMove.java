@@ -97,6 +97,8 @@ public final class ActionMove extends BaseAction
 
 		final String strDecision = Action.extractData(detailedString, "decision");
 		final boolean decision = (strDecision.isEmpty()) ? false : Boolean.parseBoolean(strDecision);
+
+
 		
 		BaseAction action = null;
 		

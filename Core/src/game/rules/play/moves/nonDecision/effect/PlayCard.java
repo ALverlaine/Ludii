@@ -9,6 +9,8 @@ import game.rules.play.moves.BaseMoves;
 import game.rules.play.moves.Moves;
 import game.types.board.SiteType;
 import game.types.state.GameType;
+import game.util.moves.From;
+import game.util.moves.To;
 import main.Constants;
 import other.action.Action;
 import other.action.move.move.ActionMove;
@@ -33,7 +35,10 @@ public final class PlayCard extends Effect
 	 */
 	public PlayCard
 	(
-		@Opt final Then then
+				final To to,
+				final From from,
+		@Opt 	final Then then
+
 	) 
 	{ 
 		super(then);

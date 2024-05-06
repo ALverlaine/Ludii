@@ -171,4 +171,6 @@ public enum ActionType
 	
 	/** To trigger an event. */
 	Trigger,
+	PutCard,
+	DrawCard,
 }

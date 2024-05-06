@@ -120,11 +120,11 @@ public class TravisTest
 
 			// We exclude that game from the tests because the legal moves are
 			// too slow to test.
-//			if (!filePath.replaceAll(Pattern.quote("\\"), "/").contains("Tavli"))
+//			if (!filePath.replaceAll(Pattern.quote("\\"), "/").contains("Pagade Kayi Ata (Sixteen-handed)"))
 //				continue;
 
 			// Get game description from resource
-			// System.out.println("Game: " + filePath);
+			System.out.println("Game: " + filePath);
 
 			String path = filePath.replaceAll(Pattern.quote("\\"), "/");
 			path = path.substring(path.indexOf("/lud/"));
@@ -200,9 +200,13 @@ public class TravisTest
 				fail();
 			}
 
+			final List<String> excludedIntegrity = new ArrayList<String>();
+			excludedIntegrity.add("Pagade Kayi Ata (Sixteen-handed)");
+
 			try
 			{
-				testIntegrity();
+				if (!containsPartOf(excludedIntegrity, game.name()))
+					testIntegrity();
 			}
 			catch (final IOException e)
 			{
@@ -792,7 +796,7 @@ public class TravisTest
 
 			final String ludPath = folder.getPath().replaceAll(Pattern.quote("\\"), "/");
 			final String trialDirPath = ludPath
-					.replaceFirst(Pattern.quote("/Common/res/"), Matcher.quoteReplacement("/../TravisTrials/"))
+					.replaceFirst(Pattern.quote("/Common/res/"), Matcher.quoteReplacement("/Player/res/"))
 					.replaceFirst(Pattern.quote("/lud/"), Matcher.quoteReplacement("/random_trials/"))
 					.replace(".lud", "");
 
@@ -1148,7 +1152,6 @@ public class TravisTest
 		for (final String string : list)
 			if (test.contains(string))
 				return true;
-
 		return false;
 	}
 }

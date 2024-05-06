@@ -186,7 +186,6 @@ public final class Sites extends BaseRegionFunction
 	 * For getting the sites in a pattern.
 	 * 
 	 * @param regionType Type of sites to return.
-	 * @param isType     The type of query to perform.
 	 * @param walk       The walk describing the pattern.
 	 * @param type       The type of the site from to detect the pattern.
 	 * @param from       The site from to detect the pattern [(last To)].
