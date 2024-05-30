@@ -1,5 +1,6 @@
 package game.equipment.container.deck;
 
+import annotations.Name;
 import game.equipment.component.Card;
 import game.equipment.container.Container;
 import game.types.play.RoleType;
@@ -21,9 +22,7 @@ public class Deck extends Container {
 
     public Deck
     (
-            String label,
-            int index,
-            RoleType role
+            @Name String label
     )
     {
         super("Deck", Constants.UNDEFINED, RoleType.Neutral);
