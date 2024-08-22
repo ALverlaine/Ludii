@@ -1,6 +1,6 @@
 package game.rules.start.set;
 
-public enum SetDeck {
+public enum SetDeckType {
     /** To set the deck. */
     Deck,
 }

@@ -1,7 +1,7 @@
 package game.equipment.container.deck;
 
 import annotations.Name;
-import game.equipment.component.Card;
+import game.equipment.component.CardType;
 import game.equipment.container.Container;
 import game.types.play.RoleType;
 import main.Constants;
@@ -11,42 +11,33 @@ public class Deck extends Container {
     private static final long serialVersionUID = 1L;
 
     //-------------------------------------------------------------------------
-
+    private final String label;
+    private final int numCards;
     /**
      * Creating a deck.
      *
-     * @param  role is query type to perform.
+     * @param  Name is the name of the label
+     * @param  Number is to number of cards that can be stored in the deck
      *
      * @example (is Solved)
      */
 
     public Deck
     (
-            @Name String label
+            @Name   String label,
+                    int numCards
     )
     {
-        super("Deck", Constants.UNDEFINED, RoleType.Neutral);
+        super(label, Constants.UNDEFINED, RoleType.Neutral);
+        this.label = label;
+        this.numCards = numCards;
+
     }
 
-    public static Boolean construct(final Card isType) throws IllegalArgumentException {
-        throw new IllegalArgumentException("Deck(): A CardType is not implemented.");
-    }
 
     @Override
     public void createTopology(int beginIndex, int numEdges) {
+        // TODO Auto-generated method stub
 
     }
-
-    public static Boolean construct(final SortingType isType) {
-        switch (isType)
-
-        {
-            case Shuffle:
-                return false;
-            default:
-                break;
-        }
-        throw new IllegalArgumentException("Deck(): A CardType is not implemented.");
-    }
-
 }

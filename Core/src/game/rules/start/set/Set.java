@@ -10,6 +10,8 @@ import game.functions.ints.IntFunction;
 import game.functions.region.RegionFunction;
 import game.rules.Rule;
 import game.rules.start.StartRule;
+import game.rules.start.set.card.SetCard;
+import game.rules.start.set.deck.SetDeck;
 import game.rules.start.set.player.SetAmount;
 import game.rules.start.set.player.SetScore;
 import game.rules.start.set.players.SetTeam;
@@ -23,6 +25,9 @@ import game.types.board.SiteType;
 import game.types.play.RoleType;
 import other.IntArrayFromRegion;
 import other.context.Context;
+
+import static game.rules.start.set.SetDeckType.Deck;
+
 
 /**
  * Sets some aspect of the initial game state.
@@ -304,7 +309,63 @@ public final class Set extends StartRule
 		// We should never reach that except if we forget some codes.
 		throw new IllegalArgumentException("Set(): A SetStartPlayersType is not implemented.");
 	}
-	
+	/**
+	 * For setting a deck.
+	 *
+	 * @param SetDeckType The property to set.
+	 * @param name     The name of the deck.
+	 * @param cards     The cards contained in the deck.
+	 *
+	 * @example (set Deck "Stock" {"Red_Card" "Blue_Card" "Green_Card"})
+	 */
+	public static Rule construct
+			(
+					final SetDeckType SetDeckType,
+					final String name,
+					@Opt final String[] cards
+			)
+	{
+		switch (SetDeckType)
+		{
+			case Deck:
+				return new SetDeck(name, cards);
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		throw new IllegalArgumentException("Set(): A Deck is not implemented.");
+	}
+	/**
+	 * For setting a card.
+	 *
+	 * @param SetCardType The property to set.
+	 * @param typeName     The name of the deck.
+	 * @param cardProperties     The cards contained in the deck.
+	 *
+	 * @example (set Card "Stock" "Red_card" {1 2})
+	 */
+	public static Rule construct
+	(
+			final SetCardType SetCardType,
+			final String typeName,
+			final String cardName,
+			@Opt final String[] cardProperties
+	)
+	{
+		System.out.println("SetCardType: " + SetCardType + " typeName: " + typeName + " cardName: " + cardName + " cardProperties: " + cardProperties);
+		switch (SetCardType)
+		{
+			case Card:
+				return new SetCard(typeName, cardName, cardProperties);
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		throw new IllegalArgumentException("Set(): A Deck is not implemented.");
+	}
+
 	private Set()
 	{
 		// Ensure that compiler does pick up default constructor

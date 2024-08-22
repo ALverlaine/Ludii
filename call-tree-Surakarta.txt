@@ -1,0 +1,241 @@
+game.Game
+    "Surakarta" (java.lang.String)
+    game.players.Players
+        2 (java.lang.Integer)
+    -
+    game.equipment.Equipment
+        {
+        game.equipment.container.board.custom.SurakartaBoard (game.equipment.Item)
+            game.functions.graph.generators.basis.square.Square (game.functions.graph.GraphFunction)
+                -
+                6 (game.functions.dim.DimFunction)
+                -
+                -
+            -
+            -
+            -
+        game.equipment.component.Piece (game.equipment.Item)
+            "Marker" (java.lang.String)
+            Each (game.types.play.RoleType)
+            -
+            -
+            game.rules.play.moves.nonDecision.operators.logical.Or (game.rules.play.moves.Moves)
+                {
+                game.rules.play.moves.decision.Move (game.rules.play.moves.Moves)
+                    Step (game.rules.play.moves.decision.MoveStepType)
+                    -
+                    All (game.util.directions.Direction)
+                    game.util.moves.To
+                        -
+                        -
+                        -
+                        -
+                        -
+                        game.functions.booleans.is.Is (game.functions.booleans.BooleanFunction) "if:"
+                            Empty (game.functions.booleans.is.IsSiteType)
+                            -
+                            game.functions.ints.iterator.To (game.functions.ints.IntFunction)
+                        -
+                    -
+                    -
+                game.rules.play.moves.decision.Move (game.rules.play.moves.Moves)
+                    Slide (game.rules.play.moves.decision.MoveSlideType)
+                    -
+                    "AllTracks" (java.lang.String)
+                    -
+                    game.util.moves.Between
+                        -
+                        -
+                        -
+                        game.functions.booleans.math.Or (game.functions.booleans.BooleanFunction) "if:"
+                            game.functions.booleans.math.Equals (game.functions.booleans.BooleanFunction)
+                                game.functions.ints.iterator.Between (game.functions.ints.IntFunction)
+                                game.functions.ints.iterator.From (game.functions.ints.IntFunction)
+                                    -
+                                -
+                            game.functions.booleans.is.Is (game.functions.booleans.BooleanFunction)
+                                Empty (game.functions.booleans.is.IsSiteType)
+                                -
+                                game.functions.ints.iterator.Between (game.functions.ints.IntFunction)
+                        -
+                        -
+                    game.util.moves.To
+                        -
+                        -
+                        -
+                        -
+                        -
+                        game.functions.booleans.is.Is (game.functions.booleans.BooleanFunction) "if:"
+                            Enemy (game.functions.booleans.is.IsPlayerType)
+                            game.functions.ints.state.Who (game.functions.ints.IntFunction)
+                                -
+                                game.functions.ints.iterator.To (game.functions.ints.IntFunction) "at:"
+                                -
+                            -
+                        game.rules.play.moves.nonDecision.effect.Apply
+                            false (game.functions.booleans.BooleanFunction) "if:"
+                            game.rules.play.moves.nonDecision.effect.Remove (game.rules.play.moves.nonDecision.NonDecision)
+                                -
+                                game.functions.ints.iterator.To (game.functions.ints.IntFunction)
+                                -
+                                -
+                                -
+                                -
+                                -
+                    -
+                    game.rules.play.moves.nonDecision.effect.Then
+                        game.rules.play.moves.nonDecision.effect.set.Set (game.rules.play.moves.nonDecision.NonDecision)
+                            Counter (game.rules.play.moves.nonDecision.effect.set.SetValueType)
+                            -
+                            -
+                        -
+                }
+                -
+            -
+            -
+            -
+        }
+    game.rules.Rules
+        -
+        game.rules.start.Start
+            {
+            game.rules.start.place.Place (game.rules.start.StartRule)
+                "Marker1" (java.lang.String)
+                -
+                -
+                game.functions.region.math.Expand (game.functions.region.RegionFunction)
+                    -
+                    -
+                    game.functions.region.sites.Sites (game.functions.region.RegionFunction)
+                        Bottom (game.functions.region.sites.SitesSimpleType)
+                        -
+                    -
+                    -
+                    -
+                    -
+                -
+                -
+                -
+                -
+                -
+            game.rules.start.place.Place (game.rules.start.StartRule)
+                "Marker2" (java.lang.String)
+                -
+                -
+                game.functions.region.math.Expand (game.functions.region.RegionFunction)
+                    -
+                    -
+                    game.functions.region.sites.Sites (game.functions.region.RegionFunction)
+                        Top (game.functions.region.sites.SitesSimpleType)
+                        -
+                    -
+                    -
+                    -
+                    -
+                -
+                -
+                -
+                -
+                -
+            }
+            -
+        game.rules.play.Play
+            game.rules.play.moves.nonDecision.operators.logical.If (game.rules.play.moves.Moves)
+                game.functions.booleans.is.Is (game.functions.booleans.BooleanFunction)
+                    Proposed (game.functions.booleans.is.IsStringType)
+                    "End" (java.lang.String)
+                game.rules.play.moves.nonDecision.operators.logical.Or (game.rules.play.moves.Moves)
+                    game.rules.play.moves.decision.Move (game.rules.play.moves.Moves)
+                        Vote (game.rules.play.moves.decision.MoveMessageType)
+                        "End" (java.lang.String)
+                        -
+                        -
+                    game.rules.play.moves.decision.Move (game.rules.play.moves.Moves)
+                        Vote (game.rules.play.moves.decision.MoveMessageType)
+                        "No" (java.lang.String)
+                        -
+                        game.rules.play.moves.nonDecision.effect.Then
+                            game.rules.play.moves.nonDecision.effect.set.Set (game.rules.play.moves.nonDecision.NonDecision)
+                                Counter (game.rules.play.moves.nonDecision.effect.set.SetValueType)
+                                -
+                                -
+                            -
+                    -
+                game.rules.play.moves.nonDecision.operators.logical.Or (game.rules.play.moves.Moves)
+                    game.rules.play.moves.nonDecision.operators.logical.If (game.rules.play.moves.Moves)
+                        game.functions.booleans.math.Ge (game.functions.booleans.BooleanFunction)
+                            game.functions.ints.state.Counter (game.functions.ints.IntFunction)
+                            101 (game.functions.ints.IntFunction)
+                        game.rules.play.moves.decision.Move (game.rules.play.moves.Moves)
+                            Propose (game.rules.play.moves.decision.MoveMessageType)
+                            "End" (java.lang.String)
+                            -
+                            game.rules.play.moves.nonDecision.effect.Then
+                                game.rules.play.moves.nonDecision.effect.Vote (game.rules.play.moves.nonDecision.NonDecision)
+                                    "End" (java.lang.String)
+                                    -
+                                    -
+                                -
+                        -
+                        -
+                    game.rules.play.moves.nonDecision.operators.foreach.ForEach (game.rules.play.moves.Moves)
+                        Piece (game.rules.play.moves.nonDecision.operators.foreach.ForEachPieceType)
+                        -
+                        -
+                        -
+                        -
+                        -
+                        -
+                        -
+                        -
+                        -
+                        -
+                    -
+                -
+        game.rules.end.End
+            -
+            {
+            game.rules.end.If (game.rules.end.EndRule)
+                game.functions.booleans.is.Is (game.functions.booleans.BooleanFunction)
+                    Decided (game.functions.booleans.is.IsStringType)
+                    "End" (java.lang.String)
+                -
+                -
+                game.rules.end.ByScore (game.rules.end.Result)
+                    {
+                    game.util.end.Score
+                        P1 (game.types.play.RoleType)
+                        game.functions.ints.count.Count (game.functions.ints.IntFunction)
+                            Pieces (game.functions.ints.count.CountComponentType)
+                            -
+                            P1 (game.types.play.RoleType)
+                            -
+                            -
+                            -
+                            -
+                    game.util.end.Score
+                        P2 (game.types.play.RoleType)
+                        game.functions.ints.count.Count (game.functions.ints.IntFunction)
+                            Pieces (game.functions.ints.count.CountComponentType)
+                            -
+                            P2 (game.types.play.RoleType)
+                            -
+                            -
+                            -
+                            -
+                    }
+                    -
+            game.rules.end.If (game.rules.end.EndRule)
+                game.functions.booleans.no.No (game.functions.booleans.BooleanFunction)
+                    Pieces (game.functions.booleans.no.NoPieceType)
+                    -
+                    Next (game.types.play.RoleType)
+                    -
+                    -
+                    -
+                -
+                -
+                game.rules.end.Result
+                    Next (game.types.play.RoleType)
+                    Loss (game.types.play.ResultType)
+            }
