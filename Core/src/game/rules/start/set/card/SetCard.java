@@ -5,6 +5,8 @@ import game.rules.start.StartRule;
 import other.context.Context;
 
 public class SetCard extends StartRule {
+
+    private static final long serialVersionUID = 1L;
     private final String typeName;
     private final String cardName;
     private final String[] cardProperties;

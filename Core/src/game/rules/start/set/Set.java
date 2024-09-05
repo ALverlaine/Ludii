@@ -343,17 +343,16 @@ public final class Set extends StartRule
 	 * @param typeName     The name of the deck.
 	 * @param cardProperties     The cards contained in the deck.
 	 *
-	 * @example (set Card "Stock" "Red_card" {1 2})
+	 * @example (set Card "Stock" "Red_card" {"BLACK" "SPADES"})
 	 */
 	public static Rule construct
 	(
 			final SetCardType SetCardType,
-			final String typeName,
+			@Name final String typeName,
 			final String cardName,
-			@Opt final String[] cardProperties
+			final String[] cardProperties
 	)
 	{
-		System.out.println("SetCardType: " + SetCardType + " typeName: " + typeName + " cardName: " + cardName + " cardProperties: " + cardProperties);
 		switch (SetCardType)
 		{
 			case Card:
@@ -363,7 +362,7 @@ public final class Set extends StartRule
 		}
 
 		// We should never reach that except if we forget some codes.
-		throw new IllegalArgumentException("Set(): A Deck is not implemented.");
+		throw new IllegalArgumentException("Set(): An error appeared");
 	}
 
 	private Set()
