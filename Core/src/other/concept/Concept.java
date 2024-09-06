@@ -11402,6 +11402,21 @@ public enum Concept
 		true,
 		Concept.Efficiency
 	),
+
+	/** The ludeme (deck ...) is used. */
+	Deck
+		(
+				"2.1.3",
+				779,
+				"Player Deck for storing cards.",
+				ConceptType.Container,
+				ConceptDataType.BooleanData,
+				ConceptComputationType.Compilation,
+				new ConceptPurpose[] { ConceptPurpose.Reconstruction, ConceptPurpose.AI },
+				true,
+				Concept.Container
+		),
+
 	
 	;
 	

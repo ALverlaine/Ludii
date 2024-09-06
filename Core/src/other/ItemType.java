@@ -50,6 +50,8 @@ public enum ItemType
 	 */
 	Dominoes,
 
+	Deck,
+
 	/**
 	 * A component.
 	 */

@@ -13,13 +13,10 @@ import metadata.graphics.util.ComponentStyleType;
 import other.concept.Concept;
 
 /**
- * Defines a single domino.
+ * Defines a single card type.
  *
- * @author Eric.Piette
+ * @author Alexandre.Verlaine
  *
- * @remarks The domino defined with this ludeme will be not included in the
- *          dominoes container by default and so cannot be shuffled with other
- *          dominoes.
  */
 public class CardType extends Component implements Serializable
 {
@@ -31,27 +28,23 @@ public class CardType extends Component implements Serializable
     private String[] Attributes = null;
     /**
      * @param name       The name of the card.
-     * @param role       The owner of the card.
-     * @param generator  The moves associated with the component.
      * @param attributes
-     * @example (domino " Domino45 " Shared value : 4 value2 : 5)
+     * @example (Cardtype "Card" {"Attribute1" "Attribute2"})
      */
     public CardType
     (
             final String   name,
-            @Opt final RoleType role,
-            @Opt final Moves generator,
             String[] attributes
     )
     {
-        super(name, role,  null,
+        super(name, null,  null,
                 null,
-                generator, null, null, null);
+                null, null, null, null);
         Attributes = attributes;
 
         nameWithoutNumber = StringRoutines.removeTrailingNumbers(name);
 
-        style = ComponentStyleType.Domino;
+        style = ComponentStyleType.Card;
     }
 
     //-------------------------------------------------------------------------
@@ -76,37 +69,11 @@ public class CardType extends Component implements Serializable
     }
 
     @Override
-    public boolean isDoubleDomino()
-    {
-        return getValue() == getValue2();
-    }
-
-    @Override
-    public boolean isDomino()
-    {
-        return true;
-    }
-
-    @Override
-    public int numSides()
-    {
-        return 4;
-    }
-
-    @Override
-    public boolean isTile()
-    {
-        return true;
-    }
-
-    @Override
     public BitSet concepts(final Game game)
     {
         final BitSet concepts = new BitSet();
-        concepts.set(Concept.CanNotMove.id(), true);
-        concepts.set(Concept.LargePiece.id(), true);
-        concepts.set(Concept.Tile.id(), true);
         concepts.or(super.concepts(game));
+        concepts.set(Concept.Card.id(), true);
         return concepts;
     }
 
@@ -148,10 +115,14 @@ public class CardType extends Component implements Serializable
             )
             {
                 game.addRequirementToReport(
-                        "A domino is defined in the equipment with an incorrect owner: " + role() + ".");
+                        "A Card is defined in the equipment with an incorrect owner: " + role() + ".");
                 missingRequirement = true;
             }
         }
+        if(generator() != null)
+            if(generator().missingRequirement(game))
+                missingRequirement = true;
+
         return missingRequirement;
     }
 

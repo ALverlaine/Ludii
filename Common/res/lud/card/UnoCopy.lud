@@ -2,7 +2,7 @@
     (all Sites (sites Hand #1) if:(= 0 (count Cell at:(site))))
 )
 
-(game "Simplified_uno"
+(game "Uno"
     (players 2)
     (equipment {
             (hand Each)
@@ -30,8 +30,8 @@
             (set Card "UNO_CARD" "FOUR_YELLOW" {"YELLOW"})
             (set Deck "STOCK" {"ONE_RED" "TWO_RED" "THREE_RED" "FOUR_RED" "ONE_BLUE" "TWO_BLUE" "THREE_BLUE" "FOUR_BLUE" "ONE_GREEN" "TWO_GREEN" "THREE_GREEN" "FOUR_GREEN" "ONE_YELLOW" "TWO_YELLOW" "THREE_YELLOW" "FOUR_YELLOW"}) // add all the cards to the deck
             (shuffle "STOCK") // shuffle the deck, a deck can be constituted of multiple sets of cards
-            (deal 2 Each from:"STOCK") // deal 2 cards to each player
-            (deal 1 "PLAY" from:"STOCK") // deal 1 card to the discard pile
+            (deal Card 2 from:"STOCK") // deal 2 cards to each player
+            (deal Card 1 from:"STOCK" to:"PLAY") // deal 1 card to the discard pile
          })
         (play
             (or

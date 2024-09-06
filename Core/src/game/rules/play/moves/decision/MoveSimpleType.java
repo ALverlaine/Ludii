@@ -7,7 +7,4 @@ public enum MoveSimpleType
 {
 	/** Makes a pass move. */
 	Pass,
-
-	/** Plays a card. */
-	PlayCard,
 }

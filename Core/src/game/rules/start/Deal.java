@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
+import annotations.Name;
 import annotations.Opt;
+import annotations.Or2;
 import game.Game;
 import game.equipment.component.Component;
 import game.equipment.container.Container;
+import game.functions.ints.IntFunction;
 import game.types.board.SiteType;
 import game.types.component.DealableType;
 import game.types.state.GameType;
@@ -35,26 +38,36 @@ public final class Deal extends StartRule
 
 	/** The number to deal. */
 	private final DealableType type;
+	private final IntFunction from;
+	private final IntFunction to;
 
 	//-------------------------------------------------------------------------
 
 	/**
 	 * @param type Type of deal.
 	 * @param count The number of components to deal [1].
-	 * 
+	 *
 	 * @example (deal Dominoes 7)
 	 */
 	public Deal
 	(
 			 final DealableType type,
-		@Opt final Integer      count
+		@Opt final Integer      count,
+	    @Opt final IntFunction from,
+		@Opt final IntFunction to
 	)
+
 	{
+		System.out.println("Deal.java");
 		this.type = type;
 		this.count = (count == null) ? 1 : count.intValue();
+		this.from = from;
+		this.to = to;
 	}
 
 	//-------------------------------------------------------------------------
+
+
 
 	@Override
 	public void eval(final Context context)

@@ -784,11 +784,6 @@ public class DrawCard extends BaseAction {
         return count;
     }
 
-    @Override
-    public ActionType actionType()
-    {
-        return ActionType.DrawCard;
-    }
 
     @Override
     public boolean isStacking()

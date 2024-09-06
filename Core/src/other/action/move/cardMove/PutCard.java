@@ -797,11 +797,6 @@ public class PutCard extends BaseAction {
         return count;
     }
 
-    @Override
-    public ActionType actionType()
-    {
-        return ActionType.PutCard;
-    }
 
     @Override
     public boolean isStacking()

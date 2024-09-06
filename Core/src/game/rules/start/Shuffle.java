@@ -3,6 +3,7 @@ package game.rules.start;
 import game.Game;
 import game.equipment.component.Component;
 import game.equipment.container.Container;
+import game.equipment.container.deck.Deck;
 import game.types.component.DealableType;
 import game.types.state.GameType;
 import other.context.Context;
@@ -17,12 +18,18 @@ public class Shuffle extends StartRule {
     private static final long serialVersionUID = 1L;
 
     //-------------------------------------------------------------------------
-
+    String deck;
     /**
      * Default constructor.
+     *
+     * @param deck The deck to shuffle.
+     *
+     *
+     * Example (shuffle "Deck")
      */
-    public Shuffle() {
+    public Shuffle(String deck) {
         // Constructor
+        this.deck = deck;
     }
 
     //-------------------------------------------------------------------------

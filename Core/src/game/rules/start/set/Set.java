@@ -348,7 +348,7 @@ public final class Set extends StartRule
 	public static Rule construct
 	(
 			final SetCardType SetCardType,
-			@Name final String typeName,
+			final String typeName,
 			final String cardName,
 			final String[] cardProperties
 	)

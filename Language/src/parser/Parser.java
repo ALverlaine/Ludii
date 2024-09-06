@@ -599,6 +599,7 @@ public class Parser
 
 		extractKnownStrings(expanded, "(game",              true,  knownStrings, report);
 		extractKnownStrings(expanded, "(match",             true,  knownStrings, report);
+		extractKnownStrings(expanded, "(shuffle",             false,  knownStrings, report);
 		extractKnownStrings(expanded, "(subgame",           true,  knownStrings, report);
 		extractKnownStrings(expanded, "(subgame",           false, knownStrings, report);
 		extractKnownStrings(expanded, "(players",           false, knownStrings, report);
@@ -613,6 +614,8 @@ public class Parser
 		extractKnownStrings(expanded, "(is Trigger",        true,  knownStrings, report);
 		extractKnownStrings(expanded, "(trackSite",         false, knownStrings, report);
 		extractKnownStrings(expanded, "(set Var",           false, knownStrings, report);
+		extractKnownStrings(expanded, "(set Card",           false, knownStrings, report);
+		extractKnownStrings(expanded, "(set Deck",             false,  knownStrings, report);
 		extractKnownStrings(expanded, "(var",               false, knownStrings, report);
 		extractKnownStrings(expanded, "(remember",          false, knownStrings, report);
 		extractKnownStrings(expanded, "(set RememberValue", false, knownStrings, report);

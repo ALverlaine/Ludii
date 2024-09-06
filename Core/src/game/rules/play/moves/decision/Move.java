@@ -34,7 +34,8 @@ import game.util.moves.To;
 import other.action.ActionType;
 import other.context.Context;
 
-import static other.action.ActionType.DrawCard;
+import static game.rules.play.moves.decision.MoveDrawcardType.Drawcard;
+
 
 /**
  * Defines a decision move.
@@ -628,36 +629,6 @@ public final class Move extends Decision
 		moves.setDecision();
 		return moves;
 	}
-	public static Moves construct
-			(
-					final ActionType moveType,
-					@Opt final Then           then
-			)
-	{
-		Moves moves = null;
-
-		switch (moveType)
-		{
-			case Pass:
-				moves = new Pass(then);
-				break;
-			case PutCard:
-				moves = new PutCard(then);
-				break;
-			case DrawCard:
-				moves = new DrawCard(then);
-				break;
-			default:
-				break;
-		}
-
-		// We should never reach that except if we forget some codes.
-		if (moves == null)
-			throw new IllegalArgumentException("Move(): A MoveSimpleType is not implemented.");
-
-		moves.setDecision();
-		return moves;
-	}
 
 	//-------------------------------------------------------------------------
 
@@ -888,8 +859,6 @@ public final class Move extends Decision
 	 * For deciding to add a piece or claim a site.
 	 *
 	 * @param moveType The type of move.
-	 * @param to       The data on the location to add.
-	 * @param from     The data on the location to add.
 	 * @param then     The moves applied after that move is applied.
 	 *
 	 * @example (move PlayCard (to (topLevel at : " PLAY ") (if:(= (cardSite "suits" from:hand) (cardSite "suits" from:(topLevel at:"PLAY"))))))
@@ -897,9 +866,7 @@ public final class Move extends Decision
 
 	public static Moves construct
 			(
-					final MoveSiteType moveType,
-					final To           to,
-					final From 	       from,
+					final MoveDrawcardType moveType,
 			@Opt    final Then         then
 			)
 	{
@@ -907,8 +874,8 @@ public final class Move extends Decision
 
 		switch (moveType)
 		{
-			case PlayCard:
-				moves = new PlayCard(to, from, then);
+			case Drawcard:
+				moves = new DrawCard(then);
 				break;
 			default:
 				break;
