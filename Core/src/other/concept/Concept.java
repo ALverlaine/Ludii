@@ -922,6 +922,19 @@ public enum Concept
 		false,
 		Concept.Board
 	),
+	/** (CardTable ...) is used.*/
+	CardTable
+	(
+			"2.1.1.4",
+			780,
+			"CardTable.",
+			ConceptType.Container,
+			ConceptDataType.BooleanData,
+			ConceptComputationType.Compilation,
+			new ConceptPurpose[] {ConceptPurpose.AI, ConceptPurpose.Reconstruction  },
+			false,
+			Concept.Board
+	),
 	
 	/** (mancalaBoard ...) is used with stores not None. */
 	MancalaStores

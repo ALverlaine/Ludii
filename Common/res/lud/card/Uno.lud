@@ -5,7 +5,7 @@
 (game "Uno"
     (players 2)
     (equipment {
-            (board (tri 2))
+            (cardTable 2)
             (hand Each)
             (deck "PLAY" 32) // name of the deck and maximum number of cards
             (deck "STOCK" 32)
