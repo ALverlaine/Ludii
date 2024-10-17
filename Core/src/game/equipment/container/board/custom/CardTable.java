@@ -60,6 +60,8 @@ public class CardTable extends Board
 
             // Define the radius of the circle for placing the vertices
             float radius = 1.0f;
+            //angleoffset adjust the angle so the board looks better
+            double angleOffset = (players % 2 == 1) ? Math.PI / 2 : Math.PI / players;
 
             // Create arrays for vertices and edges
             Float[][] vertices = new Float[players][2];
@@ -68,7 +70,7 @@ public class CardTable extends Board
             // Distribute vertices around the circle
             for (int i = 0; i < players; i++) {
                 // Calculate the angle for this vertex
-                double angle = 2 * Math.PI * i / players;
+                double angle = 2 * Math.PI * i / players + angleOffset;
 
                 // Calculate the x and y coordinates
                 float x = (float) (radius * Math.cos(angle));

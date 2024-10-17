@@ -3,7 +3,7 @@
 (game "tototest"
     (players 2)
     (equipment {
-            (cardTable 8)
+            (cardTable 5)
             (hand Each)
             (deck "PLAY" 32) // name of the deck and maximum number of cards
             (deck "STOCK" 32)
