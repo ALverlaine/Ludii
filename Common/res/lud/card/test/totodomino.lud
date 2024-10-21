@@ -1,0 +1,19 @@
+(game "tototest"
+    (players 2)
+    (equipment {
+            (cardTable 5)
+            (hand Each size:5)
+            (dominoes)
+    })
+    (rules
+        (start
+            (deal Dominoes 5)
+        )
+        (play
+            (move Pass)
+        )
+        (end
+            (if (no Moves Next) (result Mover Win))
+        )
+    )
+)

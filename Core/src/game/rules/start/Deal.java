@@ -100,7 +100,7 @@ public final class Deal extends StartRule
 			return;
 
 		final Component[] components = context.components();
-
+		System.out.println(Arrays.toString(components));
 		if (components.length < count * handIndex.size())
 			throw new IllegalArgumentException("You can not deal so much dominoes in the initial state.");
 
@@ -158,16 +158,11 @@ public final class Deal extends StartRule
 			return;
 
 		final Component[] components = context.components();
-		final ArrayList<Component> components2 = new ArrayList<>();
-        for (Component comp : components) {
-			if(comp.name() != "Disc")
-            	components2.add(comp);
-        }
-		if (components2.size() < count * handIndex.size())
+		if (components.length < count * handIndex.size())
 			throw new IllegalArgumentException("Not enough cards to deal.");
 
 		final TIntArrayList toDeal = new TIntArrayList();
-		for (int i = 0; i < components2.size(); i++)
+		for (int i = 1; i < components.length; i++)
 		{
 			toDeal.add(i);
 		}
@@ -179,7 +174,7 @@ public final class Deal extends StartRule
 		{
 			final int index = context.rng().nextInt(toDeal.size());
 			final int cardIndex = toDeal.getQuick(index);
-			final Component card = components2.get(cardIndex);
+			final Component card = components[cardIndex];
 
 			final int currentPlayer = dealt % nbPlayers;
 			Start.placePieces(context, handIndex.getQuick(currentPlayer) + (dealt / nbPlayers),
