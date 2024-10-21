@@ -33,6 +33,9 @@ import other.topology.Topology;
 @SuppressWarnings("static-method")
 public class Component extends Item implements Cloneable
 {
+
+	/** Label of the component. */
+	private String label;
 	/** Current direction that piece is facing. */
 	private DirectionFacing dirn;
 
@@ -89,7 +92,7 @@ public class Component extends Item implements Cloneable
 	)
 	{
 		super(label, Constants.UNDEFINED, role);
-		
+		this.label = label;
 		this.walk = walk;
 		this.dirn = (dirn == null) ? null : dirn;
 		this.generator = generator;
@@ -512,6 +515,13 @@ public class Component extends Item implements Cloneable
 	public int trumpRank()
 	{
 		return Constants.OFF;
+	}
+
+	/**
+	 * @return The label of a component.
+	 */
+	public String name() {
+		return label;
 	}
 
 	//---------------------TILE--------------------------------

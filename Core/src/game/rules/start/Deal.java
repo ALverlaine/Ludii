@@ -58,7 +58,6 @@ public final class Deal extends StartRule
 	)
 
 	{
-		System.out.println("Deal.java");
 		this.type = type;
 		this.count = (count == null) ? 1 : count.intValue();
 		this.from = from;
@@ -76,7 +75,12 @@ public final class Deal extends StartRule
 		{
 			evalDominoes(context);
 		}
+		else if(type == DealableType.Card)
+		{
+			evalCards(context);
+		}
 	}
+
 
 	/**
 	 * To deal dominoes.
@@ -130,6 +134,53 @@ public final class Deal extends StartRule
 					SiteType.Cell);
 			toDeal.removeAt(index);
 			dealed++;
+		}
+	}
+
+	/**
+	 * To deal cards.
+	 *
+	 * @param context The game context.
+	 */
+	private void evalCards(final Context context)
+	{
+		final TIntArrayList handIndex = new TIntArrayList();
+		for (final Container c : context.containers())
+		{
+			if (c.isHand() && !c.isDeck() && !c.isDice())
+				handIndex.add(context.sitesFrom()[c.index()]);
+		}
+
+		// If each player does not have a hand, nothing to do.
+		if (handIndex.size() != context.game().players().count())
+			return;
+
+		final Component[] components = context.components();
+		if (components.length < count * handIndex.size())
+			throw new IllegalArgumentException("Not enough cards to deal.");
+
+		final TIntArrayList toDeal = new TIntArrayList();
+		for (int i = 0; i < components.length; i++)
+		{
+			toDeal.add(i);
+		}
+
+		final int nbPlayers = context.players().size() - 1;
+		int dealt = 0;
+
+		while (dealt < (count * nbPlayers))
+		{
+			final int index = context.rng().nextInt(toDeal.size());
+			final int cardIndex = toDeal.getQuick(index);
+			final Component card = components[cardIndex];
+
+			final int currentPlayer = dealt % nbPlayers;
+			Start.placePieces(context, handIndex.getQuick(currentPlayer) + (dealt / nbPlayers),
+					card.index(), 1, Constants.OFF, Constants.OFF, Constants.UNDEFINED, false,
+					SiteType.Cell);
+
+			toDeal.removeAt(index);
+			dealt++;
 		}
 	}
 

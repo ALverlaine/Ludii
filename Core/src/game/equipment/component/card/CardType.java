@@ -26,6 +26,8 @@ public class CardType extends Component implements Serializable
 
 
     private String[] Attributes = null;
+
+    private String CardStyle;
     /**
      * @param name       The name of the card.
      * @param attributes
@@ -34,10 +36,11 @@ public class CardType extends Component implements Serializable
     public CardType
     (
             final String   name,
-            String[] attributes
+            String[] attributes,
+            final RoleType role
     )
     {
-        super(name, null,  null,
+        super(name, role,  null,
                 null,
                 null, null, null, null);
         Attributes = attributes;

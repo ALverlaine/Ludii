@@ -4,14 +4,16 @@
     (players 2)
     (equipment {
             (cardTable 5)
-            (hand Each)
+            (hand Each size:16)
             (deck "PLAY" 32) // name of the deck and maximum number of cards
             (deck "STOCK" 32)
+            (cardType "King" {"Attribute1" "Attribute2"} P1)
+            (cardType "Joker" {"Attribute1" "Attribute2"} P2)
     })
     (rules
-        (start {
-
-         })
+        (start
+            (deal Card 1)
+        )
         (play
             (move Pass)
         )
