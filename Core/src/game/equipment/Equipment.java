@@ -10,6 +10,7 @@ import game.Game;
 import game.equipment.component.Component;
 import game.equipment.component.Die;
 import game.equipment.component.Piece;
+import game.equipment.component.card.CardType;
 import game.equipment.component.tile.Domino;
 import game.equipment.container.Container;
 import game.equipment.container.board.Board;
@@ -17,10 +18,7 @@ import game.equipment.container.board.Track;
 import game.equipment.container.other.Deck;
 import game.equipment.container.other.Dice;
 import game.equipment.container.other.Hand;
-import game.equipment.other.Dominoes;
-import game.equipment.other.Hints;
-import game.equipment.other.Map;
-import game.equipment.other.Regions;
+import game.equipment.other.*;
 import game.functions.region.RegionFunction;
 import game.types.board.RelationType;
 import game.types.board.SiteType;
@@ -456,6 +454,15 @@ public final class Equipment extends BaseLudeme implements Serializable
 						for (final Domino domino : listDominoes)
 							componentsWIP.add(domino);
 					}
+					else if (item.type() == ItemType.Cards)
+					{
+						final Cards54 cards54 = (Cards54) item;
+						final ArrayList<CardType> listCards = cards54.generateCards();
+						for (final CardType card : listCards)
+							componentsWIP.add(card);
+					}
+
+
 				}
 				else if (ItemType.isRegion(item.type()))
 				{

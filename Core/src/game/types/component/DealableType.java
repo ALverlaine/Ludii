@@ -12,4 +12,5 @@ public enum DealableType
 	
 	/** Card component. */
 	Cards,
+	Card;
 }

@@ -3,7 +3,7 @@ package game.util.equipment;
 import annotations.Name;
 import annotations.Opt;
 import game.Game;
-import game.types.component.CardType;
+import game.equipment.component.card.CardType;
 import main.Constants;
 import other.BaseLudeme;
 

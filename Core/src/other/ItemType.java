@@ -49,6 +49,9 @@ public enum ItemType
 	 * The dominoes.
 	 */
 	Dominoes,
+	Deck,
+	Card,
+	Cards,
 
 	/**
 	 * A component.

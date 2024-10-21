@@ -1,14 +1,17 @@
 package game.rules.start;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 
+import annotations.Name;
 import annotations.Opt;
+import annotations.Or2;
 import game.Game;
 import game.equipment.component.Component;
 import game.equipment.container.Container;
-import game.equipment.container.other.Deck;
+import game.functions.ints.IntFunction;
 import game.types.board.SiteType;
 import game.types.component.DealableType;
 import game.types.state.GameType;
@@ -22,7 +25,7 @@ import other.state.container.ContainerState;
 
 /**
  * To deal different components between players.
- * 
+ *
  * @author Eric.Piette
  */
 public final class Deal extends StartRule
@@ -36,90 +39,53 @@ public final class Deal extends StartRule
 
 	/** The number to deal. */
 	private final DealableType type;
+	private final IntFunction from;
+	private final IntFunction to;
 
 	//-------------------------------------------------------------------------
 
 	/**
 	 * @param type Type of deal.
 	 * @param count The number of components to deal [1].
-	 * 
+	 *
 	 * @example (deal Dominoes 7)
 	 */
 	public Deal
 	(
-			 final DealableType type,
-		@Opt final Integer      count
+			final DealableType type,
+			@Opt final Integer      count,
+			@Opt final IntFunction from,
+			@Opt final IntFunction to
 	)
+
 	{
 		this.type = type;
 		this.count = (count == null) ? 1 : count.intValue();
+		this.from = from;
+		this.to = to;
 	}
 
 	//-------------------------------------------------------------------------
 
+
+
 	@Override
 	public void eval(final Context context)
 	{
-		if (type == DealableType.Cards)
-		{
-			evalCards(context);
-		}
-		else if (type == DealableType.Dominoes)
+		if (type == DealableType.Dominoes)
 		{
 			evalDominoes(context);
 		}
-	}
-
-	/**
-	 * To deal cards.
-	 * 
-	 * @param context
-	 */
-	public void evalCards(final Context context)
-	{
-		// If no deck nothing to do.
-		if (context.game().handDeck().isEmpty())
-			return;
-
-		final List<Integer> handIndex = new ArrayList<>();
-		for (final Container c : context.containers())
-			if (c.isHand() && !c.isDeck() && !c.isDice())
-				handIndex.add(Integer.valueOf(context.sitesFrom()[c.index()]));
-
-		// If each player does not have a hand, nothing to do.
-		if (handIndex.size() != context.game().players().count())
-			return;
-
-		final Deck deck = context.game().handDeck().get(0);
-		final ContainerState cs = context.containerState(deck.index());
-		final int indexSiteDeck = context.sitesFrom()[deck.index()];
-		final int sizeDeck = cs.sizeStackCell(indexSiteDeck);
-
-		 if (sizeDeck < count * handIndex.size())
-			throw new IllegalArgumentException("You can not deal so much cards in the initial state.");
-		
-		int hand = 0;
-//		int level = 0;
-		for (int indexCard = 0; indexCard < count * handIndex.size(); indexCard++)
+		else if(type == DealableType.Cards)
 		{
-			final Action dealAction =  ActionMove.construct(SiteType.Cell, indexSiteDeck,cs.sizeStackCell(indexSiteDeck) - 1, SiteType.Cell, handIndex.get(hand).intValue(), Constants.OFF, Constants.OFF, Constants.OFF, Constants.OFF, false);
-			dealAction.apply(context, true);
-			context.trial().addMove(new Move(dealAction));
-			context.trial().addInitPlacement();
-
-			if (hand == context.game().players().count() - 1)
-			{
-				hand = 0;
-//				level++;
-			}
-			else
-				hand++;
+			evalCards(context);
 		}
 	}
 
+
 	/**
 	 * To deal dominoes.
-	 * 
+	 *
 	 * @param context
 	 */
 	public void evalDominoes(final Context context)
@@ -172,6 +138,59 @@ public final class Deal extends StartRule
 		}
 	}
 
+	/**
+	 * To deal cards.
+	 *
+	 * @param context The game context.
+	 */
+	private void evalCards(final Context context)
+	{
+		final TIntArrayList handIndex = new TIntArrayList();
+		for (final Container c : context.containers())
+		{
+			if (c.isHand() && !c.isDeck() && !c.isDice())
+
+				handIndex.add(context.sitesFrom()[c.index()]);
+		}
+
+		// If each player does not have a hand, nothing to do.
+		if (handIndex.size() != context.game().players().count())
+			return;
+
+		final Component[] components = context.components();
+		final ArrayList<Component> components2 = new ArrayList<>();
+        for (Component comp : components) {
+			if(comp.name() != "Disc")
+            	components2.add(comp);
+        }
+		if (components2.size() < count * handIndex.size())
+			throw new IllegalArgumentException("Not enough cards to deal.");
+
+		final TIntArrayList toDeal = new TIntArrayList();
+		for (int i = 0; i < components2.size(); i++)
+		{
+			toDeal.add(i);
+		}
+
+		final int nbPlayers = context.players().size() - 1;
+		int dealt = 0;
+
+		while (dealt < (count * nbPlayers))
+		{
+			final int index = context.rng().nextInt(toDeal.size());
+			final int cardIndex = toDeal.getQuick(index);
+			final Component card = components2.get(cardIndex);
+
+			final int currentPlayer = dealt % nbPlayers;
+			Start.placePieces(context, handIndex.getQuick(currentPlayer) + (dealt / nbPlayers),
+					card.index(), 1, Constants.OFF, Constants.OFF, Constants.UNDEFINED, false,
+					SiteType.Cell);
+
+			toDeal.removeAt(index);
+			dealt++;
+		}
+	}
+
 	//-------------------------------------------------------------------------
 
 	@Override
@@ -197,9 +216,7 @@ public final class Deal extends StartRule
 	@Override
 	public long gameFlags(final Game game)
 	{
-		if (type == DealableType.Cards)
-			return GameType.Card;
-		else if (type == DealableType.Dominoes)
+		if (type == DealableType.Dominoes)
 			return GameType.LargePiece | GameType.Dominoes | GameType.Stochastic | GameType.HiddenInfo;
 		else
 			return 0L;
@@ -218,15 +235,15 @@ public final class Deal extends StartRule
 		final String str = "(Deal" + type + ")";
 		return str;
 	}
-	
+
 	//-------------------------------------------------------------------------
-	
+
 	@Override
 	public String toEnglish(final Game game)
 	{
 		return "deal " + count + " " + type.name().toLowerCase() + " to each player";
 	}
-	
+
 	//-------------------------------------------------------------------------
-		
+
 }

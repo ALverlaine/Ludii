@@ -1,0 +1,19 @@
+(game "tototest"
+    (players 2)
+    (equipment {
+            (cardTable 5)
+            (hand Each size:27)
+            (cards54)
+    })
+    (rules
+        (start
+            (deal Cards 27)
+        )
+        (play
+            (move Pass)
+        )
+        (end
+            (if (no Moves Next) (result Mover Win))
+        )
+    )
+)

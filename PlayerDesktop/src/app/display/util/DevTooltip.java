@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.ToolTipManager;
 
+import game.equipment.component.card.CardType;
 import org.jfree.graphics2d.svg.SVGGraphics2D;
 
 import app.DesktopApp;
@@ -15,10 +16,9 @@ import app.PlayerApp;
 import app.utils.SVGUtil;
 import app.views.tools.ToolButton;
 import game.Game;
-import game.equipment.component.Card;
+import game.equipment.component.card.Card;
 import game.equipment.component.Component;
 import game.types.board.SiteType;
-import game.types.component.CardType;
 import main.Constants;
 import other.context.Context;
 import other.location.Location;
