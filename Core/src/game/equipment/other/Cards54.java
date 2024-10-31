@@ -42,7 +42,7 @@ public class Cards54 extends Item
         if (jokers < 0 || jokers > 2)
             throw new IllegalArgumentException("You can have a maximum of 2 Jokers.");
 
-        setType(ItemType.Cards);
+        setType(ItemType.Cards54);
     }
 
     /***
@@ -58,15 +58,15 @@ public class Cards54 extends Item
             for (final String rank : RANKS)
             {
                 final CardType card = new CardType(
-                        rank + " of " + suit
-                        );
+                        rank + " of " + suit, new String[]{"Rank", "Suits"}, new String[]{rank, suit}
+                );
                 cards.add(card);
             }
         }
 
         // Add Jokers
-        cards.add(new CardType("Joker 1"));
-        cards.add(new CardType("Joker 2"));
+        cards.add(new CardType("Joker 1", new String[]{"Rank", "Suits"}, new String[]{"Joker", "Joker"}));
+        cards.add(new CardType("Joker 2", new String[]{"Rank", "Suits"}, new String[]{"Joker", "Joker"}));
 
         return cards;
     }

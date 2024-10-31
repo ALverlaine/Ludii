@@ -3,6 +3,7 @@ package game.equipment.component.card;
 import java.io.Serializable;
 import java.util.BitSet;
 
+import annotations.Opt;
 import game.Game;
 import game.equipment.component.Component;
 import game.types.play.RoleType;
@@ -23,21 +24,27 @@ public class CardType extends Component implements Serializable
     //-------------------------------------------------------------------------
 
 
-    private String[] Attributes = null;
+    private String[] AttributesName = null;
+    private String[] AttributesValue = null;
 
     private String CardStyle;
     /**
      * @param name       The name of the card.
-     * @example (Cardtype "Card" {"Attribute1" "Attribute2"})
+     * @example (Cardtype "Card" {"Number" "Color"} {"2" "Hearts"})
      */
     public CardType
     (
-            final String   name
+            final String   name,
+            @Opt final String[] AttributesName,
+            @Opt final String[] AttributeValue
     )
     {
         super(name, RoleType.Shared,  null,
                 null,
                 null, null, null, null);
+
+        this.AttributesName = AttributesName;
+        this.AttributesValue = AttributeValue;
 
         nameWithoutNumber = StringRoutines.removeTrailingNumbers(name);
 
@@ -57,6 +64,14 @@ public class CardType extends Component implements Serializable
     protected CardType(final CardType other)
     {
         super(other);
+    }
+    public String[] getAttributesName()
+    {
+        return AttributesName;
+    }
+    public String[] getAttributesValue()
+    {
+        return AttributesValue;
     }
 
     @Override

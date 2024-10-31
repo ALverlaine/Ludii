@@ -1,7 +1,7 @@
 (game "tototest"
     (players 2)
     (equipment {
-            (cardTable 5)
+            (cardTable 2)
             (hand Each size:5)
             (dominoes)
     })

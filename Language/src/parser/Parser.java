@@ -613,6 +613,7 @@ public class Parser
 		extractKnownStrings(expanded, "(is Trigger",        true,  knownStrings, report);
 		extractKnownStrings(expanded, "(trackSite",         false, knownStrings, report);
 		extractKnownStrings(expanded, "(set Var",           false, knownStrings, report);
+		extractKnownStrings(expanded, "(value CardType",           false, knownStrings, report);
 		extractKnownStrings(expanded, "(var",               false, knownStrings, report);
 		extractKnownStrings(expanded, "(remember",          false, knownStrings, report);
 		extractKnownStrings(expanded, "(set RememberValue", false, knownStrings, report);

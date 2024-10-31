@@ -68,7 +68,7 @@ public final class Max extends BaseFloatFunction
 	{
 		if (list == null)
 		{
-			return Math.max(a.eval(context),b.eval(context));
+			return Math.max(a.eval(context),  b.eval(context));
 		}
 
 		float max = list[0].eval(context);

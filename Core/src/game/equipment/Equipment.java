@@ -454,10 +454,17 @@ public final class Equipment extends BaseLudeme implements Serializable
 						for (final Domino domino : listDominoes)
 							componentsWIP.add(domino);
 					}
-					else if (item.type() == ItemType.Cards)
+					else if (item.type() == ItemType.Cards54)
 					{
 						final Cards54 cards54 = (Cards54) item;
 						final ArrayList<CardType> listCards = cards54.generateCards();
+						for (final CardType card : listCards)
+							componentsWIP.add(card);
+					}
+					else if (item.type() == ItemType.CardsUno)
+					{
+						final UnoCards unoCards = (UnoCards) item;
+						final ArrayList<CardType> listCards = unoCards.generateCards();
 						for (final CardType card : listCards)
 							componentsWIP.add(card);
 					}

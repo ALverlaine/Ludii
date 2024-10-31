@@ -55,8 +55,9 @@ public class CardTable extends Board
                 // Maximum supported players is 16
                 if (players < 1 || players > 16) {
                     // If wrong number of players, return an empty graph
-                    return new Graph(new Float[0][0], new Integer[0][0]);
+                    return new Graph(new Float[0][0], new Integer[0][0]).eval(context, siteType);
                 }
+
 
                 // Define the radius of the circle for placing the vertices
                 float radius = 1.0f;
@@ -65,24 +66,30 @@ public class CardTable extends Board
 
                 // Create arrays for vertices and edges
                 Float[][] vertices = new Float[players][2];
-                // Integer[][] edges = new Integer[players][2];
+                if (players == 1) {
+                    vertices[0][0] = 0.0f; // x-coordinate at the center
+                    vertices[0][1] = 0.0f; // y-coordinate at the center
+                }
+                else {
+                    // Integer[][] edges = new Integer[players][2];
 
-                // Distribute vertices around the circle
-                for (int i = 0; i < players; i++) {
-                    // Calculate the angle for this vertex
-                    double angle = 2 * Math.PI * i / players + angleOffset;
+                    // Distribute vertices around the circle
+                    for (int i = 0; i < players; i++) {
+                        // Calculate the angle for this vertex
+                        double angle = 2 * Math.PI * i / players + angleOffset;
 
-                    // Calculate the x and y coordinates
-                    float x = (float) (radius * Math.cos(angle));
-                    float y = (float) (radius * Math.sin(angle));
+                        // Calculate the x and y coordinates
+                        float x = (float) (radius * Math.cos(angle));
+                        float y = (float) (radius * Math.sin(angle));
 
-                    // Store vertex
-                    vertices[i][0] = x;
-                    vertices[i][1] = y;
+                        // Store vertex
+                        vertices[i][0] = x;
+                        vertices[i][1] = y;
 
-                    // Create edge to the next vertex (looping back to the start)
-                    //edges[i][0] = i;
-                    //edges[i][1] = (i + 1) % players;
+                        // Create edge to the next vertex (looping back to the start)
+                        //edges[i][0] = i;
+                        //edges[i][1] = (i + 1) % players;
+                    }
                 }
 
                 // Return the generated graph
@@ -102,7 +109,7 @@ public class CardTable extends Board
         // Store the parameter to access it later in TableCard logic.
         this.numPlayers = players.intValue();
 
-        if (numPlayers < 2)
+        if (numPlayers < 1)
             throw new IllegalArgumentException("TableCard: Number of players must be at least 2.");
     }
 

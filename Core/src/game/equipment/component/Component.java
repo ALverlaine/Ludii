@@ -523,6 +523,7 @@ public class Component extends Item implements Cloneable
 		return null;
 	}
 
+
 	//---------------------TILE--------------------------------
 
 	/**
@@ -1648,5 +1649,5 @@ public class Component extends Item implements Cloneable
 	{
 		return nameWithoutNumber + StringRoutines.getPlural(nameWithoutNumber) + " " + generator().toEnglish(game);
 	}
-	
+
 }

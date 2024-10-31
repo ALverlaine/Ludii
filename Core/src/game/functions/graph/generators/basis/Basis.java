@@ -13,7 +13,7 @@ import other.context.Context;
  * 
  * @author cambolbro
  */
-public abstract class Basis extends BaseGraphFunction
+public abstract class  Basis extends BaseGraphFunction
 {
 	private static final long serialVersionUID = 1L;
 		

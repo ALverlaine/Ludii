@@ -12,4 +12,5 @@ public enum ValueComponentType
 	 * To get the value of a component.
 	 */
 	Piece,
+	CardType,
 }

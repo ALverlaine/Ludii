@@ -4,8 +4,10 @@ import annotations.Name;
 import annotations.Opt;
 import annotations.Or;
 import game.Game;
+import game.equipment.component.card.CardType;
 import game.functions.ints.BaseIntFunction;
 import game.functions.ints.IntFunction;
+import game.functions.ints.value.card.ValueCard;
 import game.functions.ints.value.iterated.ValueIterated;
 import game.functions.ints.value.piece.ValuePiece;
 import game.functions.ints.value.player.ValuePlayer;
@@ -152,6 +154,36 @@ public final class Value extends BaseIntFunction
 			return new ValuePiece(type,at,level);
 		default:
 			break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		throw new IllegalArgumentException("Value(): A ValueComponentType is not implemented.");
+	}
+
+	/**
+	 * For returning the piece value.
+	 *
+	 * @param valueType The property to return the value.
+	 * @param cardAttribute The attribute of the card to retrieve.
+	 * @param at        The location to check.
+	 *
+	 * @example (value CardType "Attribute" at:(to))
+	 */
+	public static IntFunction construct
+	(
+			final ValueComponentType valueType,
+			@Opt       final SiteType           type,
+			final String           cardAttribute,
+			@Name final IntFunction        at,
+			@Opt @Name final IntFunction        level
+	)
+	{
+		switch (valueType)
+		{
+			case CardType:
+				return new ValueCard(type, cardAttribute, at, level);
+			default:
+				break;
 		}
 
 		// We should never reach that except if we forget some codes.

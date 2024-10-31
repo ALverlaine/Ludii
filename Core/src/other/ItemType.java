@@ -51,7 +51,8 @@ public enum ItemType
 	Dominoes,
 	Deck,
 	Card,
-	Cards,
+	Cards54,
+	CardsUno,
 
 	/**
 	 * A component.

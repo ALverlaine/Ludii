@@ -1,0 +1,41 @@
+(game "TotUno"
+    (players 2)
+    (equipment {
+            (cardTable 2)
+            (hand Each size:5)
+            (unoCards)
+    })
+    (rules
+        (start
+        {
+            (deal Cards 5)
+
+            //TODO set a deck with the reamaing cards
+        })
+        (play (or {
+             (move
+                (from
+                    (sites Hand Mover)
+                        if:(and
+                                (is Occupied (from))
+                                (or
+                                    (=
+                                        (value CardType "Color" at:(from))
+                                        (value CardType "Color" at:(to))
+                                    )
+                                    (=
+                                      (value CardType "Number" at:(from))
+                                      (value CardType "Number" at:(to))
+                                    )
+                                )
+                           ))
+                           (to (sites Occupied by:All))
+             )
+
+             (move (from (sites Hand Mover) if:(is Occupied (from))) (to (sites Empty)))
+        }))
+        (end
+            (if (no Moves Next) (result Mover Win))
+        )
+    )
+)
