@@ -1,9 +1,9 @@
 (game "tototest"
     (players 2)
     (equipment {
-            (cardTable 5)
-            (hand Each size:27)
-            (cards54)
+        (cardTable 5)
+        (hand Each size:27)
+        (cards54)
     })
     (rules
         (start

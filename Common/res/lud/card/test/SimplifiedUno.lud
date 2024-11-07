@@ -11,10 +11,10 @@
             (SpecialCard green 4 {1..4})
             (SpecialCard yellow 4 {1..4})
             (SpecialCard yellow 4 {1..4})
-           }
-           Shuffle
+            }
+            Shuffle
         )
-
+        
     })
     (rules
         (start {
@@ -23,7 +23,7 @@
         })
         (play
             (or
-               {
+                {
                 (PutCard if:(= color color:(Discard))) //ou if:(= color color:(at stack/deck/discard))
                 (PutCard if:(= value value:(Discard)))
                 (DrawCard deck) //deck ou PlayerDeck ...
