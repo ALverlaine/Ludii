@@ -41,7 +41,8 @@ public class CardTable extends Board
             final Integer players,
             @Opt @Name final Boolean largeStack,
             @Opt @Or final Track track,
-            @Opt @Or      final Track[]   tracks
+            @Opt @Or      final Track[]   tracks,
+            @Opt @Or      final SiteType use
     )
     {
         super(new BaseGraphFunction() {
@@ -104,7 +105,7 @@ public class CardTable extends Board
             public void preprocess(Game game) {
 
             }
-        }, track, tracks, null, null, SiteType.Vertex, largeStack);
+        }, track, tracks, null, null, (use == null) ? SiteType.Vertex : use, largeStack);
 
         // Store the parameter to access it later in TableCard logic.
         this.numPlayers = players.intValue();

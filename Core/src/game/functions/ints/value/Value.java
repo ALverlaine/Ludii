@@ -172,8 +172,8 @@ public final class Value extends BaseIntFunction
 	public static IntFunction construct
 	(
 			final ValueComponentType valueType,
-			@Opt       final SiteType           type,
 			final String           cardAttribute,
+			@Opt       final SiteType           type,
 			@Name final IntFunction        at,
 			@Opt @Name final IntFunction        level
 	)
@@ -181,7 +181,7 @@ public final class Value extends BaseIntFunction
 		switch (valueType)
 		{
 			case CardType:
-				return new ValueCard(type, cardAttribute, at, level);
+				return new ValueCard(cardAttribute,type, at, level);
 			default:
 				break;
 		}

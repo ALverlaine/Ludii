@@ -41,7 +41,7 @@ public final class ValueCard extends BaseIntFunction {
      */
     private final IntFunction loc;
     private final IntFunction level;
-    private final SiteType type;
+    private SiteType type;
 
     /**
      * The type of site, e.g., Cell, Edge, Vertex.
@@ -55,8 +55,8 @@ public final class ValueCard extends BaseIntFunction {
      */
     public ValueCard
     (
-            @Opt       final SiteType    type,
             final String cardAttribute,
+            @Opt       final SiteType    type,
             @Name final IntFunction at,
             @Opt @Name final IntFunction level
     ) {
@@ -77,8 +77,10 @@ public final class ValueCard extends BaseIntFunction {
         // Évalue la localisation de la carte à partir du contexte
         final int location = loc.eval(context);
         // Vérifie si la carte est "OFF" (hors du jeu)
-        if (location == Constants.OFF)
+        if (location == Constants.OFF) {
+            System.out.println("Location is OFF");
             return Constants.UNDEFINED; // ou toute autre valeur qui représente un cas "non trouvé"
+        }
         // Récupère l'ID du conteneur associé à cette localisation
         final int containerId = context.containerId()[location];
         // Si le jeu n'est pas un jeu de Stacking, utilise le ContainerState basique
@@ -87,7 +89,10 @@ public final class ValueCard extends BaseIntFunction {
         final ContainerState cs = context.state().containerStates()[containerId];
         final int what = cs.what(location, type);
         final Component[] equipment = context.game().equipment().components();
-
+        if(what == 0) {
+            System.out.println("What is 0");
+            return Constants.UNDEFINED;
+        }
         final CardType cardType = (CardType) equipment[what];
         final String[] attributes = cardType.getAttributesValue();
         final String[] attributesName = cardType.getAttributesName();
@@ -122,6 +127,9 @@ public final class ValueCard extends BaseIntFunction {
 
     @Override
     public void preprocess(Game game) {
+        type = SiteType.use(type, game);
+        loc.preprocess(game);
+        level.preprocess(game);
 
     }
 }

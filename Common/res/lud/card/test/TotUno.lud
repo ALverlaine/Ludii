@@ -4,7 +4,7 @@
         (cardTable 2)
         (hand Each size:5)
         (unoCards)
-        (CardType "1jaune" {"Number" "Color" "eric"} {"1" "Jaune" "alex"})
+
     })
     (rules
         (start

@@ -1,0 +1,133 @@
+game.Game
+    "TotUno2" (java.lang.String)
+    game.players.Players
+        2 (java.lang.Integer)
+    -
+    game.equipment.Equipment
+        {
+        game.equipment.container.board.custom.CardTable (game.equipment.Item)
+            2 (java.lang.Integer)
+            -
+            -
+            -
+        game.equipment.container.other.Hand (game.equipment.Item)
+            Each (game.types.play.RoleType)
+            5 (java.lang.Integer) "size:"
+        game.equipment.other.UnoCards (game.equipment.Item)
+        }
+    game.rules.Rules
+        -
+        game.rules.start.Start
+            {
+            game.rules.start.Deal (game.rules.start.StartRule)
+                Cards (game.types.component.DealableType)
+                5 (java.lang.Integer)
+                -
+                -
+            }
+            -
+        game.rules.play.Play
+            game.rules.play.moves.nonDecision.operators.logical.Or (game.rules.play.moves.Moves)
+                {
+                game.rules.play.moves.decision.Move (game.rules.play.moves.Moves)
+                    game.util.moves.From
+                        -
+                        game.functions.region.sites.Sites (game.functions.region.RegionFunction)
+                            Hand (game.functions.region.sites.SitesPlayerType)
+                            -
+                            -
+                            Mover (game.types.play.RoleType)
+                            -
+                            -
+                        -
+                        -
+                        game.functions.booleans.math.And (game.functions.booleans.BooleanFunction) "if:"
+                            game.functions.booleans.is.Is (game.functions.booleans.BooleanFunction)
+                                Occupied (game.functions.booleans.is.IsSiteType)
+                                -
+                                game.functions.ints.iterator.From (game.functions.ints.IntFunction)
+                                    -
+                            game.functions.booleans.math.Equals (game.functions.booleans.BooleanFunction)
+                                game.functions.ints.value.Value (game.functions.ints.IntFunction)
+                                    CardType (game.functions.ints.value.ValueComponentType)
+                                    -
+                                    "Number" (java.lang.String)
+                                    game.functions.ints.iterator.From (game.functions.ints.IntFunction) "at:"
+                                        -
+                                    -
+                                game.functions.ints.value.Value (game.functions.ints.IntFunction)
+                                    CardType (game.functions.ints.value.ValueComponentType)
+                                    -
+                                    "Number" (java.lang.String)
+                                    game.functions.ints.iterator.To (game.functions.ints.IntFunction) "at:"
+                                    -
+                                -
+                    game.util.moves.To
+                        -
+                        game.functions.region.sites.Sites (game.functions.region.RegionFunction)
+                            Occupied (game.functions.region.sites.SitesOccupiedType)
+                            -
+                            All (game.types.play.RoleType) "by:"
+                            -
+                            -
+                            -
+                            -
+                            -
+                            -
+                            -
+                        -
+                        -
+                        -
+                        -
+                        -
+                    -
+                    -
+                    -
+                    -
+                    -
+                game.rules.play.moves.decision.Move (game.rules.play.moves.Moves)
+                    game.util.moves.From
+                        -
+                        game.functions.region.sites.Sites (game.functions.region.RegionFunction)
+                            Hand (game.functions.region.sites.SitesPlayerType)
+                            -
+                            -
+                            Mover (game.types.play.RoleType)
+                            -
+                            -
+                        -
+                        -
+                        game.functions.booleans.is.Is (game.functions.booleans.BooleanFunction) "if:"
+                            Occupied (game.functions.booleans.is.IsSiteType)
+                            -
+                            game.functions.ints.iterator.From (game.functions.ints.IntFunction)
+                                -
+                    game.util.moves.To
+                        -
+                        game.functions.region.sites.Sites (game.functions.region.RegionFunction)
+                            Empty (game.functions.region.sites.SitesIndexType)
+                            -
+                            -
+                        -
+                        -
+                        -
+                        -
+                        -
+                    -
+                    -
+                    -
+                    -
+                    -
+                }
+                -
+        game.rules.end.End
+            game.rules.end.If (game.rules.end.EndRule)
+                game.functions.booleans.no.No (game.functions.booleans.BooleanFunction)
+                    Moves (game.functions.booleans.no.NoMoveType)
+                    Next (game.types.play.RoleType)
+                -
+                -
+                game.rules.end.Result
+                    Mover (game.types.play.RoleType)
+                    Win (game.types.play.ResultType)
+            -
