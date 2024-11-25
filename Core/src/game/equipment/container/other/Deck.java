@@ -60,7 +60,6 @@ public class Deck extends Container
 
 		// Set the name of the deck.
 		this.deckName = name;
-		this.setName(name);
 
 		// Set the size of the deck (default 1 if not provided).
 		this.numLocs = (size == null) ? 1 : size.intValue();

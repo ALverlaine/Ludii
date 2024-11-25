@@ -34,9 +34,9 @@ public class CardType extends Component implements Serializable
      */
     public CardType
     (
-            final String   name,
-            @Opt final String[] AttributesName,
-            @Opt final String[] AttributeValue
+                    final String   name,
+            @Opt    final String[] AttributesName,
+            @Opt    final String[] AttributeValue
     )
     {
         super(name, RoleType.Shared,  null,

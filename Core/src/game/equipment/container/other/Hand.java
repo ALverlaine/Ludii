@@ -161,6 +161,11 @@ public class Hand extends Container
 		return true;
 	}
 
+	public boolean isSharedHand()
+	{
+        return role().equals(RoleType.Shared);
+	}
+
 	//-------------------------------------------------------------------------
 
 	@Override

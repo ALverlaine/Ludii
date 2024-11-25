@@ -80,6 +80,43 @@ public final class Deal extends StartRule
 		{
 			evalCards(context);
 		}
+		else if(type == DealableType.Deck)
+		{
+			evalDeck(context);
+		}
+	}
+
+	private void evalDeck(Context context) {
+		final TIntArrayList handIndex = new TIntArrayList();
+		for (final Container c : context.containers())
+			if (c.isHand() && !c.isDeck() && !c.isDice())
+				if(c.isSharedHand())
+					handIndex.add(context.sitesFrom()[c.index()]);
+
+
+		final Component[] components = context.components();
+		System.out.println(Arrays.toString(components));
+		if (components.length < count)
+			throw new IllegalArgumentException("You can not deal so much card in the initial state.");
+
+		final TIntArrayList toDeal = new TIntArrayList();
+		for (int i = 1; i < components.length; i++)
+			toDeal.add(i);
+
+
+		int dealed = 0;
+		while (dealed < count)
+		{
+			final int index = context.rng().nextInt(toDeal.size());
+			final int indexComponent = toDeal.getQuick(index);
+			final Component component = components[indexComponent];
+			final int Deck = 0;
+			Start.placePieces(context, handIndex.getQuick(Deck), component.index(), 1,
+					Constants.OFF, Constants.OFF, Constants.UNDEFINED, true,
+					SiteType.Cell);
+			toDeal.removeAt(index);
+			dealed++;
+		}
 	}
 
 
@@ -100,7 +137,6 @@ public final class Deal extends StartRule
 			return;
 
 		final Component[] components = context.components();
-		System.out.println(Arrays.toString(components));
 		if (components.length < count * handIndex.size())
 			throw new IllegalArgumentException("You can not deal so much dominoes in the initial state.");
 
@@ -154,7 +190,7 @@ public final class Deal extends StartRule
 		}
 
 		// If each player does not have a hand, nothing to do.
-		if (handIndex.size() != context.game().players().count())
+		if (handIndex.size() < context.game().players().count())
 			return;
 
 		final Component[] components = context.components();

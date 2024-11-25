@@ -141,6 +141,12 @@ public abstract class Container extends Item implements Serializable, Cloneable
 	{
 		return false;
 	}
+	/**
+	 * @return True if the container is a shared hand.
+	 */
+	public boolean isSharedHand() {
+		return false;
+	}
 
 	/**
 	 * @return True if the container is a dice.
@@ -538,4 +544,6 @@ public abstract class Container extends Item implements Serializable, Cloneable
 		}
 		return refs;
 	}
+
+
 }

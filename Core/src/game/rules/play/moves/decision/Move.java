@@ -13,23 +13,7 @@ import game.functions.ints.IntFunction;
 import game.functions.range.RangeFunction;
 import game.functions.region.RegionFunction;
 import game.rules.play.moves.Moves;
-import game.rules.play.moves.nonDecision.effect.Add;
-import game.rules.play.moves.nonDecision.effect.Bet;
-import game.rules.play.moves.nonDecision.effect.Claim;
-import game.rules.play.moves.nonDecision.effect.FromTo;
-import game.rules.play.moves.nonDecision.effect.Hop;
-import game.rules.play.moves.nonDecision.effect.Leap;
-import game.rules.play.moves.nonDecision.effect.Pass;
-import game.rules.play.moves.nonDecision.effect.PlayCard;
-import game.rules.play.moves.nonDecision.effect.Promote;
-import game.rules.play.moves.nonDecision.effect.Propose;
-import game.rules.play.moves.nonDecision.effect.Remove;
-import game.rules.play.moves.nonDecision.effect.Select;
-import game.rules.play.moves.nonDecision.effect.Shoot;
-import game.rules.play.moves.nonDecision.effect.Slide;
-import game.rules.play.moves.nonDecision.effect.Step;
-import game.rules.play.moves.nonDecision.effect.Then;
-import game.rules.play.moves.nonDecision.effect.Vote;
+import game.rules.play.moves.nonDecision.effect.*;
 import game.rules.play.moves.nonDecision.effect.set.SetNextPlayerType;
 import game.rules.play.moves.nonDecision.effect.set.SetRotationType;
 import game.rules.play.moves.nonDecision.effect.set.SetTrumpType;
@@ -42,6 +26,7 @@ import game.rules.play.moves.nonDecision.effect.state.swap.players.SwapPlayers;
 import game.rules.play.moves.nonDecision.effect.state.swap.sites.SwapPieces;
 import game.types.board.SiteType;
 import game.types.board.StepType;
+import game.types.component.DealableType;
 import game.types.play.RoleType;
 import game.types.play.WhenType;
 import game.util.directions.AbsoluteDirection;
@@ -50,6 +35,8 @@ import game.util.moves.Piece;
 import game.util.moves.Player;
 import game.util.moves.To;
 import other.context.Context;
+import  game.rules.play.moves.decision.MoveDrawCardType;
+
 
 /**
  * Defines a decision move.
@@ -920,6 +907,77 @@ public final class Move extends Decision
 		// We should never reach that except if we forget some codes.
 		if (moves == null)
 			throw new IllegalArgumentException("Move(): A MoveAddType is not implemented.");
+
+		moves.setDecision();
+		return moves;
+	}
+	/**
+	 * For deciding to draw a card.
+	 *
+	 * @param moveType The type of move.
+
+	 * @param then     The moves applied after that move is applied.
+	 *
+	 */
+	public static Moves construct
+			(
+						final MoveDrawCardType moveType,
+						final int numberOfDraw,
+			@Opt        final SiteType       type,
+			@Or       	final IntFunction    locationFunction,
+			@Or     	final RegionFunction regionFunction,
+			@Opt 	    final Then           then
+			)
+	{
+		Moves moves = null;
+
+		switch (moveType)
+		{
+			case DrawCard:
+				moves = new DrawCard(numberOfDraw, type, locationFunction, regionFunction, then);
+				break;
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		if (moves == null)
+			throw new IllegalArgumentException("Move(): A MoveRemoveType is not implemented.");
+
+		moves.setDecision();
+		return moves;
+	}
+	/**
+	 * For deciding to deal a card.
+	 *
+	 * @param moveType The type of move.
+
+	 * @param then     The moves applied after that move is applied.
+	 *
+	 */
+	public static Moves construct
+	(
+			final MoveDealType moveType,
+			final DealableType type,
+			@Opt       final IntFunction  count,
+			@Opt @Name final IntFunction  beginWith,
+			@Opt       final Then         then
+	)
+	{
+		Moves moves = null;
+
+		switch (moveType)
+		{
+			case Deal:
+				moves = new Deal(type, count, beginWith, then);
+				break;
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		if (moves == null)
+			throw new IllegalArgumentException("Move(): A MoveRemoveType is not implemented.");
 
 		moves.setDecision();
 		return moves;
