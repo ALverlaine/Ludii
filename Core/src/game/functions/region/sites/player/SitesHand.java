@@ -12,6 +12,7 @@ import game.functions.region.BaseRegionFunction;
 import game.types.play.RoleType;
 import game.util.equipment.Region;
 import other.context.Context;
+import game.functions.ints.board.Id;
 
 /**
  * Returns all the sites in a specific hand.
@@ -50,7 +51,9 @@ public final class SitesHand extends BaseRegionFunction
 		@Or @Opt final RoleType               role
     )
 	{
+
 		index = (role != null) ? RoleType.toIntFunction(role) : (player != null) ? player.index() : null;
+
 		this.role = role;
 	}
 

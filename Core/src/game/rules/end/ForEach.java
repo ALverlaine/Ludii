@@ -42,7 +42,7 @@ public final class ForEach extends BaseEndRule
 	 * @param If        Condition to apply.
 	 * @param result    Result to return.
 	 * 
-	 * @example (forEach NonMover if:(is Blocked Player) (result Player Loss))
+	 * @example (forEach Non Mover if:(is Blocked Player) (result Player Loss))
 	 */
 	public ForEach
 	(

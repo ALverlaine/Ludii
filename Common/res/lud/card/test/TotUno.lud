@@ -1,3 +1,4 @@
+(define "HandEmpty" (all Sites (sites Hand #1) if:(= 0 (count Cell at:(site)))) )
 (game "TotUno"
     (players 2)
     (equipment {
@@ -34,10 +35,10 @@
                     stack:true
                 )
                 (move (from (sites Hand Mover) if:(is Occupied (from))) (to (sites Empty)) stack:true)
-                (move (from (sites Hand Shared) if:(is Occupied (from))) (to (sites Hand Mo  ver)))
+                (move (from (handSite Shared)) (to (handSite Mover) if:(is Empty (to))))
         }))
         (end
-            (if (no Moves Next) (result Mover Win))
+           (if ("HandEmpty" Mover) (result Mover Win))
         )
     )
 )

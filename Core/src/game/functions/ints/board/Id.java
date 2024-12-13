@@ -64,7 +64,7 @@ public final class Id extends BaseIntFunction
 	 */
 	public static IndexOfComponent construct(final String name)	
 	{
-		return new IndexOfComponent(name);
+		return new IndexOfComponent(name);  
 	}
 	
 	//-------------------------------------------------------------------------
