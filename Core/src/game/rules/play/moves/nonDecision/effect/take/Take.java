@@ -11,9 +11,12 @@ import game.rules.play.moves.Moves;
 import game.rules.play.moves.nonDecision.effect.Effect;
 import game.rules.play.moves.nonDecision.effect.Then;
 import game.rules.play.moves.nonDecision.effect.take.control.TakeControl;
+import game.rules.play.moves.nonDecision.effect.take.simple.TakeCards;
 import game.rules.play.moves.nonDecision.effect.take.simple.TakeDomino;
 import game.types.board.SiteType;
 import game.types.play.RoleType;
+import game.util.moves.From;
+import game.util.moves.To;
 import other.context.Context;
 
 /**
@@ -54,6 +57,36 @@ public final class Take extends Effect
 		throw new IllegalArgumentException("Take(): A TakeSimpleType is not implemented.");
 	}
 	
+	//-------------------------------------------------------------------------
+	/**
+	 * For taking a Card or a set of Cards from the game.
+	 *
+	 * @param takeType The type of property to take.
+	 * @param then     The moves applied after that move is applied.
+	 *
+	 * @example (take Cards from:(sites Board) to:(handsite Mover))
+	 */
+	public static Moves construct
+			(
+							final TakeSimpleType 	takeType,
+					final From from,
+						final To to,
+			@Opt 			final Then           	then
+			)
+	{
+		switch (takeType)
+		{
+			case Card:
+				System.out.println("hey");
+				return new TakeCards(from, to, then);
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		throw new IllegalArgumentException("Take(): A TakeSimpleType is not implemented.");
+	}
+
 	//-------------------------------------------------------------------------
 
 	/**

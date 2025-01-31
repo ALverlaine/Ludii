@@ -1,0 +1,42 @@
+(define "HandEmpty" (all Sites (sites Hand #1) if:(= 0 (count Cell at:(site)))) )
+(game "war"
+    (players 2)
+    (equipment {
+        (cardTable 2)
+        (hand Each size:52)
+        ("FrenchCards")
+    })
+    (rules
+        (start {
+            (deal Cards 5)
+
+        })
+        phases:{
+                (phase "One"
+                    (play
+                        (or
+                            (move
+                                (from (handSite Mover))
+                                (to (sites Empty))
+                            )
+                            (if
+                                (= 2  (count Sites in:(sites Occupied by:All))) (move Pass)
+                            )
+                        )
+                    )
+                    (nextPhase Mover
+                            (=
+                                (value CardType "Rank" at:0)
+                                (value CardType "Rank" at:1)
+                            )
+                            "War")
+                )
+                (phase "War"
+                    (play (move Pass))
+                    (end
+                        (if ("HandEmpty" Mover) (result Mover Win))
+                    )
+                )
+        }
+    )
+)

@@ -1,0 +1,24 @@
+(define "HandEmpty" (all Sites (sites Hand #1) if:(= 0 (count Cell at:(site)))) )
+(game "warstack"
+    (players 2)
+    (equipment {
+        (cardTable 6)
+        (hand Each size:2)
+        ("FrenchCards")
+    })
+    (rules
+        (start {
+            (deal Cards 5 stack:True)
+        })
+        (play
+            (move
+                (from (sites Hand Mover))
+                (to (sites Empty))
+                
+            )
+        )
+        (end
+            (if ("HandEmpty" Mover) (result Mover Win))
+        )
+    )
+)

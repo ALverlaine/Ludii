@@ -65,8 +65,8 @@ public class Cards54 extends Item
         }
 
         // Add Jokers
-        cards.add(new CardType("Joker 1", new String[]{"Rank", "Suits"}, new String[]{"Joker", "Joker"}));
-        cards.add(new CardType("Joker 2", new String[]{"Rank", "Suits"}, new String[]{"Joker", "Joker"}));
+        //cards.add(new CardType("Joker 1", new String[]{"Rank", "Suits"}, new String[]{"Joker", "Joker"}));
+        //cards.add(new CardType("Joker 2", new String[]{"Rank", "Suits"}, new String[]{"Joker", "Joker"}));
 
         return cards;
     }

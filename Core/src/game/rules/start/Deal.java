@@ -39,8 +39,8 @@ public final class Deal extends StartRule
 
 	/** The number to deal. */
 	private final DealableType type;
-	private final IntFunction from;
-	private final IntFunction to;
+
+	private final boolean stack;
 
 	//-------------------------------------------------------------------------
 
@@ -53,16 +53,14 @@ public final class Deal extends StartRule
 	public Deal
 	(
 			final DealableType type,
-			@Opt final Integer      count,
-			@Opt final IntFunction from,
-			@Opt final IntFunction to
+			@Opt final Integer count,
+			@Opt @Name final Boolean stack
 	)
 
 	{
 		this.type = type;
 		this.count = (count == null) ? 1 : count.intValue();
-		this.from = from;
-		this.to = to;
+		this.stack = stack == null ? false : stack;
 	}
 
 	//-------------------------------------------------------------------------
@@ -211,9 +209,9 @@ public final class Deal extends StartRule
 			final int index = context.rng().nextInt(toDeal.size());
 			final int cardIndex = toDeal.getQuick(index);
 			final Component card = components[cardIndex];
-
+			System.out.println(card.name());
 			final int currentPlayer = dealt % nbPlayers;
-			Start.placePieces(context, handIndex.getQuick(currentPlayer) + (dealt / nbPlayers),
+			Start.placePieces(context, handIndex.getQuick(currentPlayer),
 					card.index(), 1, Constants.OFF, Constants.OFF, Constants.UNDEFINED, false,
 					SiteType.Cell);
 

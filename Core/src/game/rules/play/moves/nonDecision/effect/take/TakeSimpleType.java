@@ -10,4 +10,6 @@ public enum TakeSimpleType
 {
 	/** To take a domino from the bag. */
 	Domino,
+	/** To take a Card from the game. */
+	Card,
 }

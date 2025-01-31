@@ -1,0 +1,24 @@
+// Defines UnoCards.
+// @example ("UnoCards")
+
+(define "UnoCards"
+    (cardType "1 of Red" {"Number" "Color"} {"1" "Red"})
+    (cardType "2 of Red" {"Number" "Color"} {"2" "Red"})
+    (cardType "3 of Red" {"Number" "Color"} {"3" "Red"})
+    (cardType "4 of Red" {"Number" "Color"} {"4" "Red"})
+
+    (cardType "1 of Blue" {"Number" "Color"} {"1" "Blue"})
+    (cardType "2 of Blue" {"Number" "Color"} {"2" "Blue"})
+    (cardType "3 of Blue" {"Number" "Color"} {"3" "Blue"})
+    (cardType "4 of Blue" {"Number" "Color"} {"4" "Blue"})
+
+    (cardType "1 of Green" {"Number" "Color"} {"1" "Green"})
+    (cardType "2 of Green" {"Number" "Color"} {"2" "Green"})
+    (cardType "3 of Green" {"Number" "Color"} {"3" "Green"})
+    (cardType "4 of Green" {"Number" "Color"} {"4" "Green"})
+
+    (cardType "1 of Yellow" {"Number" "Color"} {"1" "Yellow"})
+    (cardType "2 of Yellow" {"Number" "Color"} {"2" "Yellow"})
+    (cardType "3 of Yellow" {"Number" "Color"} {"3" "Yellow"})
+    (cardType "4 of Yellow" {"Number" "Color"} {"4" "Yellow"})
+)

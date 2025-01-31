@@ -6,7 +6,6 @@
         (hand Each size:5)
         (hand Shared size:1)
         (unoCards)
-
     })
     (rules
         (start {
@@ -35,7 +34,7 @@
                     stack:true
                 )
                 (move (from (sites Hand Mover) if:(is Occupied (from))) (to (sites Empty)) stack:true)
-                (move (from (handSite Shared)) (to (handSite Mover) if:(is Empty (to))))
+                (move (from (handSite Shared)) (to (sites Hand Mover) if:(is Empty (to))))
         }))
         (end
            (if ("HandEmpty" Mover) (result Mover Win))

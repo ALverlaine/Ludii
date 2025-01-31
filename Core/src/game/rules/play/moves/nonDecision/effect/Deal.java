@@ -121,7 +121,7 @@ public final class Deal extends Effect
 		int counter = 0;
 		for (int indexCard = 0; indexCard < count * handIndex.size(); indexCard++)
 		{
-			final Action dealAction = ActionMove.construct(SiteType.Cell, indexSiteDeck, cs.sizeStackCell(indexSiteDeck) - 1 - counter, SiteType.Cell, handIndex.get(hand).intValue(), Constants.OFF, Constants.OFF, Constants.OFF, Constants.OFF, false);
+			final Action dealAction = ActionMove.construct(SiteType.Cell, indexSiteDeck, cs.sizeStackCell(indexSiteDeck) - 1 - counter, SiteType.Cell, handIndex.get(hand).intValue(), Constants.OFF, Constants.OFF, Constants.OFF, Constants.OFF, true);
 			final Move move = new Move(dealAction);
 			moves.moves().add(move);
 

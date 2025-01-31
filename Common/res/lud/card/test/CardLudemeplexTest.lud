@@ -1,0 +1,22 @@
+(game "CardLudemeplexTest"
+    (players 4)
+    (equipment {
+        (board
+           (square 2)
+        )
+        (hand Shared size:2)
+        (hand Each size:4)
+        ("UnoCards")
+    })
+    (rules
+        (start
+            (deal Cards 2)
+        )
+        (play
+            (move Pass)
+        )
+        (end
+            (if ("HandEmpty" Mover) (result Mover Win))
+        )
+    )
+)

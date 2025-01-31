@@ -1,0 +1,13 @@
+(game "testtable"
+    (players 2)
+        (equipment {
+            //(board (graph vertices:{{0 0} {1 0} {1 1} {0 1}} edges:{ {0 1} {1 2} {2 3} {3 0}}) use:Vertex)
+            (board (graph vertices:{{0 0}} edges:{ {0 0} }) use:Vertex)
+            (piece "Disc" P1)
+            (piece "Cross" P2)
+        })
+        (rules
+            (play (move Add (to (sites Empty))))
+            (end (if (is Line 3) (result Mover Win)))
+        )
+)

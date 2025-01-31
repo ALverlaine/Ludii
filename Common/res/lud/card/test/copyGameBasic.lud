@@ -1,0 +1,17 @@
+(game "copyGameBasic"
+    (players 4)
+    (equipment {
+        (board
+           (square 2)
+        )
+        (hand Shared size:2)
+    })
+    (rules
+        (play
+            (move Pass)
+        )
+        (end
+            (if ("HandEmpty" Mover) (result Mover Win))
+        )
+    )
+)
