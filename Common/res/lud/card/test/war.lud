@@ -3,12 +3,12 @@
     (players 2)
     (equipment {
         (cardTable 2)
-        (hand Each size:52)
+        (hand Each size:10)
         ("FrenchCards")
     })
     (rules
         (start {
-            (deal Cards 5)
+            (deal cards 5 stack:True)
 
         })
         phases:{

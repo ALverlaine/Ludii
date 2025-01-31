@@ -1,6 +1,7 @@
 package game.rules.start;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
@@ -110,7 +111,7 @@ public final class Deal extends StartRule
 			final Component component = components[indexComponent];
 			final int Deck = 0;
 			Start.placePieces(context, handIndex.getQuick(Deck), component.index(), 1,
-					Constants.OFF, Constants.OFF, Constants.UNDEFINED, true,
+					Constants.OFF, Constants.OFF, Constants.UNDEFINED, false,
 					SiteType.Cell);
 			toDeal.removeAt(index);
 			dealed++;
@@ -211,7 +212,7 @@ public final class Deal extends StartRule
 			final Component card = components[cardIndex];
 			System.out.println(card.name());
 			final int currentPlayer = dealt % nbPlayers;
-			Start.placePieces(context, handIndex.getQuick(currentPlayer),
+			Start.placePieces(context, handIndex.getQuick(currentPlayer) + (dealt / nbPlayers),
 					card.index(), 1, Constants.OFF, Constants.OFF, Constants.UNDEFINED, false,
 					SiteType.Cell);
 
@@ -245,10 +246,11 @@ public final class Deal extends StartRule
 	@Override
 	public long gameFlags(final Game game)
 	{
+		long gameFlags = stack ? GameType.Stacking : 0l;
 		if (type == DealableType.Dominoes)
-			return GameType.LargePiece | GameType.Dominoes | GameType.Stochastic | GameType.HiddenInfo;
+			return gameFlags | GameType.LargePiece | GameType.Dominoes | GameType.Stochastic | GameType.HiddenInfo;
 		else
-			return 0L;
+			return gameFlags;
 	}
 	@Override
 	public void preprocess(final Game game)
