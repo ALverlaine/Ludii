@@ -1,0 +1,83 @@
+(define "HandEmpty" (all Sites (sites Hand #1) if:(= 0 (count Cell at:(site)))))
+(define "PlayCard" (move (from (handSite Mover)) (to (sites {#1}) if:(is Empty (to)))))
+(define "CardOnTable" (= 2  (count Sites in:(sites Occupied by:All))))
+(define "PlayerTake" (move
+                        (from (sites {0}))
+                        (to (handSite #1) level:(topLevel at:0))
+                        stack:True
+                        (then
+                            (fromTo
+                                (from (sites {1}))
+                                (to (handSite #1) level:(topLevel at:0))
+                                stack:True
+                            )
+                        ))
+)
+
+
+
+
+(define "PlayACard"
+    (move
+        (from (handSite #1))
+        (to #2)
+        #3
+        #4
+    )
+)
+(define "P1PlayACard" ("PlayACard" P1 0 #1 #2))
+(define "P2PlayACard" ("PlayACard" P2 1 #1 #2))
+(define "PlayACardOfEachDeck"
+    (and {
+        ("P2PlayACard") //supposed hidden
+        ("P1PlayACard") //supposed hidden
+    })
+)
+(define "P1HasNoCard" (and (= (what at:0) 0) ("HandEmpty" P1)))
+(define "P2HasNoCard" (and (= (what at:1) 0) ("HandEmpty" P2)))
+(game "Bataille"
+    (players 2)
+    (mode Simultaneous)
+    (equipment {
+        (cardTable 2)
+        (hand Each size:1)
+        ("FrenchCards")
+    })
+    (rules
+        (start {
+            (deal Cards 15 stack:True)
+        })
+
+                    (play
+                        (if (is Odd (count Turns))
+                            (or
+                                ("P1PlayACard" P1)
+                                ("P2PlayACard" P2)
+                            )
+                            (move Pass
+                                (then
+                                    (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                        ("PlayerTake" P1)
+                                        (if (< (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                            ("PlayerTake" P2)
+                                            ("PlayACardOfEachDeck")
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                   )
+                    (end {
+                         (if
+                             ("P1HasNoCard")
+                             (result P2 Win)
+                         )
+                         (if
+                             ("P2HasNoCard")
+                             (result P1 Win)
+                         )
+                     })
+
+
+    )
+)

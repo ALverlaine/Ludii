@@ -212,10 +212,16 @@ public final class Deal extends StartRule
 			final Component card = components[cardIndex];
 			System.out.println(card.name());
 			final int currentPlayer = dealt % nbPlayers;
-			Start.placePieces(context, handIndex.getQuick(currentPlayer) + (dealt / nbPlayers),
-					card.index(), 1, Constants.OFF, Constants.OFF, Constants.UNDEFINED, false,
-					SiteType.Cell);
-
+			if(stack){
+				Start.placePieces(context, handIndex.getQuick(currentPlayer),
+						card.index(), 1, Constants.OFF, Constants.OFF, Constants.UNDEFINED, stack,
+						SiteType.Cell);
+			}
+			else{
+				Start.placePieces(context, handIndex.getQuick(currentPlayer) + (dealt / nbPlayers),
+						card.index(), 1, Constants.OFF, Constants.OFF, Constants.UNDEFINED, stack,
+						SiteType.Cell);
+			}
 			toDeal.removeAt(index);
 			dealt++;
 		}

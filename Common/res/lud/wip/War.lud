@@ -44,7 +44,7 @@
 
 (game "War" 
     (players 2) 
-    (mode Simultaneous) 
+    (mode Simultaneous)  
     (equipment { 
         (board 
             (union 
@@ -71,7 +71,7 @@
                                 ("TakeCards" P1)
                                 (if ("CardOfP2isHigher")
                                     ("TakeCards" P2)
-                                    ("PlayACardOfEachDeck") // Else the cards have the same value
+                                    ("PlayACardOf EachDeck") // Else the cards have the same value
                                 )
                             )
                             ("MaskedCards")

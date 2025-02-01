@@ -1,0 +1,78 @@
+(define "HandEmpty" (all Sites (sites Hand #1) if:(= 0 (count Cell at:(site)))))
+(define "PlayCard"
+    (move
+        (from (handSite #1))
+        (to (sites {#2}))
+    )
+)
+(define "CardOnTable" (= 2  (count Sites in:(sites Occupied by:All))))
+(define "PlayerTake" (move
+                        (from (sites {0}))
+                        (to (handSite #1) level:(topLevel at:0))
+                        stack:True
+                        (then
+                            (fromTo
+                                (from (sites {1}))
+                                (to (handSite #1) level:(topLevel at:0))
+                                stack:True
+                            )
+                        ))
+)
+(define "PlayACard"
+    (move
+        (from (handSite #1))
+        (to #2)
+        #3
+        #4
+    )
+)
+(game "Bataille"
+    (players 2)
+    (mode Simultaneous)
+    (equipment {
+        (cardTable 2)
+        (hand Each size:1)
+        ("FrenchCards")
+    })
+    (rules
+        (start {
+            (deal Cards 26 stack:True)
+        })
+        (play
+                (or
+                    {
+                    ("PlayACard" P1 0)
+                    ("PlayACard" P2 1)
+                    (move Pass
+                            (then
+
+                                    (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                        ("TakeCards" P1)
+                                        (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                            ("TakeCards" P2)
+                                            ("PlayACardOfEachDeck") // Else the cards have the same value
+                                        )
+                                    )
+
+                            )
+                        )
+                    }
+                )
+                (move Pass
+                    (then
+
+                            (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                ("TakeCards" P1)
+                                (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                    ("TakeCards" P2)
+                                    ("PlayACardOfEachDeck") // Else the cards have the same value
+                                )
+                            )
+
+                    )
+                )
+            )
+        )
+
+    )
+)

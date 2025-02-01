@@ -1,0 +1,22 @@
+
+(game "Bataille"
+    (players 2)
+    (mode Simultaneous)
+    (equipment {
+        (cardTable 2)
+        (hand Each size:1)
+        ("FrenchCards")
+    })
+    (rules
+        (start
+            (deal Cards 26 stack:True)
+        )
+        (play
+         (if (is Odd (count Turns))
+            (move Pass)
+
+        )
+        (end (if ("HandEmpty" Mover) (result Mover Win)))
+
+    )
+)
