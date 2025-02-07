@@ -40,6 +40,10 @@ public class Hand extends Container
 
 	//-------------------------------------------------------------------------
 
+	/** The game can involves large stack. */
+	private boolean largeStack;
+
+	//-------------------------------------------------------------------------
 	/**
 	 * @param role The owner of the hand.
 	 * @param size The numbers of sites in the hand.
@@ -49,7 +53,8 @@ public class Hand extends Container
 	public Hand
 	(
 			 	   final RoleType role,
-		@Opt @Name final Integer  size
+		@Opt @Name final Integer  size,
+		@Opt @Name final Boolean  largeStack
 	)
 	{
 		super(null, Constants.UNDEFINED, role);
@@ -77,6 +82,7 @@ public class Hand extends Container
 		
 		this.style = ContainerStyleType.Hand;
 		setType(ItemType.Hand);
+		this.largeStack = largeStack == null ? false : largeStack.booleanValue();
 	}
 
 	/**
@@ -218,5 +224,9 @@ public class Hand extends Container
 			}
 		}
 		return missingRequirement;
+	}
+	public boolean largeStack()
+	{
+		return largeStack;
 	}
 }

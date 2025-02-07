@@ -94,7 +94,7 @@ public class CardTable extends Board
                 }
 
                 // Return the generated graph
-                return new Graph(vertices, null).eval(context, siteType);
+                return new Graph(vertices,  null).eval(context, siteType);
             }
             @Override
             public long gameFlags(Game game) {
@@ -105,7 +105,7 @@ public class CardTable extends Board
             public void preprocess(Game game) {
 
             }
-        }, track, tracks, null, null, (use == null) ? SiteType.Vertex : use, largeStack);
+        }, track, tracks, null, null, (use == null) ? SiteType.Vertex : use, false);
 
         // Store the parameter to access it later in TableCard logic.
         this.numPlayers = players.intValue();

@@ -2,6 +2,7 @@ package other.state.stacking;
 
 import game.Game;
 import game.equipment.container.Container;
+import game.functions.intArray.array.Array;
 import game.types.board.SiteType;
 import game.types.state.GameType;
 import game.util.equipment.Region;
@@ -9,6 +10,8 @@ import main.Constants;
 import main.collections.ListStack;
 import other.state.State;
 import other.state.zhash.ZobristHashGenerator;
+
+import java.util.Arrays;
 
 /**
  * Container state for large stacks on the vertices or on the edges.
@@ -92,8 +95,9 @@ public class ContainerGraphStateStacksLarge extends ContainerStateStacksLarge
 		else
 		{
 			listStacksVertex = new ListStack[other.listStacksVertex.length];
-			for(int i = 0 ; i < listStacksVertex.length; i++)
+			for(int i = 0 ; i < listStacksVertex.length; i++) {
 				listStacksVertex[i] = new ListStack(other.listStacksVertex[i]);
+			}
 		}
 
 		if (other.listStacksEdge == null)

@@ -1,26 +1,22 @@
 (define "HandEmpty" (all Sites (sites Hand #1) if:(= 0 (count Cell at:(site)))))
-(define "PlayCard" (move (from (handSite Mover)) (to (sites {#1}) if:(is Empty (to)))))
 (define "CardOnTable" (= 2  (count Sites in:(sites Occupied by:All))))
 (define "PlayerTake" (move
-                        (from (sites {0}))
-                        (to (handSite #1) level:(topLevel at:0))
+                        (from Vertex 0)
+                        (to Cell (handSite #1) level:0)
                         stack:True
                         (then
                             (fromTo
-                                (from (sites {1}))
-                                (to (handSite #1) level:(topLevel at:0))
+                                (from Vertex 1)
+                                (to Cell (handSite #1) level:0 )
                                 stack:True
                             )
                         ))
 )
 
-
-
-
 (define "PlayACard"
     (move
-        (from (handSite #1))
-        (to #2)
+        (from Cell (handSite #1))
+        (to Vertex #2)
         #3
         #4
     )
@@ -35,6 +31,7 @@
 )
 (define "P1HasNoCard" (and (= (what at:0) 0) ("HandEmpty" P1)))
 (define "P2HasNoCard" (and (= (what at:1) 0) ("HandEmpty" P2)))
+
 (game "Bataille"
     (players 2)
     (mode Simultaneous)
@@ -45,7 +42,7 @@
     })
     (rules
         (start {
-            (deal Cards 15 stack:True)
+            (deal Cards 20 stack:True)
         })
 
                     (play

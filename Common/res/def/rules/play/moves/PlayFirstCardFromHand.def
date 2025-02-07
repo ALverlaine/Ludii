@@ -1,0 +1,16 @@
+// Defines a move that plays a card from hand to a site
+// #1 = The player of his hand
+// #2 = The site to play the card
+// #3 = If the Stack is true
+// #4 = The then condition
+// @example ("PlayACard" P1 0 stack:True (then (move Pass)))
+
+
+(define "PlayFirstCardFromHand"
+    (move
+        (from (handSite #1))
+        (to #2)
+        #3
+        #4
+    )
+)
