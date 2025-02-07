@@ -494,8 +494,9 @@ public class ActionMoveTopPiece extends BaseAction
 
 			final int who = (what < 1) ? 0 : context.components()[what].owner();
 
-			if (!context.game().hasCard())
-				csTo.addItemGeneric(context.state(), to, what, who, context.game(), typeTo);
+			//if (!context.game().hasCard())
+			System.out.println("from = " + from + " to = " + to + " typeFrom = " + typeFrom + " typeTo = " + typeTo + " What = " + what);
+			csTo.addItemGeneric(context.state(), to, what, who, context.game(), typeTo);
 
 			if (csTo.sizeStack(to, typeTo) != 0)
 				csTo.removeFromEmpty(to, typeTo);

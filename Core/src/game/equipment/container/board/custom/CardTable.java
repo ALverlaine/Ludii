@@ -105,7 +105,7 @@ public class CardTable extends Board
             public void preprocess(Game game) {
 
             }
-        }, track, tracks, null, null, (use == null) ? SiteType.Vertex : use, false);
+        }, track, tracks, null, null, (use == null) ? SiteType.Vertex : use, true);
 
         // Store the parameter to access it later in TableCard logic.
         this.numPlayers = players.intValue();

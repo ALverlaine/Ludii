@@ -88,6 +88,11 @@ public class ContainerGraphStateStacksLarge extends ContainerStateStacksLarge
 	{
 		super(other);
 
+//		System.out.println("OTHER VERTEX");
+//		for(int i = 0 ; i < other.listStacksVertex.length; i++) {
+//			System.out.println(other.listStacksVertex[i].what());
+//		}
+		
 		if (other.listStacksVertex == null)
 		{
 			listStacksVertex = null;
@@ -100,6 +105,11 @@ public class ContainerGraphStateStacksLarge extends ContainerStateStacksLarge
 			}
 		}
 
+//		System.out.println("VERTEX");
+//		for(int i = 0 ; i < listStacksVertex.length; i++) {
+//			System.out.println(listStacksVertex[i].what());
+//		}
+		
 		if (other.listStacksEdge == null)
 		{
 			listStacksEdge = null;
@@ -158,6 +168,9 @@ public class ContainerGraphStateStacksLarge extends ContainerStateStacksLarge
 	{
 		if (listStacksVertex[site] != null)
 			return;
+		
+		// ERIC A FAIT CETTE MODIFICATION CAR CETTE METHODE NE SERT A RIEN SANS 
+		listStacksVertex[site] = new ListStack(numComponents, numPlayers, numStates, numRotation, numValues, type, hiddenVertexInfo);
 	}
 
 	private void verifyPresentEdge(final int site)
