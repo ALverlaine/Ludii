@@ -10,7 +10,8 @@
                                 (to Cell (handSite #1) level:0 )
                                 stack:True
                             )
-                        ))
+                        )
+                        )
 )
 
 (define "PlayACard"

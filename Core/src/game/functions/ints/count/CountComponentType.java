@@ -12,4 +12,5 @@ public enum CountComponentType
 	
 	/** The number of pips showing on all dice, or dice owned by a specified player. */
 	Pips,
+	CardType,
 }
