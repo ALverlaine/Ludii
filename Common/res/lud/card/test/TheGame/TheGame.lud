@@ -11,18 +11,17 @@
     )
 (define "DrawACard"
          (move
-            (from (handSite Shared) if:(is Occupied (from)))
-            (to (sites Hand Mover)
-                if:(is Empty (to))
+            (from Cell (handSite Shared) if:(and (is Occupied (from)) (not ("IsDeckEmpty"))))
+            (to Cell (sites Hand Mover)
+                if:(and (is Empty (to)) (not ("IsDeckEmpty")))
             )
             (then
                 (fromTo
-                    (from (handSite Shared)
-                    if:(is Occupied (from)))
-                    (to (sites Hand Mover)
-                     if:(is Empty (to))
-                     )
-                )
+                    (from Cell (handSite Shared) if:(and (is Occupied (from)) (not ("IsDeckEmpty"))))
+                                (to Cell (sites Hand Mover)
+                                    if:(and (is Empty (to)) (not ("IsDeckEmpty")))
+                                )
+                                )
            )
          )
 )
@@ -112,14 +111,14 @@
 )
 (define "CompareWithSites1" ("CompareWithSites>" #1))
 (define "CompareWithSites99" ("CompareWithSites<" #1))
-
+(define "MoveAgain" (then (if (< 0 (count CardType in:(sites Hand Mover))) (moveAgain))))
 (define "ChooseWhereToPlay2Cards"
         (or
             {
-                ("CompareWithSites1" (then (moveAgain)))
-                ("CompareWithSites99" (then (moveAgain)))
-                ("SpecialRules01" (then (moveAgain)))
-                ("SpecialRules23" (then (moveAgain)))
+                ("CompareWithSites1" ("MoveAgain"))
+                ("CompareWithSites99" ("MoveAgain"))
+                ("SpecialRules01" ("MoveAgain"))
+                ("SpecialRules23" ("MoveAgain"))
             }
         )
 )
@@ -130,6 +129,10 @@
         (hand Each size:7)
         (hand Shared size:1)
         ("TheGameCards")
+        (cardType "1" {"Value"} {"1"})
+        (cardType "1" {"Value"} {"1"})
+        (cardType "99" {"Value"} {"99"})
+        (cardType "99" {"Value"} {"99"})
     })
     (rules
         (start {
@@ -140,14 +143,28 @@
             (deal Cards 7)
             (deal Deck 10 stack:True)
         })
-        (play
-            (or
-                ("ChooseWhereToPlay2Cards")
-                (if (> 1 (count Cell (Hand Empty))) ("DrawACard"))
-            )
-        )
+        phases:{
+                (phase "DeckNotEmpty"
+                    (play
+                        (or
+                            ("ChooseWhereToPlay2Cards")
+                            (if (or (> 6 (count CardType in:(sites Hand Mover))) ("IsDeckEmpty")) ("DrawACard"))
+                        )
+                    )
+                    (nextPhase "IsDeckEmpty" "DeckEmpty")
+                )
+                (phase "DeckEmpty"
+                    (play
+                        (or
+                            ("ChooseWhereToPlay2Cards")
+                            (move Pass)
+                        )
+                    )
+                )
+        }
+
         (end
-            (if ("HandEmpty" All)
+            (if (and ("HandEmpty" P1) ("HandEmpty" P2))
                 (result All Win)
             )
         )

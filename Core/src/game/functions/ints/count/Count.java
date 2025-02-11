@@ -8,6 +8,7 @@ import game.functions.booleans.BooleanFunction;
 import game.functions.intArray.IntArrayFunction;
 import game.functions.ints.BaseIntFunction;
 import game.functions.ints.IntFunction;
+import game.functions.ints.count.component.CountCardType;
 import game.functions.ints.count.component.CountPieces;
 import game.functions.ints.count.component.CountPips;
 import game.functions.ints.count.groups.CountGroups;
@@ -298,6 +299,8 @@ public final class Count extends BaseIntFunction
 			return new CountPieces(type, role, of, name, in, If);
 		case Pips:
 			return new CountPips(role, of);
+		case CardType:
+			return new CountCardType(type, role, of, name, in, If);
 		default:
 			break;
 		}

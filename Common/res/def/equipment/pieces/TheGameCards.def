@@ -2,8 +2,6 @@
 // @example ("TheGameCards")
 
 (define "TheGameCards"
-    (cardType "1" {"Value"} {"1"})
-    (cardType "1" {"Value"} {"1"})
     (cardType "2" {"Value"} {"2"})
     (cardType "3" {"Value"} {"3"})
     (cardType "4" {"Value"} {"4"})
@@ -101,6 +99,4 @@
     (cardType "96" {"Value"} {"96"})
     (cardType "97" {"Value"} {"97"})
     (cardType "98" {"Value"} {"98"})
-    (cardType "99" {"Value"} {"99"})
-    (cardType "99" {"Value"} {"99"})
 )

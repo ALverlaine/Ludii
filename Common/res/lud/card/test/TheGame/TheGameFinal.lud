@@ -11,13 +11,13 @@
     )
 (define "DrawACard"
          (move
-            (from (handSite Shared) if:(is Occupied (from)))
+            (from (sites Hand Shared) if:(is Occupied (from)))
             (to (sites Hand Mover)
                 if:(is Empty (to))
             )
             (then
                 (fromTo
-                    (from (handSite Shared)
+                    (from (sites Hand Shared)
                     if:(is Occupied (from)))
                     (to (sites Hand Mover)
                      if:(is Empty (to))
@@ -130,6 +130,7 @@
         (hand Each size:7)
         (hand Shared size:1)
         ("TheGameCards")
+
     })
     (rules
         (start {
