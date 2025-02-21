@@ -1,0 +1,58 @@
+(define "PlayACard"
+    (move
+        (from (sites Hand Mover))
+        (to (sites Occupied by:All)
+            if:(or
+                (is Empty (to))
+                (is Empty (from))
+            )
+        )
+        stack:True
+    )
+)
+(define "PlayHigh"
+    (move
+        (from Cell (sites Hand Mover))
+        (to Vertex 1 )
+        stack:True
+    )
+)
+(define "PlayLow"
+    (move
+        (from Cell (sites Hand Mover))
+        (to Vertex 0)
+        stack:True
+    )
+)
+
+
+
+(game "Split"
+    (players 2)
+    (equipment {
+        (cardTable 2)
+        (hand Each size:9)
+        (hand Shared size:1)
+        ("SplitCards")
+    })
+    (rules
+        (start {
+            (deal Cards 7 P1)
+            (deal Cards 7 P2)
+            (deal Deck 10)
+            (place "12" 0)
+            (place "87" 1)
+        })
+        (play
+            (or
+                    ("PlayHigh")
+                    ("PlayLow")
+            )
+        )
+        (end
+            (if ("HandEmpty" P2)
+                (result P2 Win)
+            )
+        )
+    )
+)

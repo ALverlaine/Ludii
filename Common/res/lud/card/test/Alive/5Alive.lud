@@ -1,0 +1,76 @@
+
+
+(define "PlayNumber"
+    (move
+        (from Cell (sites Hand #1) if:(hasAttribute (from) "Value"))
+        (to Vertex 0 if:(>= 21 (+ (value CardType "Value" at:(from)) (score P1))))
+        (then (addScore P1 (value CardType "Value" at:0)))
+    )
+)
+(define "Play+1"
+    (move
+            (from Cell (sites Hand Mover) if:(hasAttribute (from) "+1"))
+            (to Vertex 0)
+            (then
+                (fromTo
+                    (from Cell 25 if:(is Occupied (from)))
+                    (to Cell (sites Hand Next) if:(and (is Empty (to)) (not (= 8 (to)))))
+                )
+            )
+        )
+)
+(define "Play0"
+    (move
+            (from Cell (sites Hand Mover) if:(hasAttribute (from) "0"))
+            (to Vertex 0)
+            (then
+                (set Score P1 0)
+            )
+        )
+)
+(define "Play10"
+    (move
+            (from Cell (sites Hand Mover) if:(hasAttribute (from) "10"))
+            (to Vertex 0)
+            (then
+                (set Score P1 10)
+            )
+        )
+)
+
+
+(game "5Alive"
+    (players 3)
+    (equipment {
+        (cardTable 1)
+        (hand Each size:8)
+        (hand Shared size:2)
+        ("5AliveCards")
+        ("5AliveCardsLive")
+    })
+    (rules
+        (start {
+            (set Score P1 0)
+            (deal Cards 7 P1 deckType:"Card")
+            (deal Cards 7 P2 deckType:"Card")
+            (deal Cards 7 P3 deckType:"Card")
+            (deal Deck 10 26 stack:True deckType:"Live")
+            (deal Deck 10 25 stack:True deckType:"Card")
+        })
+        (play
+            (or
+                {
+                    ("PlayNumber" Mover)
+                    ("Play+1" Next)
+                    ("Play0")
+                    ("Play10")
+
+                    //("Play+2" Next)
+                }
+            )
+        )
+        (end
+            ("NoMoves" Loss)
+        )
+    )
+)

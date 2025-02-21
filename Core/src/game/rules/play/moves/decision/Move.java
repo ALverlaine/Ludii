@@ -922,10 +922,9 @@ public final class Move extends Decision
 	public static Moves construct
 			(
 						final MoveDrawCardType moveType,
-						final int numberOfDraw,
-			@Opt        final SiteType       type,
-			@Or       	final IntFunction    locationFunction,
-			@Or     	final RegionFunction regionFunction,
+						@Opt @Name  final IntFunction     count,
+						@Opt 		final RoleType mover,
+						@Opt @Name  final Boolean         stack,
 			@Opt 	    final Then           then
 			)
 	{
@@ -934,7 +933,7 @@ public final class Move extends Decision
 		switch (moveType)
 		{
 			case DrawCard:
-				moves = new DrawCard(numberOfDraw, type, locationFunction, regionFunction, then);
+				moves = new DrawCard(count,  mover, stack, then);
 				break;
 			default:
 				break;

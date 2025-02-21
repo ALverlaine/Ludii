@@ -9,7 +9,7 @@
     })
     (rules
         (start {
-            (deal Cards 5)
+            (deal Cards 5 All)
             (deal Deck 5)
         })
         (play (or {

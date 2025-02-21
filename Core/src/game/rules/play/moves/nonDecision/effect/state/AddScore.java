@@ -146,6 +146,7 @@ public final class AddScore extends Effect
 			{
 				final RoleType role = roles[i];
 				final int score = scores[i].eval(context);
+				System.out.println("SCOREE" + score);
 				final TIntArrayList idPlayers = PlayersIndices.getIdRealPlayers(context, role);
 				for(int j = 0; j < idPlayers.size();j++)
 				{
@@ -272,7 +273,7 @@ public final class AddScore extends Effect
 			{
 				final int indexOwnerPhase = role.owner();
 
-				if (role.equals(RoleType.Mover) || role.equals(RoleType.Next) || role.equals(RoleType.Prev) || role.equals(RoleType.Player))
+				if (role.equals(RoleType.Mover) || role.equals(RoleType.Next) || role.equals(RoleType.Prev) || role.equals(RoleType.Player) || role.equals(RoleType.Neutral))
 					continue;
 
 				if (indexOwnerPhase < 1 || indexOwnerPhase > game.players().count())

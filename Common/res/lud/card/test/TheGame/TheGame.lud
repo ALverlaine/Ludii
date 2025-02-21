@@ -21,7 +21,7 @@
                                 (to Cell (sites Hand Mover)
                                     if:(and (is Empty (to)) (not ("IsDeckEmpty")))
                                 )
-                                )
+                )
            )
          )
 )
@@ -112,7 +112,7 @@
 (define "CompareWithSites1" ("CompareWithSites>" #1))
 (define "CompareWithSites99" ("CompareWithSites<" #1))
 (define "MoveAgain" (then (if (< 0 (count CardType in:(sites Hand Mover))) (moveAgain))))
-(define "ChooseWhereToPlay2Cards"
+(define "ChooseWhereToPlayCards"
         (or
             {
                 ("CompareWithSites1" ("MoveAgain"))
@@ -140,28 +140,15 @@
             (place "1" 1)
             (place "99" 2)
             (place "99" 3)
-            (deal Cards 7)
-            (deal Deck 10 stack:True)
+            (deal Cards 7 All)
+            (deal Deck 45 stack:True)
         })
-        phases:{
-                (phase "DeckNotEmpty"
-                    (play
-                        (or
-                            ("ChooseWhereToPlay2Cards")
-                            (if (or (> 6 (count CardType in:(sites Hand Mover))) ("IsDeckEmpty")) ("DrawACard"))
-                        )
-                    )
-                    (nextPhase "IsDeckEmpty" "DeckEmpty")
-                )
-                (phase "DeckEmpty"
-                    (play
-                        (or
-                            ("ChooseWhereToPlay2Cards")
-                            (move Pass)
-                        )
-                    )
-                )
-        }
+        (play
+            (or
+                ("ChooseWhereToPlayCards")
+                (if (and (> 6 (count CardType in:(sites Hand Mover))) (not ("IsDeckEmpty"))) ("DrawACard"))
+            )
+        )
 
         (end
             (if (and ("HandEmpty" P1) ("HandEmpty" P2))

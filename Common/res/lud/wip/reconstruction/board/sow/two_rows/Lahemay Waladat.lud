@@ -76,7 +76,7 @@
                                         )
                                     )
                                 )
-                                (then // No need of the Jen rule, because the capture is automatic in Ludii, so no errors are possible.
+                                 (then // No need of the Jen rule, because the capture is automatic in Ludii, so no errors are possible.
                                     (and
                                         (forEach Site (sites Track from:(last From) to:(trackSite Move from:(last From) "Track" steps:(- (var "NumSowed") 1)))
                                             (if (= 4 (count at:(site)))

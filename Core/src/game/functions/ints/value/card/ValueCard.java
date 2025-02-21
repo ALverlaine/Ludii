@@ -2,7 +2,6 @@ package game.functions.ints.value.card;
 
 import java.util.Arrays;
 import java.util.BitSet;
-import annotations.Hide;
 import annotations.Name;
 import annotations.Opt;
 import game.Game;
@@ -27,7 +26,7 @@ import other.state.stacking.BaseContainerStateStacking;
  *
  * @remarks Useful for games where cards have attributes with specific values.
  */
-@Hide
+
 public final class ValueCard extends BaseIntFunction {
     private static final long serialVersionUID = 1L;
 
@@ -76,6 +75,8 @@ public final class ValueCard extends BaseIntFunction {
     public int eval(final Context context) {
         // Évalue la localisation de la carte à partir du contexte
         final int location = loc.eval(context);
+
+        //System.out.println("Location: " + location);
         // Vérifie si la carte est "OFF" (hors du jeu)
         if (location == Constants.OFF) {
             System.out.println("Location is OFF");
@@ -108,16 +109,18 @@ public final class ValueCard extends BaseIntFunction {
                     // Si ce n'est pas un entier, convertit la chaîne en fonction des caractères
                     value = convertStringToNumber(attributes[i]); // Conversion de la chaîne en entier basé sur les caractères
                 }
-                System.out.println("ValueCard: " + value + " for Attribute " + attributes[i]);
+                //System.out.println("ValueCard: " + value + " for Attribute " + attributes[i]);
                 return value;
             }
         }
         return Constants.UNDEFINED; // attributes wasnt found
     }
 
+
+
     @Override
     public long gameFlags(Game game) {
-        return 0;
+        return 0L;
     }
 
     @Override

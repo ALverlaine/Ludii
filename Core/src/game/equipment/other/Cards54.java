@@ -58,7 +58,7 @@ public class Cards54 extends Item
             for (final String rank : RANKS)
             {
                 final CardType card = new CardType(
-                        rank + " of " + suit, new String[]{"Rank", "Suits"}, new String[]{rank, suit}
+                        rank + " of " + suit, new String[]{"Rank", "Suits"}, new String[]{rank, suit}, null
                 );
                 cards.add(card);
             }

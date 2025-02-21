@@ -51,7 +51,7 @@ public class UnoCards extends Item
             for (final String number : NUMBERS)
             {
                 final CardType card = new CardType(
-                        number + " of " + color,new String[]{"Number", "Color"}, new String[]{number, color}
+                        number + " of " + color,new String[]{"Number", "Color"}, new String[]{number, color}, null
                 );
                 cards.add(card);
             }

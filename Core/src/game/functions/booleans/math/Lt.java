@@ -76,6 +76,7 @@ public final class Lt extends BaseBooleanFunction
 
 			final int vA = ps.what(indexA, type);
 			final int vB = ps.what(indexB, type);
+			System.out.println("vA < vB " + vA + " < " + vB);
 			return vA < vB;
 		}
 	}

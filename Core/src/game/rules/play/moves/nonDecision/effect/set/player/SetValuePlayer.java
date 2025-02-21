@@ -90,7 +90,6 @@ public final class SetValuePlayer extends Effect
 		// Store the Moves in the computed moves.
 		for (int j = 0; j < moves.moves().size(); j++)
 			moves.moves().get(j).setMovesLudeme(this);
-
 		return moves;
 	}
 

@@ -72,7 +72,7 @@ public final class SetScore extends Effect
 		final Moves moves = new BaseMoves(super.then());
 		final int playerId = playerFn.eval(context);
 		final int score = scoreFn.eval(context);
-		
+		System.out.println(score);
 		if(role != null)
 		{
 			// Code to handle specific roleType.

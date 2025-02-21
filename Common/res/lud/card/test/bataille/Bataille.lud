@@ -43,7 +43,8 @@
     })
     (rules
         (start {
-            (deal Cards 20 stack:True)
+            (deal Cards 20 P1 stack:True)
+            (deal Cards 20 P2 stack:True)
         })
 
                     (play
