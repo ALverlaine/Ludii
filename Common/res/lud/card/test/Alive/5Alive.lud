@@ -1,10 +1,12 @@
 
-
+(define "NPlayer"
+    (set NextPlayer (player (+ 1 (% (+ 1  (mover)) 3))))
+)
 (define "PlayNumber"
     (move
-        (from Cell (sites Hand #1) if:(hasAttribute (from) "Value"))
-        (to Vertex 0 if:(>= 21 (+ (value CardType "Value" at:(from)) (score P1))))
-        (then (addScore P1 (value CardType "Value" at:0)))
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "Value"))
+        (to Vertex 0 if:(>= 21 (+ (value CardType "Value" at:(from)) (value Pot))))
+        (then (set Pot (+ (value Pot) (value CardType "Value" at:0))))
     )
 )
 (define "Play+1"
@@ -12,61 +14,116 @@
             (from Cell (sites Hand Mover) if:(hasAttribute (from) "+1"))
             (to Vertex 0)
             (then
-                (fromTo
-                    (from Cell 25 if:(is Occupied (from)))
-                    (to Cell (sites Hand Next) if:(and (is Empty (to)) (not (= 8 (to)))))
+                (and
+                    {
+                    (fromTo
+                        (from Cell 28 if:(is Occupied (from)))
+                        (to Cell (sites Hand P1) if:(and (is Empty (to)) (not (= 9 (to)))))
+                    )
+                    (fromTo
+                        (from Cell 28 if:(is Occupied (from)))
+                        (to Cell (sites Hand P2) if:(and (is Empty (to)) (not (= 9 (to)))))
+                    )
+                    (fromTo
+                        (from Cell 28 if:(is Occupied (from)))
+                        (to Cell (sites Hand P3) if:(and (is Empty (to)) (not (= 9 (to)))))
+                    )
+                    }
                 )
             )
         )
 )
 (define "Play0"
     (move
-            (from Cell (sites Hand Mover) if:(hasAttribute (from) "0"))
+            (from Cell (sites Hand Mover) if:(hasAttribute (from) "=0"))
             (to Vertex 0)
             (then
-                (set Score P1 0)
+                (set Pot 0)
             )
         )
 )
 (define "Play10"
     (move
-            (from Cell (sites Hand Mover) if:(hasAttribute (from) "10"))
+            (from Cell (sites Hand Mover) if:(hasAttribute (from) "=10"))
             (to Vertex 0)
             (then
-                (set Score P1 10)
+                (set Pot 10)
             )
         )
 )
+(define "Play21"
+    (move
+            (from Cell (sites Hand Mover) if:(hasAttribute (from) "=21"))
+            (to Vertex 0)
+            (then
+                (set Pot 21)
+            )
+        )
+)
+
+(define "Pass0"
+    (move
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "Pass"))
+        (to Vertex 0)
+    )
+)
+
+(define "Jump0"
+    (move
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "Jump"))
+        (to Vertex 0)
+        (then (set NextPlayer (player (% (+ 2 (mover)) 3))))
+    )
+)
+(define "Inversion0"
+    (move
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "Inversion"))
+        (to Vertex 0)
+        (then
+                (or
+                 (if (= 0 (var "InversionVar")) (set Var "InversionVar" 1 (then ("NPlayer"))))
+                 (if (= 1 (var "InversionVar")) (set Var "InversionVar" 0 (then (set NextPlayer (player (+ 1 (% (mover) 3)))))))
+                 )
+
+
+        )
+    )
+)
+
 
 
 (game "5Alive"
     (players 3)
     (equipment {
         (cardTable 1)
-        (hand Each size:8)
-        (hand Shared size:2)
+        (hand Each size:9)
+        (hand Shared size:1)
         ("5AliveCards")
         ("5AliveCardsLive")
     })
     (rules
         (start {
-            (set Score P1 0)
+            (set Var "InversionVar" 0)
             (deal Cards 7 P1 deckType:"Card")
             (deal Cards 7 P2 deckType:"Card")
             (deal Cards 7 P3 deckType:"Card")
-            (deal Deck 10 26 stack:True deckType:"Live")
-            (deal Deck 10 25 stack:True deckType:"Card")
+            (deal Deck 10 28 stack:True deckType:"Card")
         })
         (play
-            (or
-                {
-                    ("PlayNumber" Mover)
-                    ("Play+1" Next)
-                    ("Play0")
-                    ("Play10")
-
-                    //("Play+2" Next)
-                }
+            (do
+                (if (= 1 (var "InversionVar")) ("NPlayer"))
+                next:(or
+                    {
+                        ("PlayNumber")
+                        ("Play+1")
+                        ("Play0")
+                        ("Play10")
+                        ("Play21")
+                        ("Pass0")
+                        ("Jump0")
+                        ("Inversion0")
+                    }
+                )
             )
         )
         (end

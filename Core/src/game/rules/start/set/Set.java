@@ -9,7 +9,11 @@ import game.functions.booleans.BooleanFunction;
 import game.functions.ints.IntFunction;
 import game.functions.region.RegionFunction;
 import game.rules.Rule;
+import game.rules.play.moves.nonDecision.effect.Then;
+import game.rules.play.moves.nonDecision.effect.set.SetVarType;
+import game.rules.start.set.var.SetVar;
 import game.rules.start.StartRule;
+import game.rules.start.set.pending.SetPending;
 import game.rules.start.set.player.SetAmount;
 import game.rules.start.set.player.SetScore;
 import game.rules.start.set.players.SetTeam;
@@ -144,9 +148,37 @@ public final class Set extends StartRule
 		// We should never reach that except if we forget some codes.
 		throw new IllegalArgumentException("Set(): A SetStartHiddenType is not implemented.");
 	}
-
 	//-------------------------------------------------------------------------
-	
+
+	/**
+	 * For setting the counter or the variables.
+	 *
+	 * @param setType  The type of property to set.
+	 * @param name     The name of the var.
+	 * @param newValue The new counter value [-1].
+	 * @param then     The moves to apply afterwards.
+	 * @example (set Var ( value Piece at : ( last To)))
+	 */
+	public static Rule construct
+	(
+			final SetVarType setType,
+			@Opt final String         name,
+			@Opt final IntFunction    newValue
+	)
+	{
+		switch (setType)
+		{
+			case Var:
+				return new SetVar(name, newValue);
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		throw new IllegalArgumentException("Set(): A SetVarType is not implemented.");
+	}
+	//-------------------------------------------------------------------------
+
 	/**
 	 * For setting a site to a player.
 	 * 
@@ -303,6 +335,37 @@ public final class Set extends StartRule
 
 		// We should never reach that except if we forget some codes.
 		throw new IllegalArgumentException("Set(): A SetStartPlayersType is not implemented.");
+	}
+
+	//-------------------------------------------------------------------------
+
+	/**
+	 * For setting the pending values.
+	 *
+	 * @param setType The type of property to set.
+	 * @param value   The value of the pending state [1].
+	 * @param region  The set of locations to put in pending.
+	 *
+	 * @example (set Pending)
+	 * @example (set Pending (sites From (forEach Piece)))
+	 */
+	public static Rule construct
+	(
+			final SetPendingType setType,
+			@Opt @Or final IntFunction    value,
+			@Opt @Or final RegionFunction region
+	)
+	{
+		switch (setType)
+		{
+			case Pending:
+				return new SetPending(value, region);
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		throw new IllegalArgumentException("Set(): A SetPendingType is not implemented.");
 	}
 	
 	private Set()

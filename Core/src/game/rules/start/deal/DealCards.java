@@ -176,7 +176,15 @@ public final class DealCards extends StartRule
         final TIntArrayList toDeal = new TIntArrayList();
         for (int i = 1; i < components.length; i++)
         {
-            toDeal.add(i);
+            if(deckType != null){
+                final CardType card = (CardType) components[i];
+                if(card.getDeckType().equals(deckType)){
+                    toDeal.add(i);
+                }
+            }
+            else {
+                toDeal.add(i);
+            }
         }
 
         final int nbPlayers = context.players().size() - 1;

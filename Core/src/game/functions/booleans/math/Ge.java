@@ -62,6 +62,8 @@ public final class Ge extends BaseBooleanFunction
 		
 		if (!context.game().isDeductionPuzzle())
 		{
+
+			System.out.println(valueA.eval(context) + ">=" + valueB.eval(context));
 			return valueA.eval(context) >= valueB.eval(context);
 		}
 		else
@@ -74,6 +76,7 @@ public final class Ge extends BaseBooleanFunction
 				return true;
 			final int vA = ps.what(indexA, type);
 			final int vB = ps.what(indexB, type);
+			System.out.println(vA + ">=" + vB);
 			return vA >= vB;
 		}
 	}

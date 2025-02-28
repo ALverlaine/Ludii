@@ -263,6 +263,10 @@ public interface GameType extends Serializable
 	 * On if the game checks the repetition of cycles.
 	 */
 	public final static long CycleDetection          = (0x1L << 49);
+	/**
+	 * On if the game uses some pot states/values.
+	 */
+	public final static long PotValues			= (0x1L << 50);
 
 	/**
 	 * @param game The game.

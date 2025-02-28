@@ -1,5 +1,6 @@
 package game.functions.ints.math;
 
+import java.util.Arrays;
 import java.util.BitSet;
 
 import annotations.Alias;
@@ -85,7 +86,6 @@ public final class Add extends BaseIntFunction
 			return precomputedValue;
 
 		final int[] values = array.eval(context);
-
 		int sum = 0;
 		for (final int val : values)
 			sum += val;

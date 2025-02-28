@@ -129,19 +129,17 @@
         (hand Each size:7)
         (hand Shared size:1)
         ("TheGameCards")
-        (cardType "1" {"Value"} {"1"})
-        (cardType "1" {"Value"} {"1"})
-        (cardType "99" {"Value"} {"99"})
-        (cardType "99" {"Value"} {"99"})
+
     })
     (rules
         (start {
+
             (place "1" 0)
             (place "1" 1)
             (place "99" 2)
             (place "99" 3)
-            (deal Cards 7 All)
-            (deal Deck 45 stack:True)
+            (deal Cards 7 All deckType:"Deck")
+            (deal Deck 15 stack:True deckType:"Deck")
         })
         (play
             (or
@@ -151,8 +149,21 @@
         )
 
         (end
-            (if (and ("HandEmpty" P1) ("HandEmpty" P2))
-                (result All Win)
+            (if
+                (and (no Moves P1) (no Moves P2))
+                (if
+                    (>=
+                        10
+                        (+
+                            (+
+                                (count CardType in:(sites Hand P1)) (count CardType in:(sites Hand P2))
+                            )
+                            (count CardType in:(sites Hand Shared))
+                        )
+                    )
+                    (result P1 Win)
+                )
+                (result P2 Win)
             )
         )
     )

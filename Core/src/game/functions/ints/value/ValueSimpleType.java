@@ -23,4 +23,5 @@ public enum ValueSimpleType
 	 * To get the turn limit of a game.
 	 */
 	TurnLimit,
+	Pot
 }

@@ -38,6 +38,7 @@ public final class ValuePending extends BaseIntFunction
 		// pendingValues should mathematically be a set, so if it contains
 		// more than 1 value we don't know what to return and just return
 		// the default of 0 instead
+		System.out.println(context.state().pendingValues());
 		if (context.state().pendingValues().size() == 1)
 			return context.state().pendingValues().iterator().next();
 		
