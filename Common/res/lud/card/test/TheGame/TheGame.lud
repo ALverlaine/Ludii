@@ -122,6 +122,7 @@
             }
         )
 )
+
 (game "TheGame"
     (players 2)
     (equipment {

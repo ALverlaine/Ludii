@@ -89,7 +89,21 @@
         )
     )
 )
-
+(define "Bomb0"
+    (move
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "Bomb"))
+        (to Vertex 0)
+        (then
+            (forEach Player
+                if:(not (= (player) (mover)))
+                    (fromTo
+                        (from Cell (sites Hand Mover) if:(hasAttribute (from) "0"))
+                        (to Vertex 0)
+                    )
+                 )
+            )
+        )
+    )
 
 
 (game "5Alive"
@@ -122,6 +136,7 @@
                         ("Pass0")
                         ("Jump0")
                         ("Inversion0")
+                        ("Bomb0")
                     }
                 )
             )
