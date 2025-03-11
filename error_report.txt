@@ -1,8 +1,8 @@
 java.lang.NullPointerException: Cannot read field "type" because "other" is null
 	at main.collections.ListStack.<init>(ListStack.java:221)
-	at other.state.stacking.ContainerStateStacksLarge.<init>(ContainerStateStacksLarge.java:109)
-	at other.state.stacking.ContainerStateStacksLarge.deepClone(ContainerStateStacksLarge.java:119)
-	at other.state.stacking.ContainerStateStacksLarge.deepClone(ContainerStateStacksLarge.java:18)
+	at other.state.stacking.ContainerGraphStateStacksLarge.<init>(ContainerGraphStateStacksLarge.java:104)
+	at other.state.stacking.ContainerGraphStateStacksLarge.deepClone(ContainerGraphStateStacksLarge.java:135)
+	at other.state.stacking.ContainerGraphStateStacksLarge.deepClone(ContainerGraphStateStacksLarge.java:21)
 	at other.state.State.<init>(State.java:564)
 	at other.context.Context.copyState(Context.java:348)
 	at other.context.Context.<init>(Context.java:282)
