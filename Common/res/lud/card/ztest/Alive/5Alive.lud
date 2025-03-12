@@ -11,54 +11,54 @@
 )
 (define "Play+1"
     (move
-            (from Cell (sites Hand Mover) if:(hasAttribute (from) "+1"))
-            (to Vertex 0)
-            (then
-                (and
-                    {
-                    (fromTo
-                        (from Cell 28 if:(is Occupied (from)))
-                        (to Cell (sites Hand P1) if:(and (is Empty (to)) (not (= 9 (to)))))
-                    )
-                    (fromTo
-                        (from Cell 28 if:(is Occupied (from)))
-                        (to Cell (sites Hand P2) if:(and (is Empty (to)) (not (= 9 (to)))))
-                    )
-                    (fromTo
-                        (from Cell 28 if:(is Occupied (from)))
-                        (to Cell (sites Hand P3) if:(and (is Empty (to)) (not (= 9 (to)))))
-                    )
-                    }
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "+1"))
+        (to Vertex 0)
+        (then
+            (and
+                {
+                (fromTo
+                    (from Cell 28 if:(is Occupied (from)))
+                    (to Cell (sites Hand P1) if:(and (is Empty (to)) (not (= 9 (to)))))
                 )
+                (fromTo
+                    (from Cell 28 if:(is Occupied (from)))
+                    (to Cell (sites Hand P2) if:(and (is Empty (to)) (not (= 9 (to)))))
+                )
+                (fromTo
+                    (from Cell 28 if:(is Occupied (from)))
+                    (to Cell (sites Hand P3) if:(and (is Empty (to)) (not (= 9 (to)))))
+                )
+                }
             )
         )
+    )
 )
 (define "Play0"
     (move
-            (from Cell (sites Hand Mover) if:(hasAttribute (from) "=0"))
-            (to Vertex 0)
-            (then
-                (set Pot 0)
-            )
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "=0"))
+        (to Vertex 0)
+        (then
+            (set Pot 0)
         )
+    )
 )
 (define "Play10"
     (move
-            (from Cell (sites Hand Mover) if:(hasAttribute (from) "=10"))
-            (to Vertex 0)
-            (then
-                (set Pot 10)
-            )
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "=10"))
+        (to Vertex 0)
+        (then
+            (set Pot 10)
         )
+    )
 )
 (define "Play21"
     (move
-            (from Cell (sites Hand Mover) if:(hasAttribute (from) "=21"))
-            (to Vertex 0)
-            (then
-                (set Pot 21)
-            )
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "=21"))
+        (to Vertex 0)
+        (then
+            (set Pot 21)
         )
+    )
 )
 
 (define "Pass0"
@@ -80,12 +80,11 @@
         (from Cell (sites Hand Mover) if:(hasAttribute (from) "Inversion"))
         (to Vertex 0)
         (then
-                (or
-                 (if (= 0 (var "InversionVar")) (set Var "InversionVar" 1 (then ("NPlayer"))))
-                 (if (= 1 (var "InversionVar")) (set Var "InversionVar" 0 (then (set NextPlayer (player (+ 1 (% (mover) 3)))))))
-                 )
-
-
+            (or
+                (if (= 0 (var "InversionVar")) (set Var "InversionVar" 1 (then ("NPlayer"))))
+                (if (= 1 (var "InversionVar")) (set Var "InversionVar" 0 (then (set NextPlayer (player (+ 1 (% (mover) 3)))))))
+            )
+            
         )
     )
 )
@@ -96,15 +95,14 @@
         (then
             (forEach Player
                 if:(not (= (player) (mover)))
-                    (fromTo
-                        (from Cell (sites Hand Mover) if:(hasAttribute (from) "0"))
-                        (to Vertex 0)
-                    )
-                 )
+                (fromTo
+                    (from Cell (sites Hand Mover) if:(hasAttribute (from) "0"))
+                    (to Vertex 0)
+                )
             )
         )
     )
-
+)
 
 (game "5Alive"
     (players 3)
@@ -128,15 +126,15 @@
                 (if (= 1 (var "InversionVar")) ("NPlayer"))
                 next:(or
                     {
-                        ("PlayNumber")
-                        ("Play+1")
-                        ("Play0")
-                        ("Play10")
-                        ("Play21")
-                        ("Pass0")
-                        ("Jump0")
-                        ("Inversion0")
-                        ("Bomb0")
+                    ("PlayNumber")
+                    ("Play+1")
+                    ("Play0")
+                    ("Play10")
+                    ("Play21")
+                    ("Pass0")
+                    ("Jump0")
+                    ("Inversion0")
+                    ("Bomb0")
                     }
                 )
             )

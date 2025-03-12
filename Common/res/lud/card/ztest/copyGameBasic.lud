@@ -2,7 +2,7 @@
     (players 4)
     (equipment {
         (board
-           (square 2)
+            (square 2)
         )
         (hand Shared size:2)
     })

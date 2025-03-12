@@ -20,7 +20,7 @@
                     )
                     (to (sites Occupied by:All)
                         if:(or
-
+                            
                             (=
                                 (value CardType "Color" at:(from))
                                 (value CardType "Color" at:(to))
@@ -29,8 +29,7 @@
                                 (value CardType "Number" at:(from))
                                 (value CardType "Number" at:(to))
                             )
-
-
+                            
                         )
                     )
                 )

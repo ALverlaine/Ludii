@@ -1,17 +1,17 @@
 (define "HandEmpty" (all Sites (sites Hand #1) if:(= 0 (count Cell at:(site)))))
 (define "CardOnTable" (= 2  (count Sites in:(sites Occupied by:All))))
 (define "PlayerTake" (move
-                        (from Vertex 0)
-                        (to Cell (handSite #1) level:0)
-                        stack:True
-                        (then
-                            (fromTo
-                                (from Vertex 1)
-                                (to Cell (handSite #1) level:0 )
-                                stack:True
-                            )
-                        )
-                        )
+        (from Vertex 0)
+        (to Cell (handSite #1) level:0)
+        stack:True
+        (then
+            (fromTo
+                (from Vertex 1)
+                (to Cell (handSite #1) level:0 )
+                stack:True
+            )
+        )
+    )
 )
 
 (define "PlayACard"
@@ -46,37 +46,36 @@
             (deal Cards 20 P1 stack:True)
             (deal Cards 20 P2 stack:True)
         })
-
-                    (play
-                        (if (is Odd (count Turns))
-                            (or
-                                ("P1PlayACard" P1)
-                                ("P2PlayACard" P2)
-                            )
-                            (move Pass
-                                (then
-                                    (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
-                                        ("PlayerTake" P1)
-                                        (if (< (value CardType "Rank" at:0) (value CardType "Rank" at:1))
-                                            ("PlayerTake" P2)
-                                            ("PlayACardOfEachDeck")
-                                        )
-                                    )
-                                )
+        
+        (play
+            (if (is Odd (count Turns))
+                (or
+                    ("P1PlayACard" P1)
+                    ("P2PlayACard" P2)
+                )
+                (move Pass
+                    (then
+                        (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                            ("PlayerTake" P1)
+                            (if (< (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                ("PlayerTake" P2)
+                                ("PlayACardOfEachDeck")
                             )
                         )
-                   )
-                    (end {
-                         (if
-                             ("P1HasNoCard")
-                             (result P2 Win)
-                         )
-                         (if
-                             ("P2HasNoCard")
-                             (result P1 Win)
-                         )
-                     })
-
-
+                    )
+                )
+            )
+        )
+        (end {
+            (if
+                ("P1HasNoCard")
+                (result P2 Win)
+            )
+            (if
+                ("P2HasNoCard")
+                (result P1 Win)
+            )
+        })
+        
     )
 )

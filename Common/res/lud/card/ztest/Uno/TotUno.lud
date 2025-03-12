@@ -37,7 +37,7 @@
                 (move (from (handSite Shared)) (to (sites Hand Mover) if:(is Empty (to))))
         }))
         (end
-           (if ("HandEmpty" Mover) (result Mover Win))
+            (if ("HandEmpty" Mover) (result Mover Win))
         )
     )
 )

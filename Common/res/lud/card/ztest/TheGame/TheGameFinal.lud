@@ -8,39 +8,39 @@
 )
 (define "IsDeckEmpty"
     (is Empty 18)
-    )
+)
 (define "DrawACard"
-         (move
-            (from (sites Hand Shared) if:(is Occupied (from)))
-            (to (sites Hand Mover)
-                if:(is Empty (to))
-            )
-            (then
-                (fromTo
-                    (from (sites Hand Shared)
-                    if:(is Occupied (from)))
-                    (to (sites Hand Mover)
-                     if:(is Empty (to))
-                     )
+    (move
+        (from (sites Hand Shared) if:(is Occupied (from)))
+        (to (sites Hand Mover)
+            if:(is Empty (to))
+        )
+        (then
+            (fromTo
+                (from (sites Hand Shared)
+                if:(is Occupied (from)))
+                (to (sites Hand Mover)
+                    if:(is Empty (to))
                 )
-           )
-         )
+            )
+        )
+    )
 )
 
 (define "CompareWithSites>"
     (move
         (from
             (sites Hand Mover)
-
+            
         )
         (to (sites Occupied by:All)
-        if:(and
-               (>
-                   (value CardType "Value" at:(from))
-                   (value CardType "Value" at:(to))
-               )
-               (or (= 0 (to)) (= 1 (to)))
-           )
+            if:(and
+                (>
+                    (value CardType "Value" at:(from))
+                    (value CardType "Value" at:(to))
+                )
+                (or (= 0 (to)) (= 1 (to)))
+            )
         )
         #1
     )
@@ -52,76 +52,76 @@
         )
         (to (sites Occupied by:All)
             if:(and
-                    (<
-                        (value CardType "Value" at:(from))
-                        (value CardType "Value" at:(to))
-                    )
-                    (or (= 2 (to)) (= 3 (to)))
+                (<
+                    (value CardType "Value" at:(from))
+                    (value CardType "Value" at:(to))
                 )
+                (or (= 2 (to)) (= 3 (to)))
+            )
         )
-       #1
+        #1
     )
 )
 (define "SpecialRules23"
     (move
-            (from
-                (sites Hand Mover)
-            )
-            (to (sites Occupied by:All)
-                if:(and
-                        {
-
-                            (=
-                                10 (abs (- (value CardType "Value" at:(from)) (value CardType "Value" at:(to))))
-                            )
-                            (>
-                                (value CardType "Value" at:(from))
-                                (value CardType "Value" at:(to))
-                            )
-                            (or (= 2 (to)) (= 3 (to)))
-                        }
-
-                    )
-            )
-            #1
+        (from
+            (sites Hand Mover)
         )
+        (to (sites Occupied by:All)
+            if:(and
+                {
+                
+                (=
+                    10 (abs (- (value CardType "Value" at:(from)) (value CardType "Value" at:(to))))
+                )
+                (>
+                    (value CardType "Value" at:(from))
+                    (value CardType "Value" at:(to))
+                )
+                (or (= 2 (to)) (= 3 (to)))
+                }
+                
+            )
+        )
+        #1
+    )
 )
 (define "SpecialRules01"
     (move
-            (from
-                (sites Hand Mover)
-            )
-            (to (sites Occupied by:All)
-                if:(and
-                        {
-
-                            (=
-                                10 (abs (- (value CardType "Value" at:(from)) (value CardType "Value" at:(to))))
-                            )
-                            (<
-                                (value CardType "Value" at:(from))
-                                (value CardType "Value" at:(to))
-                            )
-                            (or (= 0 (to)) (= 1 (to)))
-                        }
-
-                    )
-            )
-            #1
+        (from
+            (sites Hand Mover)
         )
+        (to (sites Occupied by:All)
+            if:(and
+                {
+                
+                (=
+                    10 (abs (- (value CardType "Value" at:(from)) (value CardType "Value" at:(to))))
+                )
+                (<
+                    (value CardType "Value" at:(from))
+                    (value CardType "Value" at:(to))
+                )
+                (or (= 0 (to)) (= 1 (to)))
+                }
+                
+            )
+        )
+        #1
+    )
 )
 (define "CompareWithSites1" ("CompareWithSites>" #1))
 (define "CompareWithSites99" ("CompareWithSites<" #1))
 
 (define "ChooseWhereToPlay2Cards"
-        (or
-            {
-                ("CompareWithSites1" (then (moveAgain)))
-                ("CompareWithSites99" (then (moveAgain)))
-                ("SpecialRules01" (then (moveAgain)))
-                ("SpecialRules23" (then (moveAgain)))
-            }
-        )
+    (or
+        {
+        ("CompareWithSites1" (then (moveAgain)))
+        ("CompareWithSites99" (then (moveAgain)))
+        ("SpecialRules01" (then (moveAgain)))
+        ("SpecialRules23" (then (moveAgain)))
+        }
+    )
 )
 (game "TheGameFinal"
     (players 2)
@@ -130,7 +130,7 @@
         (hand Each size:7)
         (hand Shared size:1)
         ("TheGameCards")
-
+        
     })
     (rules
         (start {
@@ -142,23 +142,23 @@
             (deal Deck 10 stack:True)
         })
         phases:{
-                (phase "DeckNotEmpty"
-                    (play
-                        (or
-                            ("ChooseWhereToPlay2Cards")
-                            ("DrawACard")
-                        )
-                    )
-                    (nextPhase "IsDeckEmpty" "DeckEmpty")
+        (phase "DeckNotEmpty"
+            (play
+                (or
+                    ("ChooseWhereToPlay2Cards")
+                    ("DrawACard")
                 )
-                (phase "DeckEmpty"
-                    (play
-                        (or
-                            ("ChooseWhereToPlay2Cards")
-                            ("DrawACard")
-                        )
-                    )
+            )
+            (nextPhase "IsDeckEmpty" "DeckEmpty")
+        )
+        (phase "DeckEmpty"
+            (play
+                (or
+                    ("ChooseWhereToPlay2Cards")
+                    ("DrawACard")
                 )
+            )
+        )
         }
         (end
             (if ("HandEmpty" All)

@@ -12,11 +12,11 @@
             (deal Cards 26 stack:True)
         )
         (play
-         (if (is Odd (count Turns))
-            (move Pass)
-
+            (if (is Odd (count Turns))
+                (move Pass)
+                
+            )
+            (end (if ("HandEmpty" Mover) (result Mover Win)))
+            
         )
-        (end (if ("HandEmpty" Mover) (result Mover Win)))
-
     )
-)

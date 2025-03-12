@@ -15,8 +15,7 @@
     (cardType "Jack Hearts" {"Rank" "Suit"} {"11" "Hearts"})
     (cardType "Queen Hearts" {"Rank" "Suit"} {"12" "Hearts"})
     (cardType "King Hearts" {"Rank" "Suit"} {"13" "Hearts"})
-
-
+    
     (cardType "Ace Diamonds" {"Rank" "Suit"} {"14" "Diamonds"})
     (cardType "2 Diamonds" {"Rank" "Suit"} {"2" "Diamonds"})
     (cardType "3 Diamonds" {"Rank" "Suit"} {"3" "Diamonds"})
@@ -30,8 +29,7 @@
     (cardType "Jack Diamonds" {"Rank" "Suit"} {"11" "Diamonds"})
     (cardType "Queen Diamonds" {"Rank" "Suit"} {"12" "Diamonds"})
     (cardType "King Diamonds" {"Rank" "Suit"} {"13" "Diamonds"})
-
-
+    
     (cardType "Ace Clubs" {"Rank" "Suit"} {"14" "Clubs"})
     (cardType "2 Clubs" {"Rank" "Suit"} {"2" "Clubs"})
     (cardType "3 Clubs" {"Rank" "Suit"} {"3" "Clubs"})
@@ -45,8 +43,7 @@
     (cardType "Jack Clubs" {"Rank" "Suit"} {"11" "Clubs"})
     (cardType "Queen Clubs" {"Rank" "Suit"} {"12" "Clubs"})
     (cardType "King Clubs" {"Rank" "Suit"} {"13" "Clubs"})
-
-
+    
     (cardType "Ace Spades" {"Rank" "Suit"} {"14" "Spades"})
     (cardType "2 Spades" {"Rank" "Suit"} {"2" "Spades"})
     (cardType "3 Spades" {"Rank" "Suit"} {"3" "Spades"})

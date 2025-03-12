@@ -7,16 +7,16 @@
 )
 (define "CardOnTable" (= 2  (count Sites in:(sites Occupied by:All))))
 (define "PlayerTake" (move
-                        (from (sites {0}))
-                        (to (handSite #1) level:(topLevel at:0))
-                        stack:True
-                        (then
-                            (fromTo
-                                (from (sites {1}))
-                                (to (handSite #1) level:(topLevel at:0))
-                                stack:True
-                            )
-                        ))
+        (from (sites {0}))
+        (to (handSite #1) level:(topLevel at:0))
+        stack:True
+        (then
+            (fromTo
+                (from (sites {1}))
+                (to (handSite #1) level:(topLevel at:0))
+                stack:True
+            )
+    ))
 )
 (define "PlayACard"
     (move
@@ -39,40 +39,40 @@
             (deal Cards 26 stack:True)
         })
         (play
-                (or
-                    {
-                    ("PlayACard" P1 0)
-                    ("PlayACard" P2 1)
+            (or
+                {
+                ("PlayACard" P1 0)
+                ("PlayACard" P2 1)
+                (move Pass
+                    (then
+                        
+                        (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                ("TakeCards" P1)
+                                (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                        ("TakeCards" P2)
+                                        ("PlayACardOfEachDeck") // Else the cards have the same value
+                                    )
+                                )
+                                
+                            )
+                        )
+                        }
+                    )
                     (move Pass
-                            (then
-
+                        (then
+                            
+                            (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
+                                    ("TakeCards" P1)
                                     (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
-                                        ("TakeCards" P1)
-                                        (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
                                             ("TakeCards" P2)
                                             ("PlayACardOfEachDeck") // Else the cards have the same value
                                         )
                                     )
-
-                            )
-                        )
-                    }
-                )
-                (move Pass
-                    (then
-
-                            (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
-                                ("TakeCards" P1)
-                                (if (if (> (value CardType "Rank" at:0) (value CardType "Rank" at:1))
-                                    ("TakeCards" P2)
-                                    ("PlayACardOfEachDeck") // Else the cards have the same value
+                                    
                                 )
                             )
-
+                        )
                     )
+                    
                 )
             )
-        )
-
-    )
-)

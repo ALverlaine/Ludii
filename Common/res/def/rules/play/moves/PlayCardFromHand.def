@@ -5,7 +5,6 @@
 // #4 = The then condition
 // @example ("PlayACard" P1 0 stack:True (then (move Pass)))
 
-
 (define "PlayCardFromHand"
     (move
         (from (sites Hand #1))

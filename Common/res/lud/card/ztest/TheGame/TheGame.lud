@@ -8,38 +8,38 @@
 )
 (define "IsDeckEmpty"
     (is Empty 18)
-    )
+)
 (define "DrawACard"
-         (move
-            (from Cell (handSite Shared) if:(and (is Occupied (from)) (not ("IsDeckEmpty"))))
-            (to Cell (sites Hand Mover)
-                if:(and (is Empty (to)) (not ("IsDeckEmpty")))
-            )
-            (then
-                (fromTo
-                    (from Cell (handSite Shared) if:(and (is Occupied (from)) (not ("IsDeckEmpty"))))
-                                (to Cell (sites Hand Mover)
-                                    if:(and (is Empty (to)) (not ("IsDeckEmpty")))
-                                )
+    (move
+        (from Cell (handSite Shared) if:(and (is Occupied (from)) (not ("IsDeckEmpty"))))
+        (to Cell (sites Hand Mover)
+            if:(and (is Empty (to)) (not ("IsDeckEmpty")))
+        )
+        (then
+            (fromTo
+                (from Cell (handSite Shared) if:(and (is Occupied (from)) (not ("IsDeckEmpty"))))
+                (to Cell (sites Hand Mover)
+                    if:(and (is Empty (to)) (not ("IsDeckEmpty")))
                 )
-           )
-         )
+            )
+        )
+    )
 )
 
 (define "CompareWithSites>"
     (move
         (from
             (sites Hand Mover)
-
+            
         )
         (to (sites Occupied by:All)
-        if:(and
-               (>
-                   (value CardType "Value" at:(from))
-                   (value CardType "Value" at:(to))
-               )
-               (or (= 0 (to)) (= 1 (to)))
-           )
+            if:(and
+                (>
+                    (value CardType "Value" at:(from))
+                    (value CardType "Value" at:(to))
+                )
+                (or (= 0 (to)) (= 1 (to)))
+            )
         )
         #1
     )
@@ -51,76 +51,76 @@
         )
         (to (sites Occupied by:All)
             if:(and
-                    (<
-                        (value CardType "Value" at:(from))
-                        (value CardType "Value" at:(to))
-                    )
-                    (or (= 2 (to)) (= 3 (to)))
+                (<
+                    (value CardType "Value" at:(from))
+                    (value CardType "Value" at:(to))
                 )
+                (or (= 2 (to)) (= 3 (to)))
+            )
         )
-       #1
+        #1
     )
 )
 (define "SpecialRules23"
     (move
-            (from
-                (sites Hand Mover)
-            )
-            (to (sites Occupied by:All)
-                if:(and
-                        {
-
-                            (=
-                                10 (abs (- (value CardType "Value" at:(from)) (value CardType "Value" at:(to))))
-                            )
-                            (>
-                                (value CardType "Value" at:(from))
-                                (value CardType "Value" at:(to))
-                            )
-                            (or (= 2 (to)) (= 3 (to)))
-                        }
-
-                    )
-            )
-            #1
+        (from
+            (sites Hand Mover)
         )
+        (to (sites Occupied by:All)
+            if:(and
+                {
+                
+                (=
+                    10 (abs (- (value CardType "Value" at:(from)) (value CardType "Value" at:(to))))
+                )
+                (>
+                    (value CardType "Value" at:(from))
+                    (value CardType "Value" at:(to))
+                )
+                (or (= 2 (to)) (= 3 (to)))
+                }
+                
+            )
+        )
+        #1
+    )
 )
 (define "SpecialRules01"
     (move
-            (from
-                (sites Hand Mover)
-            )
-            (to (sites Occupied by:All)
-                if:(and
-                        {
-
-                            (=
-                                10 (abs (- (value CardType "Value" at:(from)) (value CardType "Value" at:(to))))
-                            )
-                            (<
-                                (value CardType "Value" at:(from))
-                                (value CardType "Value" at:(to))
-                            )
-                            (or (= 0 (to)) (= 1 (to)))
-                        }
-
-                    )
-            )
-            #1
+        (from
+            (sites Hand Mover)
         )
+        (to (sites Occupied by:All)
+            if:(and
+                {
+                
+                (=
+                    10 (abs (- (value CardType "Value" at:(from)) (value CardType "Value" at:(to))))
+                )
+                (<
+                    (value CardType "Value" at:(from))
+                    (value CardType "Value" at:(to))
+                )
+                (or (= 0 (to)) (= 1 (to)))
+                }
+                
+            )
+        )
+        #1
+    )
 )
 (define "CompareWithSites1" ("CompareWithSites>" #1))
 (define "CompareWithSites99" ("CompareWithSites<" #1))
 (define "MoveAgain" (then (if (< 0 (count CardType in:(sites Hand Mover))) (moveAgain))))
 (define "ChooseWhereToPlayCards"
-        (or
-            {
-                ("CompareWithSites1" ("MoveAgain"))
-                ("CompareWithSites99" ("MoveAgain"))
-                ("SpecialRules01" ("MoveAgain"))
-                ("SpecialRules23" ("MoveAgain"))
-            }
-        )
+    (or
+        {
+        ("CompareWithSites1" ("MoveAgain"))
+        ("CompareWithSites99" ("MoveAgain"))
+        ("SpecialRules01" ("MoveAgain"))
+        ("SpecialRules23" ("MoveAgain"))
+        }
+    )
 )
 
 (game "TheGame"
@@ -130,11 +130,11 @@
         (hand Each size:7)
         (hand Shared size:1)
         ("TheGameCards")
-
+        
     })
     (rules
         (start {
-
+            
             (place "1" 0)
             (place "1" 1)
             (place "99" 2)
@@ -148,7 +148,7 @@
                 (if (and (> 6 (count CardType in:(sites Hand Mover))) (not ("IsDeckEmpty"))) ("DrawACard"))
             )
         )
-
+        
         (end
             (if
                 (and (no Moves P1) (no Moves P2))
