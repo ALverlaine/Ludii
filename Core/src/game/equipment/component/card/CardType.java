@@ -10,6 +10,7 @@ import game.equipment.component.Component;
 import game.types.play.RoleType;
 import main.StringRoutines;
 import metadata.graphics.util.ComponentStyleType;
+import org.w3c.dom.Attr;
 import other.concept.Concept;
 
 /**
@@ -80,6 +81,14 @@ public class CardType extends Component implements Serializable
     public String[] getAttributesValue()
     {
         return AttributesValue;
+    }
+    public String getValue(String Attribute){
+        for(int i = 0; i< this.AttributesName.length; i++){
+            if(Attribute.equals(this.AttributesName[i])){
+                return this.AttributesValue[i];
+            }
+        }
+        return null;
     }
     public String getDeckType()
     {
