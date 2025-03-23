@@ -42,7 +42,8 @@ public class CardTable extends Board
             @Opt @Name final Boolean largeStack,
             @Opt @Or final Track track,
             @Opt @Or      final Track[]   tracks,
-            @Opt @Or      final SiteType use
+            @Opt @Or      final SiteType use,
+            @Opt final Boolean boolEdge
     )
     {
         super(new BaseGraphFunction() {
@@ -67,6 +68,7 @@ public class CardTable extends Board
 
                 // Create arrays for vertices and edges
                 Float[][] vertices = new Float[players][2];
+                Integer[][] edges = new Integer[players][2];
                 if (players == 1) {
                     vertices[0][0] = 0.0f; // x-coordinate at the center
                     vertices[0][1] = 0.0f; // y-coordinate at the center
@@ -86,15 +88,17 @@ public class CardTable extends Board
                         // Store vertex
                         vertices[i][0] = x;
                         vertices[i][1] = y;
+                        if(boolEdge){
+                            // Create edge to the next vertex (looping back to the start)
+                            edges[i][0] = i;
+                            edges[i][1] = (i + 1) % players;
+                        }
 
-                        // Create edge to the next vertex (looping back to the start)
-                        //edges[i][0] = i;
-                        //edges[i][1] = (i + 1) % players;
                     }
                 }
 
                 // Return the generated graph
-                return new Graph(vertices,  null).eval(context, siteType);
+                return new Graph(vertices,  boolEdge ? edges : null).eval(context, siteType);
             }
             @Override
             public long gameFlags(Game game) {
@@ -105,7 +109,7 @@ public class CardTable extends Board
             public void preprocess(Game game) {
 
             }
-        }, track, tracks, null, null, (use == null) ? SiteType.Vertex : use, false);
+        }, track, tracks, null, null, SiteType.Vertex, false);
 
         // Store the parameter to access it later in TableCard logic.
         this.numPlayers = players.intValue();

@@ -1,0 +1,36 @@
+
+(define "ChooseWhereToPlay"
+    (move
+        (from Vertex 0)
+        (to Vertex (sites {1 2}))
+        stack:True
+    )
+)
+(game "Split"
+    (players 2)
+    (equipment {
+        (cardTable 3 True)
+
+        (hand Each size:9)
+        (hand Shared size:1)
+        ("SplitCards")
+    })
+    (rules
+        (start {
+            (deal Cards 9 P1)
+            (deal Cards 7 P2)
+            (place "1" 0)
+            (deal Deck 10)
+        })
+        (play
+            ("ChooseWhereToPlay")
+        )
+
+
+        (end
+            (if ("HandEmpty" P2)
+                (result P2 Win)
+            )
+        )
+    )
+)

@@ -61,7 +61,7 @@ public final class DealDeck extends StartRule
     (
             @Opt final Integer count,
             @Opt final IntFunction sites,
-            @Opt@Name final Boolean stack,
+            @Opt @Name final Boolean stack,
             @Opt @Name final String deckType
     )
 

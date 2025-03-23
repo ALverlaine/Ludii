@@ -1,10 +1,10 @@
 (define "PlayACard"
     (move
-        (from (sites Hand Mover))
-        (to (sites Occupied by:All)
-            if:(or
-                (is Empty (to))
-                (is Empty (from))
+        (from Cell (sites Hand Mover))
+        (to Vertex 0
+            if:(and
+                (< (value CardType "Value" at:1) (value CardType "Value" at:(from)))
+                (> (value CardType "Value" at:2) (value CardType "Value" at:(from)))
             )
         )
         stack:True
@@ -13,24 +13,49 @@
 (define "PlayHigh"
     (move
         (from Cell (sites Hand Mover)  if:(isMaxAttribute (from) "Value"))
-        (to Vertex 1)
+        (to Vertex 2)
         stack:True
     )
 )
 (define "PlayLow"
-    (move
+    (fromTo
         (from Cell (sites Hand Mover) if:(isMinAttribute (from) "Value"))
-        (to Vertex 0)
+        (to Vertex 1)
         stack:True
     )
 )
 (define "PlayHighAndLow"
     (do ("PlayHigh") next:("PlayLow"))
 )
+
+(define "ChooseWhereToPlay"
+    (move
+        (from Vertex 0)
+        (to Vertex (sites {1 2}))
+        stack:True
+        (then (moveAgain))
+    )
+)
+(define "ResetTheGame"
+    (move
+        (from Vertex 1)
+        (to Cell 21 level:0)
+        stack:True
+        (then
+            (fromTo
+                (from Vertex 2)
+                (to Cell 21 level:0)
+                stack:True
+            )
+
+        )
+    )
+
+)
 (game "Split"
     (players 2)
     (equipment {
-        (cardTable 2)
+        (cardTable 3 True)
         (hand Each size:9)
         (hand Shared size:1)
         ("SplitCards")
@@ -42,18 +67,27 @@
             (deal Deck 10)
         })
         phases:{
-        (phase "Start1"
-            (play
-                ("PlayHighAndLow")
+            (phase "Start1"
+                (play
+                    ("PlayHighAndLow")
+                )
+                (nextPhase True "Propose1")
             )
-            (nextPhase True "Play1")
-        )
-        (phase "Play1"
-            (play
-                (move Pass)
+            (phase "Propose1"
+                (play
+                    (or
+                        ("PlayACard")
+                        ("ResetTheGame")
+                    )
+                )
+                (nextPhase True "Choose1")
             )
-            (nextPhase False "Start1")
-        )
+            (phase "Choose1"
+                (play
+                    ("ChooseWhereToPlay")
+                )
+                (nextPhase Mover True "Propose1")
+            )
         }
 
         (end
