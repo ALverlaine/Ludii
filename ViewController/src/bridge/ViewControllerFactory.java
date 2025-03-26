@@ -10,12 +10,7 @@ import metadata.graphics.util.ContainerStyleType;
 import metadata.graphics.util.ControllerType;
 import other.context.Context;
 import view.component.ComponentStyle;
-import view.component.custom.CardStyle;
-import view.component.custom.DieStyle;
-import view.component.custom.ExtendedShogiStyle;
-import view.component.custom.ExtendedXiangqiStyle;
-import view.component.custom.NativeAmericanDiceStyle;
-import view.component.custom.PieceStyle;
+import view.component.custom.*;
 import view.component.custom.large.DominoStyle;
 import view.component.custom.large.LargePieceStyle;
 import view.component.custom.large.TileStyle;
@@ -161,6 +156,8 @@ public class ViewControllerFactory
 			return new PieceStyle(bridge, component, true);
 		case Card:
 			return new CardStyle(bridge, component);
+		case FrenchCards:
+			return new FrenchCards(bridge, component);
 		case Die:
 			return new DieStyle(bridge, component);
 		case Domino:

@@ -40,7 +40,8 @@ public class CardType extends Component implements Serializable
                     final String   name,
             @Opt    final String[] AttributesName,
             @Opt    final String[] AttributeValue,
-            @Opt @Name final String deckType
+            @Opt @Name final String deckType,
+            @Opt @Name final ComponentStyleType ComponentStyle
     )
     {
         super(name, RoleType.Shared,  null,
@@ -52,7 +53,7 @@ public class CardType extends Component implements Serializable
         this.deckType = deckType;
         nameWithoutNumber = StringRoutines.removeTrailingNumbers(name);
 
-        style = ComponentStyleType.Card;
+        style = ComponentStyle  == null ? ComponentStyleType.Card: ComponentStyle;
     }
 
     //-------------------------------------------------------------------------
@@ -92,7 +93,10 @@ public class CardType extends Component implements Serializable
     }
     public String getDeckType()
     {
-        return deckType;
+        if(deckType != null){
+            return deckType;
+        }
+        return "NULL";
     }
 
     @Override

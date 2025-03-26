@@ -218,7 +218,7 @@ public final class CountCardType extends BaseIntFunction
     public long gameFlags(final Game game)
     {
         if (name != null && name.equals("Bag"))
-            return GameType.Dominoes | GameType.LargePiece;
+            return GameType.LargePiece;
 
         long gameFlags = whoFn.gameFlags(game);
 

@@ -72,7 +72,6 @@ public final class Gt extends BaseBooleanFunction
 				return true;
 			final int vA = ps.what(indexA, type);
 			final int vB = ps.what(indexB, type);
-			System.out.println("Gt: " + vA + " > " + vB + " = " + (vA > vB));
 			return vA > vB;
 		}
 	}

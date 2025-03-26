@@ -22,6 +22,8 @@ public enum ComponentStyleType implements MetadataItem
 	
 	/** Style for playing cards. */
 	Card,
+	/** Style for playing Frenchcards. */
+	FrenchCards,
 	
 	/** Style for die components used as playing pieces. */
 	Die,

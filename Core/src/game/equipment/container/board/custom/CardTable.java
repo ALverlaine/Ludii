@@ -88,17 +88,17 @@ public class CardTable extends Board
                         // Store vertex
                         vertices[i][0] = x;
                         vertices[i][1] = y;
-                        if(boolEdge){
+
                             // Create edge to the next vertex (looping back to the start)
                             edges[i][0] = i;
                             edges[i][1] = (i + 1) % players;
-                        }
+
 
                     }
                 }
 
                 // Return the generated graph
-                return new Graph(vertices,  boolEdge ? edges : null).eval(context, siteType);
+                return new Graph(vertices,  boolEdge!=null ? edges : null).eval(context, siteType);
             }
             @Override
             public long gameFlags(Game game) {

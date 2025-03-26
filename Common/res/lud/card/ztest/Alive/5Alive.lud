@@ -22,11 +22,11 @@
                 )
                 (fromTo
                     (from Cell 28 if:(is Occupied (from)))
-                    (to Cell (sites Hand P2) if:(and (is Empty (to)) (not (= 9 (to)))))
+                    (to Cell (sites Hand P2) if:(and (is Empty (to)) (not (= 18 (to)))))
                 )
                 (fromTo
                     (from Cell 28 if:(is Occupied (from)))
-                    (to Cell (sites Hand P3) if:(and (is Empty (to)) (not (= 9 (to)))))
+                    (to Cell (sites Hand P3) if:(and (is Empty (to)) (not (= 27 (to)))))
                 )
                 }
             )
@@ -40,6 +40,12 @@
         (then
             (set Pot 0)
         )
+    )
+)
+(define "PlayA0"
+    (move
+        (from Cell (sites Hand Mover) if:(hasAttribute (from) "0"))
+        (to Vertex 0)
     )
 )
 (define "Play10"
@@ -93,13 +99,7 @@
         (from Cell (sites Hand Mover) if:(hasAttribute (from) "Bomb"))
         (to Vertex 0)
         (then
-            (forEach Player
-                if:(not (= (player) (mover)))
-                (fromTo
-                    (from Cell (sites Hand Mover) if:(hasAttribute (from) "0"))
-                    (to Vertex 0)
-                )
-            )
+            (set Var "Bo" 1)
         )
     )
 )
@@ -121,24 +121,44 @@
             (deal Cards 7 P3 deckType:"Card")
             (deal Deck 10 28 stack:True deckType:"Card")
         })
-        (play
-            (do
-                (if (= 1 (var "InversionVar")) ("NPlayer"))
-                next:(or
-                    {
-                    ("PlayNumber")
-                    ("Play+1")
-                    ("Play0")
-                    ("Play10")
-                    ("Play21")
-                    ("Pass0")
-                    ("Jump0")
-                    ("Inversion0")
-                    ("Bomb0")
-                    }
+        phases:{
+            (phase "basic"
+                (play
+                    (do
+                        (if (= 1 (var "InversionVar")) ("NPlayer"))
+                        next:(or
+                            {
+                            ("PlayNumber")
+                            ("Play+1")
+                            ("Play0")
+                            ("Play10")
+                            ("Play21")
+                            ("Pass0")
+                            ("Jump0")
+                            ("Inversion0")
+                            ("Bomb0")
+                            }
+                        )
+                    )
                 )
+                (nextPhase (= 1 (var "Bo")) "BombP0")
+
             )
-        )
+            (phase "BombP0"
+                (play
+                    (do
+                        (if (= 1 (var "InversionVar")) ("NPlayer"))
+                        next:
+                            (and
+                                ("PlayA0")
+                                (set Var "Bo" (+ 1 (var "Bo")))
+                            )
+                    )
+                )
+                (nextPhase (= 3 (var "Bo")) "basic")
+            )
+        }
+
         (end
             ("NoMoves" Loss)
         )

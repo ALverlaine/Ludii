@@ -79,7 +79,7 @@ public final class ValueCard extends BaseIntFunction {
         //System.out.println("Location: " + location);
         // Vérifie si la carte est "OFF" (hors du jeu)
         if (location == Constants.OFF) {
-            System.out.println("Location is OFF");
+
             return Constants.UNDEFINED; // ou toute autre valeur qui représente un cas "non trouvé"
         }
         // Récupère l'ID du conteneur associé à cette localisation
@@ -91,7 +91,7 @@ public final class ValueCard extends BaseIntFunction {
         final int what = cs.what(location, type);
         final Component[] equipment = context.game().equipment().components();
         if(what == 0) {
-            System.out.println("What is 0");
+
             return Constants.UNDEFINED;
         }
         final CardType cardType = (CardType) equipment[what];

@@ -108,7 +108,6 @@ public final class DealCards extends StartRule
             return;
 
         final Component[] components = context.components();
-        System.out.println(Arrays.toString(components));
         if (components.length < count && !stack)
             throw new IllegalArgumentException("Not enough cards to deal.");
 
@@ -128,16 +127,13 @@ public final class DealCards extends StartRule
 
         //final int nbPlayers = context.players().size() - 1;
         int dealt = 0;
-        //System.out.println(toDeal.toString());
         while (dealt < count)
         {
             if(toDeal.size() <= 0) throw new IllegalArgumentException("Dealing to many cards");
             final int index = context.rng().nextInt(toDeal.size());
             final int cardIndex = toDeal.getQuick(index);
             final Component card = components[cardIndex];
-            System.out.println(card.name());
             final TIntArrayList idPlayers = PlayersIndices.getIdRealPlayers(context, roletype);
-            System.out.println(idPlayers.toString());
             final int currentPlayer = idPlayers.getQuick(0);
             if(stack){
                 Start.placePieces(context, handIndex.getQuick(currentPlayer-1),

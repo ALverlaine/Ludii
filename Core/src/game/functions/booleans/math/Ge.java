@@ -76,7 +76,6 @@ public final class Ge extends BaseBooleanFunction
 				return true;
 			final int vA = ps.what(indexA, type);
 			final int vB = ps.what(indexB, type);
-			System.out.println(vA + ">=" + vB);
 			return vA >= vB;
 		}
 	}
