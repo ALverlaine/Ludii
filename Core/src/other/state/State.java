@@ -82,6 +82,7 @@ public class State implements Serializable
 	/** Variable to store a value between two states. */
 	private int tempValue = Constants.UNDEFINED;
 
+
 	/**
 	 * The pending values of a state. These values are cleared when another state is
 	 * reached.
@@ -119,7 +120,7 @@ public class State implements Serializable
 	private int numTurn = 1;
 
 	/** The trump suit of the game (for cards games). */
-	private int trumpSuit = Constants.OFF;
+	private int trump = Constants.OFF;
 
 	/** The propositions (represented as ints). */
 	private TIntArrayList propositions;
@@ -542,7 +543,7 @@ public class State implements Serializable
 		moneyPot = other.moneyPot;
 
 		// Back to the plot		
-		trumpSuit = other.trumpSuit;
+		trump = other.trump;
 		
 		mover = other.mover;
 		next = other.next;
@@ -566,6 +567,7 @@ public class State implements Serializable
 
 		counter = other.counter;
 		tempValue = other.tempValue;
+		trump = other.trump;
 		
 		if (other.pendingValues != null)
 			pendingValues = new TIntHashSet(other.pendingValues);
@@ -947,7 +949,7 @@ public class State implements Serializable
 		moneyPot = other.moneyPot;
 
 		// Back to the plot
-		trumpSuit = other.trumpSuit;
+		trump = other.trump;
 				
 		mover = other.mover;
 		next = other.next;
@@ -1473,6 +1475,16 @@ public class State implements Serializable
 	{
 		return tempValue;
 	}
+
+	/**
+	 * @return trumpValue.
+	 */
+	public int trump()
+	{
+
+		return trump;
+	}
+
 
 	/**
 	 * Sets the temp value.
@@ -2011,19 +2023,15 @@ public class State implements Serializable
 	/**
 	 * @return The current suit trump.
 	 */
-	public int trumpSuit()
-	{
-		return trumpSuit;
-	}
 
 	/**
 	 * To set the trump suit.
 	 * 
 	 * @param trumpSuit
 	 */
-	public void setTrumpSuit(final int trumpSuit)
+	public void setTrump(final int trumpSuit)
 	{
-		this.trumpSuit = trumpSuit;
+		this.trump = trumpSuit;
 	}
 
 	/**

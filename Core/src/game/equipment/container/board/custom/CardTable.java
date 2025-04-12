@@ -98,7 +98,7 @@ public class CardTable extends Board
                 }
 
                 // Return the generated graph
-                return new Graph(vertices,  boolEdge!=null ? edges : null).eval(context, siteType);
+                return new Graph(vertices, null).eval(context, siteType);
             }
             @Override
             public long gameFlags(Game game) {

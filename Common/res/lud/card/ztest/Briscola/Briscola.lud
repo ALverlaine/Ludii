@@ -1,0 +1,28 @@
+(game "Briscola"
+    (players 4)
+    (equipment {
+        (cardTable 2)
+        ("BriscolaCards")  // Jeu de 40 cartes (sans 8, 9, 10)
+        (hand Each size:9)  // Main de chaque joueur
+        (hand Shared size:1)
+    })
+
+    (rules
+        (start {
+            (deal Cards 3 P1)  // Distribuer 3 cartes à chaque joueur
+            (deal Cards 3 P2)  // Distribuer 3 cartes à chaque joueur
+            (deal Cards 3 P3)  // Distribuer 3 cartes à chaque joueur
+            (deal Cards 3 P4)  // Distribuer 3 cartes à chaque joueur
+            (deal Deck 10 stack:True)
+            (set Trump (value CardType "Suit" at:38))  // Retourner la carte d'atout
+        })
+
+        (play
+            (move Pass)
+        )
+
+        (end
+            (if ("HandEmpty" Mover) (result Mover Win))
+        )
+    )
+)

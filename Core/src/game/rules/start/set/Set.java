@@ -11,6 +11,7 @@ import game.functions.region.RegionFunction;
 import game.rules.Rule;
 import game.rules.play.moves.nonDecision.effect.Then;
 import game.rules.play.moves.nonDecision.effect.set.SetVarType;
+import game.rules.start.set.card.trump.SetTrump;
 import game.rules.start.set.var.SetVar;
 import game.rules.start.StartRule;
 import game.rules.start.set.pending.SetPending;
@@ -155,8 +156,7 @@ public final class Set extends StartRule
 	 *
 	 * @param setType  The type of property to set.
 	 * @param name     The name of the var.
-	 * @param newValue The new counter value [-1].
-	 * @param then     The moves to apply afterwards.
+	 * @param newValue The new counter value [-1]
 	 * @example (set Var ( value Piece at : ( last To)))
 	 */
 	public static Rule construct
@@ -170,6 +170,8 @@ public final class Set extends StartRule
 		{
 			case Var:
 				return new SetVar(name, newValue);
+		case Trump:
+			return new SetTrump(name, newValue);
 			default:
 				break;
 		}
@@ -178,6 +180,8 @@ public final class Set extends StartRule
 		throw new IllegalArgumentException("Set(): A SetVarType is not implemented.");
 	}
 	//-------------------------------------------------------------------------
+
+
 
 	/**
 	 * For setting a site to a player.

@@ -2,6 +2,8 @@ package game.functions.ints.value.card;
 
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Objects;
+
 import annotations.Name;
 import annotations.Opt;
 import game.Game;
@@ -64,12 +66,16 @@ public final class ValueCard extends BaseIntFunction {
         this.loc = at;
         this.type = type;
     }
-    private int convertStringToNumber(String attribute) {
-        int sum = 0;
-        for (char c : attribute.toCharArray()) {
-            sum += (int) c; // Ajoute le code ASCII du caractère
+    public static int convertStringToNumber(Object input) {
+        if (input instanceof Integer) {
+            // Manipuler l'entier pour le différencier d'un String
+            return ((Integer) input) * 31;
+        } else if (input instanceof String) {
+            // Calculer un hash code pour la chaîne pour obtenir un entier unique
+            return Objects.hash(input);
+        } else {
+            throw new IllegalArgumentException("Input must be either an Integer or a String");
         }
-        return sum;
     }
 
     public int eval(final Context context) {

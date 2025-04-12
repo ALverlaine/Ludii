@@ -35,7 +35,7 @@ public enum ActionType
 	SetValueOfPlayer,
 
 	/** To set the trump suit in a card game. */
-	SetTrumpSuit,
+	SetTrump,
 
 	/** To use a specific die to make another move. */
 	UseDie,

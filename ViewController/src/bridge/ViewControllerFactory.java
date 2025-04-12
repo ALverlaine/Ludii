@@ -11,6 +11,8 @@ import metadata.graphics.util.ControllerType;
 import other.context.Context;
 import view.component.ComponentStyle;
 import view.component.custom.*;
+import view.component.custom.card.BasicCardStyle;
+import view.component.custom.card.FrenchCards;
 import view.component.custom.large.DominoStyle;
 import view.component.custom.large.LargePieceStyle;
 import view.component.custom.large.TileStyle;
@@ -155,7 +157,7 @@ public class ViewControllerFactory
 		case Text:
 			return new PieceStyle(bridge, component, true);
 		case Card:
-			return new CardStyle(bridge, component);
+			return new BasicCardStyle(bridge, component);
 		case FrenchCards:
 			return new FrenchCards(bridge, component);
 		case Die:

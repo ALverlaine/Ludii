@@ -1,4 +1,4 @@
-package view.component.custom;
+package view.component.custom.card;
 
 import bridge.Bridge;
 import game.equipment.component.Component;
@@ -8,6 +8,7 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.jfree.graphics2d.svg.SVGGraphics2D;
 import other.context.Context;
+import view.component.custom.PieceStyle;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -32,13 +33,13 @@ public class FrenchCards extends PieceStyle {
 
         for (String suit : suits) {
             for (String rank : ranks) {
-                CARD_SVG_MAP.put(rank + suit, "cardsSVG/FrenchCards/" + rank + suit + ".svg");
+                CARD_SVG_MAP.put(rank + suit, "FrenchCards/" + rank + suit + ".svg");
             }
         }
 
         // Jokers
-        CARD_SVG_MAP.put("1J", "cardsSVG/FrenchCards/1J.svg");
-        CARD_SVG_MAP.put("2J", "cardsSVG/FrenchCards/2J.svg");
+        CARD_SVG_MAP.put("1J", "FrenchCards/1J.svg");
+        CARD_SVG_MAP.put("2J", "FrenchCards/2J.svg");
         System.out.println(CARD_SVG_MAP);
     }
 

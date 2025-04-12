@@ -6,5 +6,5 @@ package game.rules.play.moves.nonDecision.effect.set;
 public enum SetTrumpType
 {
 	/** Sets the trump suit. */
-	TrumpSuit,
+	Trump,
 }

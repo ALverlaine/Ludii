@@ -503,7 +503,7 @@ public class MoveHandler
 		
 		if (context.game().hasLargePiece() && app.bridge().settingsVC().pieceBeingDragged())
 		{
-			final int containerId = ContainerUtil.getContainerId(context, fromInfo.site(), fromInfo.siteType());				
+			final int containerId = ContainerUtil.getContainerId(context, fromInfo.site(), fromInfo.siteType());
 			final int componentIndex = context.containerState(containerId).whatCell(fromInfo.site());
 			
 			if 

@@ -41,21 +41,13 @@
         (from Vertex 1)
         (to Cell 21 level:0)
         stack:True
-        (then
-            (fromTo
-                (from Vertex 2)
-                (to Cell 21 level:0)
-                stack:True
-            )
-
-        )
     )
 
 )
 (game "Split"
     (players 2)
     (equipment {
-        (cardTable 3 True)
+        (cardTable 3 False)
         (hand Each size:9)
         (hand Shared size:1)
         ("SplitCards")

@@ -7,4 +7,5 @@ public enum SetVarType
 {
 	/** Sets the `var' variable of the game state. */
 	Var,
+	Trump
 }

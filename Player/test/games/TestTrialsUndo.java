@@ -618,9 +618,9 @@ public class TestTrialsUndo
 								fail();
 							}
 							
-							if(state.trumpSuit() != stateToCompare.trumpSuit())
+							if(state.trump() != stateToCompare.trump())
 							{
-								System.out.println("!= trumpSuit");
+								System.out.println("!= trump");
 								fail();
 							}
 							

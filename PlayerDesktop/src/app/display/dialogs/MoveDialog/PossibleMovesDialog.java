@@ -26,7 +26,7 @@ import graphics.svg.SVGtoImage;
 import main.collections.FastArrayList;
 import other.action.Action;
 import other.action.ActionType;
-import other.action.cards.ActionSetTrumpSuit;
+import other.action.cards.ActionSetTrump;
 import other.action.move.move.ActionMove;
 import other.action.others.ActionPropose;
 import other.action.others.ActionVote;
@@ -137,9 +137,9 @@ public class PossibleMovesDialog extends MoveDialog
 				}
 				
 				// Set trump move
-				else if (a instanceof ActionSetTrumpSuit)
+				else if (a instanceof ActionSetTrump)
 				{
-					final int trumpValue = ((ActionSetTrumpSuit) a).what();
+					final int trumpValue = ((ActionSetTrump) a).what();
 					String trumpImage = "";
 					Color imageColor = Color.BLACK;
 					switch(trumpValue)
@@ -151,60 +151,60 @@ public class PossibleMovesDialog extends MoveDialog
 					}
 					BufferedImage componentImage = SVGUtil.createSVGImage(trumpImage, (int) (imageSize*0.8), (int) (imageSize*0.8));
 					componentImage = BufferedImageUtil.setPixelsToColour(componentImage, imageColor);
-					
+
 					final JButton button = AddButton(app, m, componentImage, "");
 					setDialogSize(button, columnNumber, rowNumber, buttonBorderSize);
-					
+
 					moveShown = true;
 					break;
 				}
-				
+
 				// Set next player move
 				else if (a instanceof ActionSetNextPlayer && !m.isSwap())
 				{
 					final int nextPlayerValue = ((ActionSetNextPlayer) a).who();
 					final String buttonText = "Next player: " + nextPlayerValue;
-					
+
 					final JButton button = AddButton(app, m, null, buttonText);
 					setDialogSize(button, columnNumber, rowNumber, buttonBorderSize);
-					
+
 					moveShown = true;
 					break;
 				}
-				
+
 				// Pick the bet
 				else if (a instanceof ActionBet)
 				{
 					final int betValue = ((ActionBet) a).count();
 					final int betWho = ((ActionBet) a).who();
 					final String buttonText = "P" + betWho + ", Bet: " + betValue;
-					
+
 					final JButton button = AddButton(app, m, null, buttonText);
 					setDialogSize(button, columnNumber, rowNumber, buttonBorderSize);
-					
+
 					moveShown = true;
 					break;
 				}
-				
+
 				// Propose
 				else if (a instanceof ActionPropose)
 				{
 					final String proposition = ((ActionPropose) a).proposition();
 					final String buttonText = "Propose: " + proposition;
-					
+
 					final JButton button = AddButton(app, m, null, buttonText);
 					setDialogSize(button, columnNumber, rowNumber, buttonBorderSize);
-					
+
 					moveShown = true;
 					break;
 				}
-				
+
 				// Vote
 				else if (a instanceof ActionVote)
 				{
 					final String vote = ((ActionVote) a).vote();
 					final String buttonText = "Vote: " + vote;
-					
+
 					final JButton button = AddButton(app, m, null, buttonText);
 					setDialogSize(button, columnNumber, rowNumber, buttonBorderSize);
 					

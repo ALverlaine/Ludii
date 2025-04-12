@@ -34,7 +34,7 @@ public final class CardTrumpSuit extends BaseIntFunction
 	@Override
 	public int eval(final Context context)
 	{
-		return context.state().trumpSuit();
+		return context.state().trump();
 	}
 
 	//-------------------------------------------------------------------------
