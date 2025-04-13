@@ -170,8 +170,9 @@ public final class Set extends StartRule
 		{
 			case Var:
 				return new SetVar(name, newValue);
-		case Trump:
-			return new SetTrump(name, newValue);
+			case Trump:
+				System.out.println("hello");
+				return new SetTrump(name, newValue);
 			default:
 				break;
 		}

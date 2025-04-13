@@ -11,6 +11,7 @@ import java.util.Objects;
 import annotations.Hide;
 import game.Game;
 import game.Game.StateConstructorLock;
+import game.equipment.component.card.CardType;
 import game.equipment.container.Container;
 import game.equipment.container.other.Dice;
 import game.functions.ints.last.LastFrom;
@@ -121,6 +122,9 @@ public class State implements Serializable
 
 	/** The trump suit of the game (for cards games). */
 	private int trump = Constants.OFF;
+
+	/** The cardType remembered */
+	private CardType card = null;
 
 	/** The propositions (represented as ints). */
 	private TIntArrayList propositions;
@@ -541,6 +545,8 @@ public class State implements Serializable
 		numConsecutivePassesHashes = other.numConsecutivePassesHashes;
 		playerOrder = Arrays.copyOf(other.playerOrder, other.playerOrder.length);
 		moneyPot = other.moneyPot;
+		card = other.card;
+
 
 		// Back to the plot		
 		trump = other.trump;
@@ -947,6 +953,7 @@ public class State implements Serializable
 		numConsecutivePassesHashes = other.numConsecutivePassesHashes;
 		playerOrder = Arrays.copyOf(other.playerOrder, other.playerOrder.length);
 		moneyPot = other.moneyPot;
+		card = other.card;
 
 		// Back to the plot
 		trump = other.trump;
@@ -1209,6 +1216,7 @@ public class State implements Serializable
 		return moneyPot;
 	}
 
+
 	/**
 	 * To modify the pot.
 	 * 
@@ -1218,7 +1226,25 @@ public class State implements Serializable
 	{
 		moneyPot = pot;
 	}
-	
+
+	/**
+	 * @return the CardType.
+	 */
+
+	public CardType getCard() {
+		return card;
+	}
+
+	/**
+	 * To modify the cardType.
+	 *
+	 * @param card1 The CardType.
+	 */
+	public void setCard(final CardType card1)
+	{
+		card = card1;
+
+	}
 	/**
 	 * To set a value for a specific player.
 	 * 
@@ -2031,7 +2057,8 @@ public class State implements Serializable
 	 */
 	public void setTrump(final int trumpSuit)
 	{
-		this.trump = trumpSuit;
+		trump = trumpSuit;
+		System.out.println(trump + "areaze");
 	}
 
 	/**

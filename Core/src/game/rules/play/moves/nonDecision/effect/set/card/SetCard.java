@@ -1,57 +1,54 @@
-package game.rules.play.moves.nonDecision.effect.set.card.trump;
+package game.rules.play.moves.nonDecision.effect.set.card;
 
 import java.util.BitSet;
 
 import annotations.Hide;
 import annotations.Opt;
-import annotations.Or;
 import game.Game;
-import game.functions.ints.IntConstant;
+import game.equipment.component.Component;
+import game.equipment.component.card.CardType;
 import game.functions.ints.IntFunction;
 import game.rules.play.moves.BaseMoves;
 import game.rules.play.moves.Moves;
 import game.rules.play.moves.nonDecision.effect.Effect;
 import game.rules.play.moves.nonDecision.effect.Then;
+import game.types.board.SiteType;
 import game.types.state.GameType;
-import main.Constants;
-import other.action.cards.ActionSetTrump;
-import other.action.state.ActionSetTemp;
-import other.action.state.ActionSetVar;
+import other.action.cards.ActionSetCardType;
 import other.concept.Concept;
 import other.context.Context;
 import other.move.Move;
+import other.state.container.ContainerState;
 
 /**
- * Stores a Trump in the state in the variable "trump".
+ * Stores an integer in the state in the variable "var".
  *
  * @author Eric.Piette
  */
 @Hide
-public final class SetTrump extends Effect
+public final class SetCard extends Effect
 {
     private static final long serialVersionUID = 1L;
 
     //-------------------------------------------------------------------------
 
-    /** The trump to set. */
-    private final String trump;
-    private final IntFunction trum;
+
+    private final IntFunction loc;
+    private SiteType type;
 
 
     /**
-     * @param trump  The name of the trump.
+     * @param at location of the card.
      * @param then  The moves applied after that move is applied.
      */
-    public SetTrump
+    public SetCard
     (
-            @Or final String      trump,
-            @Or final IntFunction trum,
+            final IntFunction at,
             @Opt final Then        then
     )
     {
         super(then);
-        this.trump = trump;
-        this.trum = trum;
+        this.loc = at;
     }
 
     //-------------------------------------------------------------------------
@@ -61,11 +58,15 @@ public final class SetTrump extends Effect
     {
         final Moves moves = new BaseMoves(super.then());
         final Move move;
-
-
-
-        final ActionSetTrump actionSetTrump = new ActionSetTrump(trump);
-        move = new Move(actionSetTrump);
+        final int location = loc.eval(context);
+        // Récupère l'ID du conteneur associé à cette localisation
+        final int containerId = context.containerId()[location];
+        final ContainerState cs = context.state().containerStates()[containerId];
+        final int what = cs.what(location, SiteType.Vertex);
+        final Component[] equipment = context.game().equipment().components();
+        final CardType cardType = (CardType) equipment[what];
+        final ActionSetCardType ActionSetCardType = new ActionSetCardType(cardType);
+        move = new Move(ActionSetCardType);
         moves.moves().add(move);
 
 
@@ -94,7 +95,6 @@ public final class SetTrump extends Effect
     public long gameFlags(final Game game)
     {
         long gameFlags = GameType.MapValue | super.gameFlags(game);
-
         if (then() != null)
             gameFlags |= then().gameFlags(game);
 
@@ -106,7 +106,6 @@ public final class SetTrump extends Effect
     {
         final BitSet concepts = new BitSet();
         concepts.or(super.concepts(game));
-
 
 
         if (then() != null)
@@ -125,7 +124,6 @@ public final class SetTrump extends Effect
         writeEvalContext.or(super.writesEvalContextRecursive());
 
 
-
         if (then() != null)
             writeEvalContext.or(then().writesEvalContextRecursive());
         return writeEvalContext;
@@ -136,7 +134,6 @@ public final class SetTrump extends Effect
     {
         final BitSet readEvalContext = new BitSet();
         readEvalContext.or(super.readsEvalContextRecursive());
-
 
 
         if (then() != null)
@@ -150,8 +147,6 @@ public final class SetTrump extends Effect
         boolean missingRequirement = false;
         missingRequirement |= super.missingRequirement(game);
 
-
-
         if (then() != null)
             missingRequirement |= then().missingRequirement(game);
         return missingRequirement;
@@ -162,6 +157,7 @@ public final class SetTrump extends Effect
     {
         boolean willCrash = false;
         willCrash |= super.willCrash(game);
+
 
         if (then() != null)
             willCrash |= then().willCrash(game);
@@ -178,7 +174,6 @@ public final class SetTrump extends Effect
     public void preprocess(final Game game)
     {
         super.preprocess(game);
-
     }
 
     //-------------------------------------------------------------------------
@@ -190,7 +185,7 @@ public final class SetTrump extends Effect
         if (then() != null)
             thenString = " then " + then().toEnglish(game);
 
-        return "set the trump to " + trump + thenString;
+        return "set the card ";
     }
 
     //-------------------------------------------------------------------------

@@ -1,3 +1,28 @@
+
+(define "StrongestCard"
+        (if (is Empty 0)
+            (set CardType at:0)
+            (if (= (CardTrumpSuit) (var "TopCard"))
+                (if >
+        )
+)
+
+(define "PlayCard"
+    (move
+        (from Cell (sites Hand Mover))
+        (to Vertex 0)
+        (then
+            (and
+                {
+                (set Pot (+ (value Pot) (value CardType "Rank" at:0)))
+                (set Var "CardPlayed" (+ (var "CardPlayed") 1))
+                ("StrongestCard")
+                }
+            )
+        )
+    )
+)
+
 (game "Briscola"
     (players 4)
     (equipment {
@@ -9,6 +34,7 @@
 
     (rules
         (start {
+            (set Var "CardPlayed" 0)
             (deal Cards 3 P1)  // Distribuer 3 cartes à chaque joueur
             (deal Cards 3 P2)  // Distribuer 3 cartes à chaque joueur
             (deal Cards 3 P3)  // Distribuer 3 cartes à chaque joueur
@@ -16,11 +42,20 @@
             (deal Deck 10 stack:True)
             (set Trump (value CardType "Suit" at:38))  // Retourner la carte d'atout
         })
-
-        (play
-            (move Pass)
-        )
-
+        phases:{
+            (phase "Play"
+                (play
+                        ("PlayCard")
+                )
+                (nextPhase (= 4 (var "CardPlayed")) "CountPoint")
+            )
+            (phase "CountPoint"
+                (play
+                        (move Pass)
+                )
+                (nextPhase False "Play")
+            )
+        }
         (end
             (if ("HandEmpty" Mover) (result Mover Win))
         )

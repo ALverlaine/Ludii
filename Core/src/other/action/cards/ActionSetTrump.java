@@ -3,6 +3,7 @@ package other.action.cards;
 import java.util.BitSet;
 import java.util.Objects;
 
+import annotations.Or;
 import game.rules.play.moves.Moves;
 import game.types.component.SuitType;
 import other.action.Action;
@@ -44,7 +45,8 @@ public class ActionSetTrump extends BaseAction
 		final int trumpSuit
 	)
 	{
-		this.trumpSuit = trumpSuit;
+
+		this.trumpSuit =  trumpSuit;
 	}
 	public static int convertStringToNumber(Object input) {
 		if (input instanceof Integer) {
@@ -79,6 +81,7 @@ public class ActionSetTrump extends BaseAction
 	@Override
 	public Action apply(final Context context, final boolean store)
 	{
+
 		if(!alreadyApplied)
 		{
 			previousTrumpSuit = context.state().trump();

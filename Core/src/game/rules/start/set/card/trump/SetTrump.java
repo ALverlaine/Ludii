@@ -1,6 +1,7 @@
 package game.rules.start.set.card.trump;
 
 import java.util.BitSet;
+import java.util.Objects;
 
 import annotations.Hide;
 import annotations.Opt;
@@ -54,25 +55,30 @@ public final class SetTrump  extends StartRule
     }
 
     //-------------------------------------------------------------------------
-
+    public static int convertStringToNumber(Object input) {
+        if (input instanceof Integer) {
+            // Manipuler l'entier pour le différencier d'un String
+            return ((Integer) input) * 31;
+        } else if (input instanceof String) {
+            // Calculer un hash code pour la chaîne pour obtenir un entier unique
+            return Objects.hash(input);
+        } else {
+            throw new IllegalArgumentException("Input must be either an Integer or a String");
+        }
+    }
     @Override
     public void eval(final Context context)
     {
         final Move move;
         if(trump != null) {
-            ActionSetTrump actionSetTrump = new ActionSetTrump(trump);
-            Note note = new Note(null, null, "Trump is " + trump, null , null, null, null, null, null, null ,null ,null ,null);
+            ActionSetTrump actionSetTrump = new ActionSetTrump(convertStringToNumber(trump));
             move = new Move(actionSetTrump);
             context.trial().addMove(move);
-            final Move nmove = new Move(new ActionNote("Trump is " + trump, Constants.NOBODY));
-            context.trial().addMove(nmove);
             context.trial().addInitPlacement();
         }
         else{
-            ActionSetTrump actionSetTrump = new ActionSetTrump(String.valueOf(trum));
+            ActionSetTrump actionSetTrump = new ActionSetTrump(trum.eval(context));
             move = new Move(actionSetTrump);
-            final Move nmove = new Move(new ActionNote("Trump is " + trum, Constants.NOBODY));
-            context.trial().addMove(nmove);
             context.trial().addMove(move);
             context.trial().addInitPlacement();
         }

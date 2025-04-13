@@ -210,14 +210,15 @@ public final class Move extends Decision
 	 * @param suit     The suit to choose.
 	 * @param then     The moves applied after that move is applied.
 	 * 
-	 * @example (move Set TrumpSuit (card Suit at:(handSite Shared)))
+	 * @example (move Set Trump (card Suit at:(handSite Shared)))
 	 * 
 	 */
 	public static Moves construct
 	(
 			     final MoveSetType  moveType,
 			     final SetTrumpType setType,
-	   	    		final String  suit,
+	   	 @Or   		final String  suit,
+		@Or			final IntFunction sui,
 		@Opt     final Then         then
 	)
 	{
@@ -234,7 +235,7 @@ public final class Move extends Decision
 		switch (setType)
 		{
 		case Trump:
-			moves = new SetTrump(suit, then);
+			moves = new SetTrump(suit, sui, then);
 			break;
 		default:
 			break;

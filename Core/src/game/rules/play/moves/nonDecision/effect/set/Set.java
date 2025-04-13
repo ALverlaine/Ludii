@@ -5,6 +5,7 @@ import annotations.Opt;
 import annotations.Or;
 import annotations.Or2;
 import game.Game;
+import game.equipment.component.card.CardType;
 import game.functions.booleans.BooleanFunction;
 import game.functions.intArray.IntArrayFunction;
 import game.functions.ints.IntFunction;
@@ -12,6 +13,7 @@ import game.functions.region.RegionFunction;
 import game.rules.play.moves.Moves;
 import game.rules.play.moves.nonDecision.effect.Effect;
 import game.rules.play.moves.nonDecision.effect.Then;
+import game.rules.play.moves.nonDecision.effect.set.card.SetCard;
 import game.rules.play.moves.nonDecision.effect.set.card.trump.SetTrump;
 import game.rules.play.moves.nonDecision.effect.set.direction.SetRotation;
 import game.rules.play.moves.nonDecision.effect.set.hidden.SetHidden;
@@ -32,6 +34,7 @@ import game.types.play.RoleType;
 import game.util.moves.Player;
 import other.IntArrayFromRegion;
 import other.context.Context;
+
 
 /**
  * Sets some aspect of the game state in response to a move.
@@ -153,13 +156,14 @@ public final class Set extends Effect
 	 * @param suit    The suit to choose.
 	 * @param then    The moves applied after that move is applied.
 	 * 
-	 * @example (set TrumpSuit (card Suit at:(handSite Shared)))
+	 * @example (set Trump (card Suit at:(handSite Shared)))
 	 * 
 	 */
 	public static Moves construct
 	(
 			     final SetTrumpType setType,
-		    	 final String  suit,
+		@Or    	 final String  suit,
+		@Or 	final IntFunction sui,
 		@Opt     final Then         then
 	)
 	{
@@ -174,7 +178,7 @@ public final class Set extends Effect
 		switch (setType)
 		{
 		case Trump:
-			return new SetTrump(suit, then);
+			return new SetTrump(suit, sui, then);
 		default:
 			break;
 		}
@@ -464,6 +468,44 @@ public final class Set extends Effect
 		throw new IllegalArgumentException("Set(): A SetSiteType is not implemented.");
 	}
 	
+	//-------------------------------------------------------------------------
+
+	//-------------------------------------------------------------------------
+
+	/**
+	 * For setting the count or the state of a site.
+	 *
+	 * @param setType The type of property to set.
+	 * @param at      The site to set.
+	 * @param level   The level to set [0].
+	 * @param then    The moves to apply afterwards.
+	 *
+	 * @example (set State at:(last To) (mover))
+	 *
+	 * @example (set Count at:(last To) 10)
+	 *
+	 * @example (set Value at:(last To) 10)
+	 *
+	 */
+	public static Moves construct
+	(
+			final SetCardType setType,
+			@Name      final IntFunction at,
+			@Opt final Then        then
+	)
+	{
+		switch (setType)
+		{
+			case CardType:
+				return new SetCard(at, then);
+			default:
+				break;
+		}
+
+		// We should never reach that except if we forget some codes.
+		throw new IllegalArgumentException("Set(): A SetSiteType is not implemented.");
+	}
+
 	//-------------------------------------------------------------------------
 	
 	private Set()
