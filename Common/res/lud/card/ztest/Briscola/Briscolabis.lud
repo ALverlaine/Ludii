@@ -1,0 +1,33 @@
+(game "Briscola"
+    (players 4)
+    (equipment {
+        (cardTable 2)
+        ("BriscolaCards")  // Jeu de 40 cartes (sans 8, 9, 10)
+        (hand Each size:9)  // Main de chaque joueur
+        (hand Shared size:1)
+    })
+    (rules
+            (start {
+                (deal Cards 3 P1)
+                (deal Cards 3 P2)
+                (deal Cards 3 P3)
+                (deal Cards 3 P4)
+                (set Trump (value CardType "Suit" at:38))
+                (set Var "CardsInTrick" 0)
+            })
+            phases:{
+                (phase "Play"
+                    (play ("PlayCard"))
+                    (nextPhase (= (var "CardsInTrick") 4) "ResolveTrick")
+                )
+
+                (phase "ResolveTrick"
+                    (play ("CollectTrick"))
+                    (nextPhase (if (all Players ("HandEmpty")) "End" "Play"))
+                )
+            }
+            (end
+                (byScore)
+            )
+    )
+)

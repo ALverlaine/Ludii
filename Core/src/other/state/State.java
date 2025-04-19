@@ -2058,7 +2058,6 @@ public class State implements Serializable
 	public void setTrump(final int trumpSuit)
 	{
 		trump = trumpSuit;
-		System.out.println(trump + "areaze");
 	}
 
 	/**

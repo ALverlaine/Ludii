@@ -1,5 +1,6 @@
 package game.util.moves;
 
+import annotations.Or;
 import game.functions.ints.IntFunction;
 import game.functions.ints.state.Mover;
 import other.BaseLudeme;
@@ -18,7 +19,6 @@ public class Player extends BaseLudeme
 
 	/** The index function returned by this class. */
 	private final IntFunction indexReturned;
-
 	//-------------------------------------------------------------------------
 
 	/**
@@ -37,6 +37,7 @@ public class Player extends BaseLudeme
 				: index;
 	}
 
+
 	//-------------------------------------------------------------------------
 
 	/**
@@ -44,6 +45,7 @@ public class Player extends BaseLudeme
 	 */
 	public IntFunction originalIndex()
 	{
+		System.out.println(index);
 		return index;
 	}
 

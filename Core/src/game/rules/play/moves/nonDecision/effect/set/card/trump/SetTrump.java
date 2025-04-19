@@ -63,7 +63,7 @@ public final class SetTrump extends Effect
         final Move move;
 
 
-
+        System.out.println("TRUMP IS INSIDE SET TRUMP " + trump + "   AND TRUM IS " + trum);
         final ActionSetTrump actionSetTrump = new ActionSetTrump(trump);
         move = new Move(actionSetTrump);
         moves.moves().add(move);

@@ -71,15 +71,18 @@ public final class SetTrump  extends StartRule
     {
         final Move move;
         if(trump != null) {
-            ActionSetTrump actionSetTrump = new ActionSetTrump(convertStringToNumber(trump));
-            move = new Move(actionSetTrump);
-            context.trial().addMove(move);
+            System.out.println("TRUMP IS INSIDE STR" + trump);
+            context.state().setTrump((convertStringToNumber(trump)));
             context.trial().addInitPlacement();
         }
         else{
-            ActionSetTrump actionSetTrump = new ActionSetTrump(trum.eval(context));
-            move = new Move(actionSetTrump);
-            context.trial().addMove(move);
+            String[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
+            for (String suit : suits) {
+                int convertedValue = SetTrump.convertStringToNumber(suit);
+                System.out.println("Suit: " + suit + " -> Converted Value: " + convertedValue);
+            }
+            System.out.println("TRUMP IS INSIDE int" + trum);
+            context.state().setTrump(trum.eval(context));
             context.trial().addInitPlacement();
         }
 

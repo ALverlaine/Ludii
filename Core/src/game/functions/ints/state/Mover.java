@@ -31,6 +31,7 @@ public final class Mover extends BaseIntFunction
 	@Override
 	public final int eval(final Context context)
 	{
+		System.out.println("MOVER IS " + context.state().mover());
 		return context.state().mover();
 	}
 

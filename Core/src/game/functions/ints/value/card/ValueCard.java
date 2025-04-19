@@ -82,44 +82,79 @@ public final class ValueCard extends BaseIntFunction {
         // Évalue la localisation de la carte à partir du contexte
         final int location = loc.eval(context);
 
-        //System.out.println("Location: " + location);
         // Vérifie si la carte est "OFF" (hors du jeu)
         if (location == Constants.OFF) {
-
             return Constants.UNDEFINED; // ou toute autre valeur qui représente un cas "non trouvé"
         }
+
         // Récupère l'ID du conteneur associé à cette localisation
         final int containerId = context.containerId()[location];
-        // Si le jeu n'est pas un jeu de Stacking, utilise le ContainerState basique
 
+        // Si le jeu est un jeu de stacking, utilise le BaseContainerStateStacking
+        if ((context.game().gameFlags() & GameType.Stacking) != 0) {
+            final BaseContainerStateStacking state = (BaseContainerStateStacking) context.state()
+                    .containerStates()[containerId];
 
-        final ContainerState cs = context.state().containerStates()[containerId];
-        final int what = cs.what(location, type);
-        final Component[] equipment = context.game().equipment().components();
-        if(what == 0) {
+            // Évalue le niveau
+            final int evaluatedLevel = level.eval(context);
 
-            return Constants.UNDEFINED;
-        }
-        final CardType cardType = (CardType) equipment[what];
-        final String[] attributes = cardType.getAttributesValue();
-        final String[] attributesName = cardType.getAttributesName();
+            // Récupère la carte au niveau donné ou au sommet si le niveau est -1
+            final int what = (evaluatedLevel == -1)
+                    ? state.what(location, type) // Sommet de la pile
+                    : state.what(location, evaluatedLevel, type); // Niveau spécifique
 
+            if (what == 0) {
+                return Constants.UNDEFINED; // Pas de carte trouvée
+            }
 
-        for (int i = 0; i < attributesName.length; i++) {
-            if (attributesName[i].equals(cardAttribute)) {
-                int value;
-                try {
-                    // Essaye de convertir en entier
-                    value = Integer.parseInt(attributes[i]);
-                } catch (NumberFormatException e) {
-                    // Si ce n'est pas un entier, convertit la chaîne en fonction des caractères
-                    value = convertStringToNumber(attributes[i]); // Conversion de la chaîne en entier basé sur les caractères
+            // Récupère les informations de la carte
+            final Component[] equipment = context.game().equipment().components();
+            final CardType cardType = (CardType) equipment[what];
+            final String[] attributes = cardType.getAttributesValue();
+            final String[] attributesName = cardType.getAttributesName();
+
+            // Recherche l'attribut correspondant
+            for (int i = 0; i < attributesName.length; i++) {
+                if (attributesName[i].equals(cardAttribute)) {
+                    try {
+                        // Essaye de convertir en entier
+                        return Integer.parseInt(attributes[i]);
+                    } catch (NumberFormatException e) {
+                        // Si ce n'est pas un entier, convertit la chaîne en entier basé sur les caractères
+                        return convertStringToNumber(attributes[i]);
+                    }
                 }
-                //System.out.println("ValueCard: " + value + " for Attribute " + attributes[i]);
-                return value;
+            }
+        } else {
+            // Si ce n'est pas un jeu de stacking, utilise le ContainerState basique
+            final ContainerState cs = context.state().containerStates()[containerId];
+            final int what = cs.what(location, type);
+
+            if (what == 0) {
+                return Constants.UNDEFINED; // Pas de carte trouvée
+            }
+
+            // Récupère les informations de la carte
+            final Component[] equipment = context.game().equipment().components();
+            final CardType cardType = (CardType) equipment[what];
+            final String[] attributes = cardType.getAttributesValue();
+            final String[] attributesName = cardType.getAttributesName();
+
+            // Recherche l'attribut correspondant
+            for (int i = 0; i < attributesName.length; i++) {
+                if (attributesName[i].equals(cardAttribute)) {
+                    try {
+                        // Essaye de convertir en entier
+                        return Integer.parseInt(attributes[i]);
+                    } catch (NumberFormatException e) {
+                        // Si ce n'est pas un entier, convertit la chaîne en entier basé sur les caractères
+                        return convertStringToNumber(attributes[i]);
+                    }
+                }
             }
         }
-        return Constants.UNDEFINED; // attributes wasnt found
+
+        return Constants.UNDEFINED; // Attribut non trouvé
     }
 
 

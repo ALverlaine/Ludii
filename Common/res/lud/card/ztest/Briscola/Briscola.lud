@@ -1,28 +1,60 @@
-
-(define "StrongestCard"
-        (if (is Empty 0)
-            (set CardType at:0)
-            (if (= (CardTrumpSuit) (var "TopCard"))
-                (if >
+(define "SetActualTrickWinner"
+    (apply
+        (and
+            {
+            (set Var "TopCardSuits" (value CardType "Suit" at:0 level:(topLevel at:0)))
+            (set Var "TopCardPower" (value CardType "Rank" at:0 level:(topLevel at:0)))
+            (set Var "TopCardPlayer" (mover))
+            }
         )
+    )
 )
+(define "StrongestCard"
+    (if (= (var "TopCardSuits") -1)
+        ("SetActualTrickWinner")
+        (if (= (topCard) (var "TopCardSuit"))
+            (if (= (topCard) (value CardType "Suit" at:0 level:(topLevel at:0)))
+                (if (> (value CardType "Power" at:0 level:(topLevel at:0)) (var "TopCardPower"))
+                    ("SetActualTrickWinner")
+                )
+            )
+            (if (= (topCard) (value CardType "Suit" at:0 level:(topLevel at:0)))
+                ("SetActualTrickWinner")
+                (if (> (value CardType "Power" at:0 level:(topLevel at:0)) (var "TopCardPower"))
+                    ("SetActualTrickWinner")
+                )
+            )
+        )
+    )
+)
+
 
 (define "PlayCard"
     (move
         (from Cell (sites Hand Mover))
         (to Vertex 0)
         (then
-            (and
-                {
-                (set Pot (+ (value Pot) (value CardType "Rank" at:0)))
-                (set Var "CardPlayed" (+ (var "CardPlayed") 1))
-                ("StrongestCard")
-                }
+            (if True
+                (apply
+                    (and
+                        {
+                        (set Pot (+ (value Pot) (value CardType "Rank" at:0)))
+                        (set Var "CardPlayed" (+ (var "CardPlayed") 1))
+                        ("StrongestCard")
+                        }
+                    )
+                )
             )
         )
     )
 )
-
+(define "CollectTrick"
+    (move Pass
+        (then
+            (addScore (player (var "TopCardPlayer")) (value Pot))
+        )
+    )
+)
 (game "Briscola"
     (players 4)
     (equipment {
@@ -35,29 +67,32 @@
     (rules
         (start {
             (set Var "CardPlayed" 0)
+            (set Var "TopCardPlayer" -1)
+            (set Var "TopCardSuits" -1)
+            (set Score P1 0)
+            (set Score P2 0)
+            (set Score P3 0)
+            (set Score P4 0)
             (deal Cards 3 P1)  // Distribuer 3 cartes à chaque joueur
             (deal Cards 3 P2)  // Distribuer 3 cartes à chaque joueur
             (deal Cards 3 P3)  // Distribuer 3 cartes à chaque joueur
             (deal Cards 3 P4)  // Distribuer 3 cartes à chaque joueur
             (deal Deck 10 stack:True)
-            (set Trump (value CardType "Suit" at:38))  // Retourner la carte d'atout
+            (set Trump (value CardType "Suit" at:38 level:(topLevel at:38)))  // Retourner la carte d'atout
         })
         phases:{
             (phase "Play"
                 (play
                         ("PlayCard")
                 )
-                (nextPhase (= 4 (var "CardPlayed")) "CountPoint")
+                (nextPhase (= 4 (var "CardPlayed")) "ResolveTrick")
             )
-            (phase "CountPoint"
-                (play
-                        (move Pass)
-                )
+            (phase "ResolveTrick"
+                (play "CollectTrick")
                 (nextPhase False "Play")
             )
         }
-        (end
-            (if ("HandEmpty" Mover) (result Mover Win))
-        )
+        (end (if (no Moves Next) (byScore)))
+
     )
 )

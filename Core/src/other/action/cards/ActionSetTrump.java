@@ -87,7 +87,7 @@ public class ActionSetTrump extends BaseAction
 			previousTrumpSuit = context.state().trump();
 			alreadyApplied = true;
 		}
-		
+		System.out.println("TRUMP IS IN TRUMPSUIT SET " + trumpSuit);
 		context.state().setTrump(trumpSuit);
 		return this;
 	}
