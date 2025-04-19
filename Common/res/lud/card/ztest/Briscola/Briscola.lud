@@ -41,6 +41,7 @@
                         (set Pot (+ (value Pot) (value CardType "Rank" at:0)))
                         (set Var "CardPlayed" (+ (var "CardPlayed") 1))
                         ("StrongestCard")
+                        (set Var "DrawOneCard" 0)
                         }
                     )
                 )
@@ -51,10 +52,23 @@
 (define "CollectTrick"
     (move Pass
         (then
-            (addScore (player (var "TopCardPlayer")) (value Pot))
+            (and
+                (addScore (player (var "TopCardPlayer")) (value Pot))
+                (set Var "CardPlayed" 0)
+            )
         )
     )
 )
+(define "DrawCard"
+    (move
+        (from (handSite Shared))
+        (to (sites Hand Mover)
+            if:(is Empty (to))
+        )
+        (then (set Var "DrawOneCard" (+ (var "DrawOneCard") 1)))
+    )
+)
+
 (game "Briscola"
     (players 4)
     (equipment {
@@ -69,6 +83,7 @@
             (set Var "CardPlayed" 0)
             (set Var "TopCardPlayer" -1)
             (set Var "TopCardSuits" -1)
+            (set Var "DrawOneCard" 0)
             (set Score P1 0)
             (set Score P2 0)
             (set Score P3 0)
@@ -77,7 +92,7 @@
             (deal Cards 3 P2)  // Distribuer 3 cartes à chaque joueur
             (deal Cards 3 P3)  // Distribuer 3 cartes à chaque joueur
             (deal Cards 3 P4)  // Distribuer 3 cartes à chaque joueur
-            (deal Deck 10 stack:True)
+            (deal Deck 28 stack:True)
             (set Trump (value CardType "Suit" at:38 level:(topLevel at:38)))  // Retourner la carte d'atout
         })
         phases:{
@@ -89,10 +104,21 @@
             )
             (phase "ResolveTrick"
                 (play "CollectTrick")
-                (nextPhase False "Play")
+                (nextPhase True "Deal")
+            )
+            (phase "Deal"
+                (play ("DrawCard"))
+                (nextPhase (= 4 (var "DrawOneCard")) "Play")
             )
         }
         (end (if (no Moves Next) (byScore)))
 
+    )
+)
+(metadata
+    (graphics
+    {
+        (stackType None)  // Active le stacking des cartes
+        }
     )
 )

@@ -77,7 +77,6 @@ public final class Take extends Effect
 		switch (takeType)
 		{
 			case Card:
-				System.out.println("hey");
 				return new TakeCards(from, to, then);
 			default:
 				break;

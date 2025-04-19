@@ -146,7 +146,6 @@ public final class AddScore extends Effect
 			{
 				final RoleType role = roles[i];
 				final int score = scores[i].eval(context);
-				System.out.println("SCOREE" + score);
 				final TIntArrayList idPlayers = PlayersIndices.getIdRealPlayers(context, role);
 				for(int j = 0; j < idPlayers.size();j++)
 				{

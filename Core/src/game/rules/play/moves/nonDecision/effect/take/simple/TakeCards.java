@@ -77,7 +77,6 @@ public final class TakeCards extends Effect
         int site = Constants.OFF;
         RegionFunction regfrom = fromFn.region();
         RegionFunction regto = toFn.region();
-        System.out.println(Arrays.toString(regto.eval(context).sites()));
         int[] from = regfrom.eval(context).sites();
         int[] to = regto.eval(context).sites();
         //System.out.println(to);

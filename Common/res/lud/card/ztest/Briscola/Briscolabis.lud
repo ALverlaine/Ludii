@@ -1,3 +1,74 @@
+(define "SetActualTrickWinner"
+    (apply
+        (and
+            {
+            (set Var "TopCardSuits" (value CardType "Suit" at:0 level:(topLevel at:0)))
+            (set Var "TopCardPower" (value CardType "Rank" at:0 level:(topLevel at:0)))
+            (set Var "TopCardPlayer" (mover))
+            }
+        )
+    )
+)
+(define "StrongestCard"
+    (if (= (var "TopCardSuits") -1)
+        ("SetActualTrickWinner")
+        (if (= (topCard) (var "TopCardSuit"))
+            (if (= (topCard) (value CardType "Suit" at:0 level:(topLevel at:0)))
+                (if (> (value CardType "Power" at:0 level:(topLevel at:0)) (var "TopCardPower"))
+                    ("SetActualTrickWinner")
+                )
+            )
+            (if (= (topCard) (value CardType "Suit" at:0 level:(topLevel at:0)))
+                ("SetActualTrickWinner")
+                (if (> (value CardType "Power" at:0 level:(topLevel at:0)) (var "TopCardPower"))
+                    ("SetActualTrickWinner")
+                )
+            )
+        )
+    )
+)
+
+
+(define "PlayCard"
+    (move
+        (from Cell (sites Hand Mover))
+        (to Vertex 0)
+        (then
+            (if True
+                (apply
+                    (and
+                        {
+                        (set Pot (+ (value Pot) (value CardType "Rank" at:0)))
+                        (set Var "CardPlayed" (+ (var "CardPlayed") 1))
+                        ("StrongestCard")
+                        (set Var "DrawOneCard" 0)
+                        }
+                    )
+                )
+            )
+        )
+    )
+)
+(define "CollectTrick"
+    (move Pass
+        (then
+            (and
+                (addScore (player (var "TopCardPlayer")) (value Pot))
+                (set Var "CardPlayed" 0)
+            )
+        )
+    )
+)
+(define "DrawCard"
+    (move
+        (from (handSite Shared))
+        (to (sites Hand Mover)
+            if:(is Empty (to))
+        )
+        (then (set Var "DrawOneCard" (+ (var "DrawOneCard") 1)))
+    )
+)
+
 (game "Briscola"
     (players 4)
     (equipment {
@@ -6,28 +77,41 @@
         (hand Each size:9)  // Main de chaque joueur
         (hand Shared size:1)
     })
-    (rules
-            (start {
-                (deal Cards 3 P1)
-                (deal Cards 3 P2)
-                (deal Cards 3 P3)
-                (deal Cards 3 P4)
-                (set Trump (value CardType "Suit" at:38))
-                (set Var "CardsInTrick" 0)
-            })
-            phases:{
-                (phase "Play"
-                    (play ("PlayCard"))
-                    (nextPhase (= (var "CardsInTrick") 4) "ResolveTrick")
-                )
 
-                (phase "ResolveTrick"
-                    (play ("CollectTrick"))
-                    (nextPhase (if (all Players ("HandEmpty")) "End" "Play"))
+    (rules
+        (start {
+            (set Var "CardPlayed" 0)
+            (set Var "TopCardPlayer" -1)
+            (set Var "TopCardSuits" -1)
+            (set Var "DrawOneCard" 0)
+            (set Score P1 0)
+            (set Score P2 0)
+            (set Score P3 0)
+            (set Score P4 0)
+            (deal Cards 3 P1)  // Distribuer 3 cartes à chaque joueur
+            (deal Cards 3 P2)  // Distribuer 3 cartes à chaque joueur
+            (deal Cards 3 P3)  // Distribuer 3 cartes à chaque joueur
+            (deal Cards 3 P4)  // Distribuer 3 cartes à chaque joueur
+            (deal Deck 10 stack:True)
+            (set Trump (value CardType "Suit" at:38 level:(topLevel at:38)))  // Retourner la carte d'atout
+        })
+        phases:{
+            (phase "Play"
+                (play
+                        ("PlayCard")
                 )
-            }
-            (end
-                (byScore)
+                (nextPhase (= 4 (var "CardPlayed")) "ResolveTrick")
             )
+            (phase "ResolveTrick"
+                (play "CollectTrick")
+                (nextPhase True "Deal")
+            )
+            (phase "Deal"
+                (play ("DrawCard"))
+                (nextPhase (= 4 (var "DrawOneCard")) "Play")
+            )
+        }
+        (end (if (no Moves Next) (byScore)))
+
     )
 )

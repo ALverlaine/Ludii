@@ -45,7 +45,6 @@ public class Player extends BaseLudeme
 	 */
 	public IntFunction originalIndex()
 	{
-		System.out.println(index);
 		return index;
 	}
 
