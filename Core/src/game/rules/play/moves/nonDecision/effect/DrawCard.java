@@ -79,10 +79,6 @@ public final class DrawCard extends Effect {
     public Moves eval(final Context context) {
         final int origFrom = context.from();
         final int origTo = context.to();
-        System.out.println("origFrom: " + origFrom);
-        System.out.println("Hand index " + mover);
-        System.out.println(context.containers()[mover.owner()]);
-
         final BaseMoves moves = new BaseMoves(super.then());
         if (countFn != null) {
             return moves;

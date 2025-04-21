@@ -73,7 +73,6 @@ public final class SetPending extends Effect
 			final ActionSetPending actionPending = (value == null) ? new ActionSetPending(Constants.UNDEFINED)
 					: new ActionSetPending(value.eval(context));
 			move = new Move(actionPending);
-			System.out.println("value: " + value.eval(context));
 			moves.moves().add(move);
 		}
 		else

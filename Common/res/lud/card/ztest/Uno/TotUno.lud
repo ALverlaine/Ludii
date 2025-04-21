@@ -2,7 +2,7 @@
 (game "TotUno"
     (players 2)
     (equipment {
-        (cardTable 2)
+        (cardTable 2 largeStack:False)
         (hand Each size:5)
         (hand Shared size:1)
         (unoCards)
@@ -23,21 +23,28 @@
                         if:(or
                             (=
                                 (value CardType "Color" at:(from))
-                                (value CardType "Color" at:(to))
+                                (value CardType "Color" at:0 level:(topLevel at:0))
                             )
                             (=
                                 (value CardType "Number" at:(from))
-                                (value CardType "Number" at:(to))
+                                (value CardType "Number" at:0 level:(topLevel at:0))
                             )
                         )
                     )
-                    stack:true
+                    stack:True
                 )
-                (move (from (sites Hand Mover) if:(is Occupied (from))) (to (sites Empty)) stack:true)
+                (move (from (sites Hand Mover) if:(is Occupied (from))) (to 0 if:(is Empty 0)) stack:True)
                 (move (from (handSite Shared)) (to (sites Hand Mover) if:(is Empty (to))))
         }))
         (end
             (if ("HandEmpty" Mover) (result Mover Win))
         )
+    )
+)
+(metadata
+    (graphics
+    {
+        (stackType None)  // Active le stacking des cartes
+        }
     )
 )

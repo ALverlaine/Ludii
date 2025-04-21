@@ -2,11 +2,9 @@ package game.functions.card;
 
 import java.util.BitSet;
 
-import annotations.Hide;
 import game.Game;
 import game.equipment.component.Component;
 import game.functions.ints.BaseIntFunction;
-import game.types.state.GameType;
 import other.concept.Concept;
 import other.context.Context;
 
@@ -15,7 +13,7 @@ import other.context.Context;
  * @author  Alexandre Verlaine
  */
 
-public final class TopCard extends BaseIntFunction
+public final class trump extends BaseIntFunction
 {
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +22,7 @@ public final class TopCard extends BaseIntFunction
     /**
      * @example (trumpSuit)
      */
-    public TopCard()
+    public trump()
     {
         // Nothing to do.
     }
@@ -34,7 +32,6 @@ public final class TopCard extends BaseIntFunction
     @Override
     public int eval(final Context context)
     {
-        System.out.println("TRUMP IS (in TOPCARD)" + context.state().trump());
         return context.state().trump();
     }
 

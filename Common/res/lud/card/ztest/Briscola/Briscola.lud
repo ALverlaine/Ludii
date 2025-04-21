@@ -12,13 +12,13 @@
 (define "StrongestCard"
     (if (= (var "TopCardSuits") -1)
         ("SetActualTrickWinner")
-        (if (= (topCard) (var "TopCardSuit"))
-            (if (= (topCard) (value CardType "Suit" at:0 level:(topLevel at:0)))
+        (if (= (trump) (var "TopCardSuit"))
+            (if (= (trump) (value CardType "Suit" at:0 level:(topLevel at:0)))
                 (if (> (value CardType "Power" at:0 level:(topLevel at:0)) (var "TopCardPower"))
                     ("SetActualTrickWinner")
                 )
             )
-            (if (= (topCard) (value CardType "Suit" at:0 level:(topLevel at:0)))
+            (if (= (trump) (value CardType "Suit" at:0 level:(topLevel at:0)))
                 ("SetActualTrickWinner")
                 (if (> (value CardType "Power" at:0 level:(topLevel at:0)) (var "TopCardPower"))
                     ("SetActualTrickWinner")
@@ -74,7 +74,7 @@
     (equipment {
         (cardTable 2)
         ("BriscolaCards")  // Jeu de 40 cartes (sans 8, 9, 10)
-        (hand Each size:9)  // Main de chaque joueur
+        (hand Each size:4)  // Main de chaque joueur
         (hand Shared size:1)
     })
 
@@ -93,7 +93,7 @@
             (deal Cards 3 P3)  // Distribuer 3 cartes à chaque joueur
             (deal Cards 3 P4)  // Distribuer 3 cartes à chaque joueur
             (deal Deck 28 stack:True)
-            (set Trump (value CardType "Suit" at:38 level:(topLevel at:38)))  // Retourner la carte d'atout
+            (set Trump (value CardType "Suit" at:18 level:(topLevel at:18)))  // Retourner la carte d'atout
         })
         phases:{
             (phase "Play"

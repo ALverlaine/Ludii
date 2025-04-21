@@ -40,7 +40,6 @@ public class FrenchCards extends PieceStyle {
         // Jokers
         CARD_SVG_MAP.put("1J", "FrenchCards/1J.svg");
         CARD_SVG_MAP.put("2J", "FrenchCards/2J.svg");
-        System.out.println(CARD_SVG_MAP);
     }
 
     private static void initializeBatik() {

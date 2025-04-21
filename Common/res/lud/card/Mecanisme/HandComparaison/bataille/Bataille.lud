@@ -37,7 +37,7 @@
     (players 2)
     (mode Simultaneous)
     (equipment {
-        (cardTable 2)
+        (cardTable 2 largeStack:False)
         (hand Each size:1)
         ("FrenchCards")
     })

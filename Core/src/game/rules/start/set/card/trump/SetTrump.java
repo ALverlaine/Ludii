@@ -24,7 +24,7 @@ import other.move.Move;
 /**
  * Stores a Trump in the state in the variable "trump".
  *
- * @author Eric.Piette
+ * @author Alexandre Verlaine
  */
 @Hide
 public final class SetTrump  extends StartRule
@@ -71,17 +71,11 @@ public final class SetTrump  extends StartRule
     {
         final Move move;
         if(trump != null) {
-            System.out.println("TRUMP IS INSIDE STR" + trump);
             context.state().setTrump((convertStringToNumber(trump)));
             context.trial().addInitPlacement();
         }
         else{
-            String[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
-            for (String suit : suits) {
-                int convertedValue = SetTrump.convertStringToNumber(suit);
-                System.out.println("Suit: " + suit + " -> Converted Value: " + convertedValue);
-            }
-            System.out.println("TRUMP IS INSIDE int" + trum);
+
             context.state().setTrump(trum.eval(context));
             context.trial().addInitPlacement();
         }

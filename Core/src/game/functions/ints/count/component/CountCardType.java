@@ -196,7 +196,6 @@ public final class CountCardType extends BaseIntFunction
 
         context.setLevel(origLevel);
         context.setSite(origSite);
-        System.out.println("Count =" + count);
         return count;
     }
 
